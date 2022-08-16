@@ -1,0 +1,57 @@
+version: '3'
+services:
+  mariadb:
+    image: 'mariadb'
+    container_name: 'mariadb-container'
+    environment:
+      - MARIADB_DATABASE=${DB_DATABASE}
+      - MARIADB_USER=${DB_USERNAME}
+      - MARIADB_PASSWORD=${DB_PASSWORD}
+      - MARIADB_ROOT_PASSWORD=${DB_PASSWORD}
+    ports:
+      - '${DB_PORT:-3306}:3306'
+    volumes:
+      - .docker/mariadb:/var/lib/mysql
+    networks:
+      - backend
+  #Laravel App
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bpp/publication-dashboard
+    container_name: app
+    tty: true
+    depends_on:
+      - mariadb
+    ports:
+      - 9000:9000
+    environment:
+      SERVICE_NAME: app
+      CONTAINER_ROLE: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www/html
+    volumes:
+      - "./:/var/www/html"
+    networks:
+      - backend
+
+  #Nginx Service
+  webserver:
+    image: nginx:alpine
+    container_name: webserver
+    depends_on:
+      - app
+    ports:
+      - "${DOCKER_WEBSERVER_PORT:-80}:80"
+    tty: true
+    volumes:
+      - "./:/var/www/html"
+      - ".docker/nginx/conf.d/:/etc/nginx/conf.d/"
+    networks:
+      - backend
+
+#Docker Networks
+networks:
+  backend:
+    driver: bridge
