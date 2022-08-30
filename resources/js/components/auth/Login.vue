@@ -12,11 +12,11 @@
       <form @submit.prevent="doLogin">
         <div class="mb-3 required-field">
           <label for="email" class="form-label">Email</label>
-          <input 
-            id="email" 
-            name="email" 
-            type="email" 
-            class="form-control" 
+          <input
+            id="email"
+            name="email"
+            type="email"
+            class="form-control"
             placeholder="Enter Email"
             v-model="form.email"
             :class="{ 'is-invalid': hasErrors('email') }"
@@ -28,18 +28,18 @@
         <div class="mb-3 required-field">
           <label for="password" class="form-label">Password</label>
           <div class="input-group">
-            <input 
-              id="password" 
-              name="password" 
+            <input
+              id="password"
+              name="password"
               :type="showPassword ? 'text': 'password'"
-              class="form-control" 
+              class="form-control"
               placeholder="Enter Password"
               v-model="form.password"
               :class="{ 'is-invalid': hasErrors('password') }"
             />
             <div class="input-group-append">
               <button
-                type="button" 
+                type="button"
                 class="btn btn-input-append border-secondary"
                 @click="showPassword = !showPassword"
               >
@@ -66,7 +66,7 @@
           </div>
         </div>
         <div class="mt-3">
-          <button  
+          <button
             type="submit"
             class="btn btn-primary w-100"
             :disabled="isLoading"
@@ -99,7 +99,7 @@ export default {
 
       try {
         let response = await axios.post("/login", this.form);
-        window.location = "/"
+        window.location = response.data.redirect
       } catch (error) {
         console.log(error)
         this.errors = error.response.data.errors;
@@ -109,7 +109,7 @@ export default {
       }
 
     },
-    
+
     hasErrors(key) {
       if (this.errors[key]) {
         return true;
