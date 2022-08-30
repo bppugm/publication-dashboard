@@ -1,0 +1,24 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import 'variables';
+@import '~bootstrap/scss/bootstrap';
+
+// required asterisk red mark
+.required-field label:after {
+    content: "*";
+    color: red;
+    padding-left: 5px;
+  }
+
+// input append button
+.btn-input-append, .btn-input-append:hover, .btn-input-append:focus {
+    border-radius: 0px 5px 5px 0px;
+    background-color: #F8FAFC;
+    border-color: #CED4DA !important;
+    border-left: none;
+}
