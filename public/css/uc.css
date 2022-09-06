@@ -1,0 +1,70 @@
+/* Homepage / Hero Image*/
+/* -------------------------------------*/
+.schome-hero {
+    margin-bottom: 30px;
+    padding-bottom: 0;
+    background-color: #a6a6a6;
+    height: 400px;
+    position: relative;
+}
+.schome-hero > img {
+    height: 100%;
+    width: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+.schome-hero__logotitle {
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    width: 75%;
+}
+.schome-hero__logotitle h1 {
+    color: #fff;
+    font-weight: 400;
+    letter-spacing: 3px;
+    margin: 40px auto 0;
+    font-family: "Gama Serif", Georgia, "Times New Roman", Times, serif;
+}
+@media (min-width: 768px) {
+    .schome-hero {
+        position: relative;
+        margin-bottom: 100px;
+    }
+    .schome-hero__logotitle h1 {
+        font-size: 42px;
+    }
+}
+@media (min-width: 1024px) {
+    .schome-hero {
+        height: 750px;
+    }
+}
+
+@media (max-width: 767px) {
+    .schome-hero__logotitle img {
+        max-height: 90px;
+    }
+    .schome-hero__logotitle h1 {
+        font-size: 22px;
+        margin-top: 20px;
+        width: 100%;
+    }
+    .schome-hero__page {
+        max-height: 80vh;
+    }
+}
+
+.schome-hero__page {
+    height: 80vh;
+    max-height: 80vh;
+    overflow: hidden;
+}
+.img-blur {
+    filter: blur(2px);
+    -webkit-filter: blur(2px);
+}
