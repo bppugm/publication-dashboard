@@ -19,7 +19,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    <!-- MDI Font -->    
+    <!-- MDI Font -->
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
 </head>
 <body>
@@ -30,9 +30,9 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <!-- Left Side Of Navbar -->
                         <ul class="navbar-nav me-auto">
-    
+
                         </ul>
-    
+
                         <!-- Right Side Of Navbar -->
                         <ul class="navbar-nav ms-auto">
                             <!-- Authentication Links -->
@@ -42,7 +42,7 @@
                                         <a class="nav-link" href="{{ route('login') }}">{{ __('Masuk') }}</a>
                                     </li>
                                 @endif
-                
+
                                 @if (Route::has('register'))
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('register') }}">{{ __('Daftar') }}</a>
@@ -53,14 +53,14 @@
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                         {{ Auth::user()->name }}
                                     </a>
-                
+
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                             document.getElementById('logout-form').submit();">
                                             {{ __('Logout') }}
                                         </a>
-                
+
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                             @csrf
                                         </form>
@@ -79,27 +79,26 @@
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-    
+
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <!-- Left Side Of Navbar -->
                         <ul class="navbar-nav me-auto">
-    
+
                         </ul>
-    
+
                         <!-- Right Side Of Navbar -->
                         <ul class="navbar-nav ms-auto">
                         </ul>
                     </div>
                 </div>
             </nav>
-
         </div>
 
         <main class="py-4">
             @yield('content')
         </main>
 
-        <footer class="d-none d-md-flex bg-light">
+        <footer class="d-md-flex bg-light">
             <div class="container d-flex justify-content-between">
                 <ul class="navbar-nav me-auto d-flex flex-row">
                     <i class="mdi mdi-email"></i>
@@ -107,7 +106,7 @@
                         bpp@ugm.ac.id
                     </a>
                 </ul>
-                <ul class="navbar-nav ms-auto">
+                <ul class="d-none d-md-block navbar-nav ms-auto">
                     Dikembangkan oleh Badan Penerbit dan Publikasi Universitas Gadjah Mada
                 </ul>
             </div>
