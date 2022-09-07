@@ -1,24 +1,42 @@
 @extends('layouts.app')
 
 <head>
-    <!-- Styles -->
-    <link href="{{ asset('css/uc.css') }}" rel="stylesheet">
     {{-- TITLE --}}
     <title>Under Construction</title>
+    <style>
+        .logotitle {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+        }
+        .logotitle>img {
+            -o-object-fit: cover;
+            object-fit: cover;
+        }
+        .logotitle h1 {
+            color: #fff;
+            letter-spacing: 3px;
+            font-family: "Gama Serif", Georgia, "Times New Roman", Times, serif;
+        }
+        .img-blur {
+            filter: blur(2px);
+            -webkit-filter: blur(2px);
+        }
+    </style>
 </head>
+
 @section('content')
-    <section class="relative schome-hero__page">
-        <img src="/images/gedung-pusat-night.jpeg" class="img-fluid img-blur" alt="...">
-        <div class="schome-hero__logotitle text-center">
-            <img src="/images/hero_logo.png" alt="">
-            <h1>BADAN PENERBIT DAN PUBLIKASI</h1>
-            <h1 class="mt-1">UNIVERSITAS GADJAH MADA</h1>
-            <div class="flex ">
-                <br />
+    <div class="row overflow-hidden" style="max-height:80vh">
+        <img src="/images/gedung-pusat-night.jpeg" class="img-blur" alt="...">
+        <div class="logotitle translate-middle text-center">
+            <img src="/images/hero_logo.png" class="position-relative">
+            <h1 class="d-none d-sm-block mt-2">BADAN PENERBIT DAN PUBLIKASI</h1>
+            <h1>UNIVERSITAS GADJAH MADA</h1>
+            <div class="flex">
                 <h3 class="text-bg-light text-muted text-uppercase text-center">
                     503 | Site is Under Construction
                 </h3>
             </div>
         </div>
-    </section>
+    </div>
 @endsection
