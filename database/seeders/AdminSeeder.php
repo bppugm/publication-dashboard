@@ -14,6 +14,8 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()->superadmin()->create();
+        User::factory()->superadmin()->create([
+            'email' => 'admin@mail.com'
+        ]);
     }
 }
