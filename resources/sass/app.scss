@@ -8,6 +8,12 @@
 @import 'variables';
 @import '~bootstrap/scss/bootstrap';
 
+// navbar item
+.active-nav-custom, .active-nav-custom:hover {
+  border-bottom: 2px solid #FDCB2C;
+  color:  #FDCB2C;
+}
+
 // required asterisk red mark
 .required-field label:after {
     content: "*";
@@ -18,7 +24,12 @@
 // input append button
 .btn-input-append, .btn-input-append:hover, .btn-input-append:focus {
     border-radius: 0px 5px 5px 0px;
+}
+
+.btn-search-append, .btn-search-append:hover, .btn-search-append:focus {
+    border-radius: 0px 0px;
     background-color: #F8FAFC;
     border-color: #CED4DA !important;
     border-left: none;
+    border-right: none;
 }

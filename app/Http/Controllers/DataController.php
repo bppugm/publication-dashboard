@@ -14,6 +14,10 @@ class DataController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('viewAny', Data::class);
+
+        $data = Data::all();
+        return view('data.index')->with('data', $data);
     }
 
     /**
