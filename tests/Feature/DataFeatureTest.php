@@ -15,7 +15,7 @@ class DataFeatureTest extends TestCase
     public function user_can_store_a_data()
     {
         $this->login();
-        $data = Data::factory()->make()->only('name', 'description');
+        $data = Data::factory()->make()->only('name', 'description', 'notes');
 
         $response = $this->postJson(route('data.store'), $data);
 

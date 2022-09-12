@@ -42,7 +42,8 @@ class DataController extends Controller
 
         $data = $request->validate([
             'name' => 'required|string|max:100',
-            'description' => 'nullable|string|max:500'
+            'description' => 'nullable|string|max:500',
+            'notes' => 'nullable|string|max:250',
         ]);
 
         $data = Data::create($data);
@@ -87,8 +88,9 @@ class DataController extends Controller
 
         $update = $request->validate([
             'name' => 'string|max:100',
-            'description' => 'nullable|string|max:500',
-            'value' => 'nullable'
+            'description' => 'nullable|string|max:250',
+            'value' => 'nullable',
+            'notes' => 'nullable|string|max:500',
         ]);
 
         $data->update($update);
