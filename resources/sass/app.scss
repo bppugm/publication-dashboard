@@ -8,6 +8,19 @@
 @import 'variables';
 @import '~bootstrap/scss/bootstrap';
 
+// breaking point
+@media (min-width: 992px)
+{
+	.w-md-75 {
+		width : 75% !important;
+	}
+
+	.w-md-50 {
+		width : 50% !important;
+	}
+}
+
+
 // navbar item
 .active-nav-custom, .active-nav-custom:hover {
   border-bottom: 2px solid #FDCB2C;

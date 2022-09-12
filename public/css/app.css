@@ -10903,6 +10903,14 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+@media (min-width: 992px) {
+  .w-md-75 {
+    width: 75% !important;
+  }
+  .w-md-50 {
+    width: 50% !important;
+  }
+}
 .active-nav-custom, .active-nav-custom:hover {
   border-bottom: 2px solid #FDCB2C;
   color: #FDCB2C;

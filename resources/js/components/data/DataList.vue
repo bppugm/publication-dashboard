@@ -39,61 +39,59 @@
       </ul>
       <div class="tab-content">
         <div id="data" class="tab-pane fade show active" role="tabpanel" aria-labelledby="data-tab">
-          <div class="d-flex my-3">
-            <div class="col-md-2">
-              <button
-                type="button"
-                class="btn btn-outline-primary"
+          <div class="d-flex my-3 justify-content-between">
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+            >
+              <i class="mdi mdi-filter-variant"></i> Filter
+            </button>
+            <div class="input-group w-50 w-md-75">
+              <input
+                id="search"
+                name="search"
+                type="text"
+                class="form-control"
+                placeholder="Search Data"
+                v-model="filter.keyword"
+              />
+              <div 
+                v-show="filter.keyword"
+                class="input-group-append"
               >
-                <i class="mdi mdi-filter-variant"></i> Filter
-              </button>
-            </div>
-            <div class="col-md-8 px-0">
-              <div class="input-group">
-                <input
-                  id="search"
-                  name="search"
-                  type="text"
-                  class="form-control"
-                  placeholder="Search Data"
-                  v-model="form.search"
-                />
-                <div 
-                  v-show="form.search"
-                  class="input-group-append"
+                <button
+                  type="button"
+                  class="btn btn-search-append"
+                  @click="resetSearch"
                 >
-                  <button
-                    type="button"
-                    class="btn btn-search-append"
-                    @click="resetSearch"
-                  >
-                  <i class="mdi mdi-close"></i>
-                  </button>
-                </div>
-                <div class="input-group-append">
-                  <button
-                    type="button"
-                    class="btn btn-input-append btn-outline-primary"
-                  >
-                    Search
-                  </button>
-                </div>
+                <i class="mdi mdi-close"></i>
+                </button>
+              </div>
+              <div class="input-group-append">
+                <button
+                  type="button"
+                  class="btn btn-input-append btn-outline-primary"
+                >
+                  Search
+                </button>
               </div>
             </div>
-            <div class="col-md-2 text-end">
-              <button
-                type="button"
-                class="btn btn-primary"
-              >
-                <i class="mdi mdi-plus"></i> Add Data
-              </button>
-            </div>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-toggle="modal" 
+              data-bs-target="#data-form-modal" 
+              @click="addItem()"
+            >
+              <i class="mdi mdi-plus"></i> Add Data
+            </button>
           </div>
-          <table class="table table-light table-bordered">
-            <thead class="thead-light">
+          <table class="table table-bordered">
+            <thead class="table-light">
               <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Category</th>
+                <th scope="col">Description</th>
                 <th scope="col">Value</th>
                 <th scope="col">Assigned User</th>
                 <th scope="col">Last Update</th>
@@ -112,7 +110,22 @@
                 <td>-</td>
                 <td>{{ item.updated_at }}</td>
                 <td>
-
+                  <button 
+                    type="button" 
+                    class="btn btn-outline-primary" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#data-form-modal" 
+                    @click="editItem(item)">
+                    Edit
+                  </button>
+                  <button 
+                    type="button" 
+                    class="btn btn-outline-danger" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#delete-modal" 
+                    @click="deleteItem(item)">
+                    Delete
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -123,6 +136,7 @@
         </div>
       </div>
     </div>
+    <data-form-modal :selectedData="selectedItem"></data-form-modal>
   </div>
 </template>
 
@@ -136,30 +150,37 @@ export default {
   },
   data() {
     return {
-      form: {
-        email: null,
-        password: null,
-        remember: true,
+      filter: {
+        keyword: null,
       },
-      showPassword: false,
+      selectedItem: {},
       isLoading: false,
       errors: {}
     }
   },
    methods: {
     resetSearch() {
-      this.form.search = ''
+      this.filter.search = ''
+    },
+    addItem() {
+      this.selectedItem = {};
+    },
+    editItem(item) {
+      this.selectedItem = item;
+    },
+    editItem(item) {
+      this.selectedItem = item;
     },
     async doLogin() {
       this.isLoading = true;
 
       try {
-        let response = await axios.post("/login", this.form);
+        let response = await axios.post("/login", this.filter);
         window.location = response.data.redirect
       } catch (error) {
         console.log(error)
         this.errors = error.response.data.errors;
-        this.form.password = '';
+        this.filter.password = '';
       } finally {
         this.isLoading = false;
       }
