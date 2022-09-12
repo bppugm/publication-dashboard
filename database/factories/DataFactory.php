@@ -16,7 +16,8 @@ class DataFactory extends Factory
         return [
             'name' => $this->faker->word(),
             'description' => $this->faker->sentence(),
-            'value' => $this->faker->numberBetween()
+            'value' => $this->faker->numberBetween(),
+            'notes' => $this->faker->sentence
         ];
     }
 }
