@@ -5790,6 +5790,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
+      search: "",
       filter: {
         keyword: null
       },
@@ -5800,7 +5801,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     resetSearch: function resetSearch() {
-      this.filter.search = "";
+      this.search = "";
+      this.filter.keyword = null;
     },
     addItem: function addItem() {
       this.selectedItem = {};
@@ -5864,6 +5866,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return "";
+    }
+  },
+  computed: {
+    filteredItems: function filteredItems() {
+      var _this2 = this;
+
+      return this.data.filter(function (item) {
+        return item.name.toLowerCase().indexOf(_this2.search.toLowerCase()) > -1;
+      });
     }
   }
 });
@@ -6881,8 +6892,8 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.filter.keyword,
-      expression: "filter.keyword"
+      value: _vm.search,
+      expression: "search"
     }],
     staticClass: "form-control",
     attrs: {
@@ -6892,21 +6903,20 @@ var render = function render() {
       placeholder: "Search Data"
     },
     domProps: {
-      value: _vm.filter.keyword
+      value: _vm.search
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-
-        _vm.$set(_vm.filter, "keyword", $event.target.value);
+        _vm.search = $event.target.value;
       }
     }
   }), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
-      value: _vm.filter.keyword,
-      expression: "filter.keyword"
+      value: _vm.filter.keyword || _vm.search,
+      expression: "filter.keyword || search"
     }],
     staticClass: "input-group-append"
   }, [_c("button", {
@@ -6935,7 +6945,7 @@ var render = function render() {
     staticClass: "mdi mdi-plus"
   }), _vm._v(" Add Data\n                    ")])]), _vm._v(" "), _c("table", {
     staticClass: "table table-bordered"
-  }, [_vm._m(4), _vm._v(" "), _c("tbody", _vm._l(_vm.data, function (item, index) {
+  }, [_vm._m(4), _vm._v(" "), _c("tbody", _vm._l(_vm.filteredItems, function (item, index) {
     return _c("tr", {
       key: index
     }, [_c("td", [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c("td", [_vm._v("-")]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.description))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.value))]), _vm._v(" "), _c("td", [_vm._v("-")]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.updated_at))]), _vm._v(" "), _c("td", [_c("button", {
