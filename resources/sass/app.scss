@@ -27,6 +27,10 @@
   color:  #FDCB2C;
 }
 
+.nav-tabs.nav-link.active  {
+  background-color: #FDCB2C;
+}
+
 // required asterisk red mark
 .required-field label:after {
     content: "*";

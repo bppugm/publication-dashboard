@@ -11,7 +11,7 @@
     <div class="card-body">
       <form @submit.prevent="doLogin">
         <div class="mb-3 required-field">
-          <label for="email" class="form-label">Email</label>
+          <label for="email" class="form-label fw-bold">Email</label>
           <input
             id="email"
             name="email"
@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="mb-3 required-field">
-          <label for="password" class="form-label">Password</label>
+          <label for="password" class="form-label fw-bold">Password</label>
           <div class="input-group">
             <input
               id="password"

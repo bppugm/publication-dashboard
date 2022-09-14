@@ -10,7 +10,7 @@
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button
-                        class="nav-link active"
+                        class="nav-tabs nav-link active border-0"
                         id="data-tab"
                         data-bs-toggle="tab"
                         data-bs-target="#data"
@@ -19,7 +19,7 @@
                         aria-controls="data"
                         aria-selected="true"
                     >
-                        Data
+                        Data List
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
@@ -179,21 +179,6 @@ export default {
         deleteItem(item) {
             this.selectedItem = item;
         },
-        async doLogin() {
-            this.isLoading = true;
-
-            try {
-                let response = await axios.post("/login", this.filter);
-                window.location = response.data.redirect;
-            } catch (error) {
-                console.log(error);
-                this.errors = error.response.data.errors;
-                this.filter.password = "";
-            } finally {
-                this.isLoading = false;
-            }
-        },
-
         hasErrors(key) {
             if (this.errors[key]) {
                 return true;
