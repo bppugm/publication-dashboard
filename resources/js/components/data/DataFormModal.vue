@@ -8,13 +8,16 @@
   >
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">{{ isEdit ? 'Edit' : 'Add'}} Data</h5>
+        <div class="modal-header border-0 flex-column pb-0">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="pt-2 w-100">
+            <h5 class="modal-title text-primary fw-bold">{{ isEdit ? 'Edit' : 'Add'}} Data</h5>
+            <hr>
+          </div>
         </div>
-        <div class="modal-body">
+        <div class="modal-body py-0">
           <div class="mb-3 required-field">
-            <label for="name" class="form-label">Name</label>
+            <label for="name" class="form-label fw-bold">Name</label>
             <input
               id="name"
               name="name"
@@ -29,7 +32,7 @@
             </div>
           </div>
           <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
+            <label for="description" class="form-label fw-bold">Description</label>
             <input
               id="description"
               name="description"
@@ -44,7 +47,7 @@
             </div>
           </div>
           <div class="mb-3">
-            <label for="notes" class="form-label">Notes</label>
+            <label for="notes" class="form-label fw-bold">Notes</label>
             <input
               id="notes"
               name="notes"
@@ -59,7 +62,7 @@
             </div>
           </div>
           <div class="mb-3">
-            <label for="value" class="form-label">Value</label>
+            <label for="value" class="form-label fw-bold">Value</label>
             <input
               id="value"
               name="value"
@@ -74,9 +77,11 @@
             </div>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" @click="resetForm">Reset</button>
-          <button type="button" class="btn btn-primary" :disabled="isLoading" @click="submitForm">Save</button>
+        <div class="modal-footer border-0">
+          <div class="d-flex w-100">
+            <button type="button" class="btn btn-danger w-50 me-2" @click="resetForm">Reset</button>
+            <button type="button" class="btn btn-primary w-50 ms-2" :disabled="isLoading" @click="submitForm">Save</button>
+          </div>
         </div>
       </div>
     </div>

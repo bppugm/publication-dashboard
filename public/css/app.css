@@ -1960,11 +1960,11 @@ progress {
     -webkit-overflow-scrolling: touch;
   }
 }
-.form-label {
+.form-label fw-bold {
   margin-bottom: 0.5rem;
 }
 
-.col-form-label {
+.col-form-label fw-bold {
   padding-top: calc(0.375rem + 1px);
   padding-bottom: calc(0.375rem + 1px);
   margin-bottom: 0;
@@ -1972,13 +1972,13 @@ progress {
   line-height: 1.6;
 }
 
-.col-form-label-lg {
+.col-form-label fw-bold-lg {
   padding-top: calc(0.5rem + 1px);
   padding-bottom: calc(0.5rem + 1px);
   font-size: 1.125rem;
 }
 
-.col-form-label-sm {
+.col-form-label fw-bold-sm {
   padding-top: calc(0.25rem + 1px);
   padding-bottom: calc(0.25rem + 1px);
   font-size: 0.7875rem;
@@ -10914,6 +10914,10 @@ textarea.form-control-lg {
 .active-nav-custom, .active-nav-custom:hover {
   border-bottom: 2px solid #FDCB2C;
   color: #FDCB2C;
+}
+
+.nav-tabs.nav-link.active {
+  background-color: #FDCB2C;
 }
 
 .required-field label:after {
