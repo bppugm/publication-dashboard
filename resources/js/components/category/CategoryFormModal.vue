@@ -54,17 +54,18 @@
                     </div>
                     <div class="mb-3">
                         <label for="colour" class="form-label"
-                            >Choose the colour</label>
+                            >Choose the colour</label
+                        >
                         <input
                             type="color"
                             class="form-control form-control-color"
                             id="colour"
                             title="Choose your colour"
                             v-model="form.colour"
-                            :class="{ 'is-invalid': hasErrors('name') }"
+                            :class="{ 'is-invalid': hasErrors('colour') }"
                         />
                         <div class="invalid-feedback">
-                            {{ getErrors("name") }}
+                            {{ getErrors("colour") }}
                         </div>
                     </div>
                 </div>

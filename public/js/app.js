@@ -7141,7 +7141,7 @@ var render = function render() {
     }],
     staticClass: "form-control form-control-color",
     "class": {
-      "is-invalid": _vm.hasErrors("name")
+      "is-invalid": _vm.hasErrors("colour")
     },
     attrs: {
       type: "color",
@@ -7160,7 +7160,7 @@ var render = function render() {
     }
   }), _vm._v(" "), _c("div", {
     staticClass: "invalid-feedback"
-  }, [_vm._v("\n                        " + _vm._s(_vm.getErrors("name")) + "\n                    ")])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                        " + _vm._s(_vm.getErrors("colour")) + "\n                    ")])])]), _vm._v(" "), _c("div", {
     staticClass: "modal-footer"
   }, [_c("button", {
     staticClass: "btn btn-danger",
