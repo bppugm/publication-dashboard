@@ -89,7 +89,7 @@
                         <ul class="navbar-nav ms-auto">
                             @auth
                                 <li class="nav-item">
-                                    <a class="nav-link {{ request()->is('data') ? 'active-nav-custom' : ''}}" href="{{ route('data.index') }}">DATA</a>
+                                    <a class="nav-link {{ request()->is(['data', 'category']) ? 'active-nav-custom' : ''}}" href="{{ route('data.index') }}">DATA</a>
                                 </li>
                             @endauth
                         </ul>
