@@ -55,10 +55,10 @@
                                 type="text"
                                 class="form-control"
                                 placeholder="Search Data"
-                                v-model="filter.keyword"
+                                v-model="search"
                             />
                             <div
-                                v-show="filter.keyword"
+                                v-show="filter.keyword || search"
                                 class="input-group-append"
                             >
                                 <button
@@ -101,7 +101,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(item, index) in data" :key="index">
+                            <tr v-for="(item, index) in filteredItems" :key="index">
                                 <td>{{ item.name }}</td>
                                 <td>-</td>
                                 <td>{{ item.description }}</td>
@@ -159,6 +159,7 @@ export default {
     },
     data() {
         return {
+            search: "",
             filter: {
                 keyword: null,
             },
@@ -169,7 +170,8 @@ export default {
     },
     methods: {
         resetSearch() {
-            this.filter.search = "";
+            this.search = "";
+            this.filter.keyword = null;
         },
         addItem() {
             this.selectedItem = {};
@@ -206,6 +208,16 @@ export default {
                 return this.errors[key].join(", ");
             }
             return "";
+        },
+    },
+    computed: {
+        filteredItems() {
+            return this.data.filter((item) => {
+                return (
+                    item.name.toLowerCase().indexOf(this.search.toLowerCase()) >
+                    -1
+                );
+            });
         },
     },
 };
