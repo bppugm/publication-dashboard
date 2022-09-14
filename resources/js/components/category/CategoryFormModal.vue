@@ -10,8 +10,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">
-                        {{ isEdit ? "Edit" : "Add" }} Data
+                        {{ isEdit ? "Edit" : "Add" }} Category
                     </h5>
+                    <hr />
                     <button
                         type="button"
                         class="btn-close"
@@ -20,21 +21,47 @@
                     ></button>
                 </div>
                 <div class="modal-body">
-                    <div class="mb-3 required-field">
-                        <label for="name" class="form-label">Name</label>
-                        <input
-                            id="name"
-                            name="name"
-                            type="text"
-                            class="form-control"
-                            placeholder="Enter name"
-                            v-model="form.name"
-                            :class="{ 'is-invalid': hasErrors('name') }"
-                        />
-                        <div class="invalid-feedback">
-                            {{ getErrors("name") }}
+                    <div class="row g-2">
+                        <!-- Color Picker -->
+                        <div class="col-md-2 required-field">
+                            <label for="name" class="form-label"> Name </label>
+                            <input
+                                type="color"
+                                class="form-control form-control-color"
+                                id="colour"
+                                name="colour"
+                                value="#563d7c"
+                                v-model="form.colour"
+                                :class="{
+                                    'is-invalid': hasErrors('colour'),
+                                }"
+                            />
+                            <div class="invalid-feedback">
+                                {{ getErrors("colour") }}
+                            </div>
+                        </div>
+                        <!-- Category Input -->
+                        <div class="col-md-10">
+                            <div class="mb-3 required-field">
+                                <label for="name" class="form-label invisible">
+                                    ~
+                                </label>
+                                <input
+                                    id="name"
+                                    name="name"
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Enter name"
+                                    v-model="form.name"
+                                    :class="{ 'is-invalid': hasErrors('name') }"
+                                />
+                                <div class="invalid-feedback">
+                                    {{ getErrors("name") }}
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                     <div class="mb-3">
                         <label for="description" class="form-label"
                             >Description</label
@@ -50,22 +77,6 @@
                         />
                         <div class="invalid-feedback">
                             {{ getErrors("description") }}
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="colour" class="form-label"
-                            >Choose the colour</label
-                        >
-                        <input
-                            type="color"
-                            class="form-control form-control-color"
-                            id="colour"
-                            title="Choose your colour"
-                            v-model="form.colour"
-                            :class="{ 'is-invalid': hasErrors('colour') }"
-                        />
-                        <div class="invalid-feedback">
-                            {{ getErrors("colour") }}
                         </div>
                     </div>
                 </div>

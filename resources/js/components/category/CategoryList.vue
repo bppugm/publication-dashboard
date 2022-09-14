@@ -20,13 +20,13 @@
                             aria-controls="data"
                             aria-selected="true"
                         >
-                            Data
+                            Data List
                         </button>
                     </a>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button
-                        class="nav-link active"
+                        class="nav-tabs nav-link active border-0"
                         id="category-tab"
                         data-bs-toggle="tab"
                         data-bs-target="#category"

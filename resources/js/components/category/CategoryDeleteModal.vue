@@ -3,39 +3,45 @@
         id="category-delete-modal"
         class="modal fade"
         tabindex="-1"
-        aria-labelledby="dataFormModal"
+        aria-labelledby="CategoryDeleteModal"
         aria-hidden="true"
     >
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Delete Category</h5>
+                <div class="modal-header border-0 flex-column pb-0">
                     <button
                         type="button"
                         class="btn-close"
                         data-bs-dismiss="modal"
-                        aria-label="Close"
-                    ></button>
+                        aria-label="Close"></button>
+                    <div class="pt-2 w-100">
+                        <h5 class="modal-title text-primary fw-bold">
+                            Delete Category
+                        </h5>
+                        <hr />
+                    </div>
                 </div>
-                <div class="modal-body">
-                    Are you sure to delete {{ data.name }} ?
+                <div class="modal-body py-0">
+                    Are you sure to delete <b>{{ data.name }}</b> ?
                 </div>
-                <div class="modal-footer">
-                    <button
-                        type="button"
-                        class="btn btn-danger"
-                        :disabled="isLoading"
-                        @click="deleteForm"
-                    >
-                        Yes
-                    </button>
-                    <button
-                        type="button"
-                        class="btn btn-success"
-                        data-bs-dismiss="modal"
-                    >
-                        No
-                    </button>
+                <div class="modal-footer border-0">
+                    <div class="d-flex w-100">
+                        <button
+                            type="button"
+                            class="btn btn-danger w-50 me-2"
+                            :disabled="isLoading"
+                            @click="deleteForm"
+                        >
+                            Yes
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-primary w-50 ms-2"
+                            data-bs-dismiss="modal"
+                        >
+                            No
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -76,7 +82,10 @@ export default {
         async deleteForm() {
             this.isLoading = true;
             try {
-                await axios.delete(`/category/${this.selectedData.id}`, this.data);
+                await axios.delete(
+                    `/category/${this.selectedData.id}`,
+                    this.data
+                );
                 return location.reload();
             } catch (error) {
                 this.errors = error.response.data.errors;
