@@ -61,7 +61,7 @@ class UserController extends Controller
                 'password' => 'string|min:8|confirmed',
             ]
         );
-        
+
         if (isset($update['password'])) {
             $update['password'] = Hash::make($update['password']);
         }
