@@ -22,5 +22,13 @@
         "vue": "^2.6.12",
         "vue-loader": "^15.10.0",
         "vue-template-compiler": "^2.6.12"
+    },
+    "dependencies": {
+        "chart.js": "^3.9.1",
+        "expr-eval": "^2.0.2",
+        "highcharts": "^10.2.1",
+        "highcharts-vue": "^1.4.0",
+        "vue-chartjs": "^4.1.1",
+        "vue-grid-layout": "^2.4.0"
     }
 }

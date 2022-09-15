@@ -14,5 +14,8 @@ class Dashboard extends Model
         'widgets' => 'array'
     ];
 
-
+    public function data()
+    {
+        return $this->belongsToMany(\App\Models\Data::class);
+    }
 }
