@@ -4,65 +4,59 @@
             <h5 class="text-primary card-title mb-0">
                 <b>DATA</b>
             </h5>
-            <div class="text-dark"><b>Data List</b></div>
+            <div class="text-dark"><b>Category List</b></div>
         </div>
         <div class="card border-0 shadow-sm p-3">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button
-                        class="nav-tabs nav-link active border-0"
-                        id="data-tab"
-                        data-bs-toggle="tab"
-                        data-bs-target="#data"
-                        type="button"
-                        role="tab"
-                        aria-controls="data"
-                        aria-selected="true"
-                    >
-                        Data List
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a href="/category" class="text-decoration-none">
+                    <a href="/data" class="text-decoration-none">
                         <button
                             class="nav-link disabled"
-                            id="category-tab"
+                            id="data-tab"
                             data-bs-toggle="tab"
-                            data-bs-target="#category"
+                            data-bs-target="#data"
                             type="button"
                             role="tab"
-                            aria-controls="category"
+                            aria-controls="data"
                             aria-selected="true"
                         >
-                            Category
+                            Data List
                         </button>
                     </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button
+                        class="nav-tabs nav-link active border-0"
+                        id="category-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#category"
+                        type="button"
+                        role="tab"
+                        aria-controls="category"
+                        aria-selected="true"
+                    >
+                        Category
+                    </button>
                 </li>
             </ul>
             <div class="tab-content">
                 <div
-                    id="data"
+                    id="category"
                     class="tab-pane fade show active"
                     role="tabpanel"
-                    aria-labelledby="data-tab"
+                    aria-labelledby="category-tab"
                 >
                     <div class="d-flex my-3 justify-content-between">
-                        <button type="button" class="btn btn-outline-primary">
-                            <i class="mdi mdi-filter-variant"></i> Filter
-                        </button>
                         <div class="input-group w-50 w-md-75">
                             <input
                                 id="search"
                                 name="search"
                                 type="text"
                                 class="form-control"
-                                placeholder="Search Data"
+                                placeholder="Search Category"
                                 v-model="search"
                             />
-                            <div
-                                v-show="filter.keyword || search"
-                                class="input-group-append"
-                            >
+                            <div v-show="search" class="input-group-append">
                                 <button
                                     type="button"
                                     class="btn btn-search-append"
@@ -84,21 +78,19 @@
                             type="button"
                             class="btn btn-primary"
                             data-bs-toggle="modal"
-                            data-bs-target="#data-form-modal"
+                            data-bs-target="#category-form-modal"
                             @click="addItem()"
                         >
-                            <i class="mdi mdi-plus"></i> Add Data
+                            <i class="mdi mdi-plus"></i> Add Category
                         </button>
                     </div>
                     <table class="table table-bordered">
                         <thead class="table-light">
                             <tr>
+                                <th scope="col">Colour</th>
                                 <th scope="col">Name</th>
-                                <th scope="col">Category</th>
                                 <th scope="col">Description</th>
-                                <th scope="col">Value</th>
-                                <th scope="col">Assigned User</th>
-                                <th scope="col">Last Update</th>
+                                <th scope="col">Created Date</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -107,18 +99,24 @@
                                 v-for="(item, index) in filteredItems"
                                 :key="index"
                             >
+                                <td class="text-center">
+                                        <i
+                                            class="mdi mdi-square"
+                                            :style="{
+                                                color: item.colour,
+                                                fontSize: '1.5rem',
+                                            }"
+                                        ></i>
+                                </td>
                                 <td>{{ item.name }}</td>
-                                <td>-</td>
                                 <td>{{ item.description }}</td>
-                                <td>{{ item.value }}</td>
-                                <td>-</td>
-                                <td>{{ item.updated_at }}</td>
+                                <td>{{ item.created_at }}</td>
                                 <td>
                                     <button
                                         type="button"
                                         class="btn btn-outline-primary"
                                         data-bs-toggle="modal"
-                                        data-bs-target="#data-form-modal"
+                                        data-bs-target="#category-form-modal"
                                         @click="editItem(item)"
                                     >
                                         Edit
@@ -127,7 +125,7 @@
                                         type="button"
                                         class="btn btn-outline-danger"
                                         data-bs-toggle="modal"
-                                        data-bs-target="#data-delete-modal"
+                                        data-bs-target="#category-delete-modal"
                                         @click="deleteItem(item)"
                                     >
                                         Delete
@@ -139,8 +137,10 @@
                 </div>
             </div>
         </div>
-        <data-form-modal :selectedData="selectedItem"></data-form-modal>
-        <data-delete-modal :selectedData="selectedItem"></data-delete-modal>
+        <category-form-modal :selectedData="selectedItem"></category-form-modal>
+        <category-delete-modal
+            :selectedData="selectedItem"
+        ></category-delete-modal>
     </div>
 </template>
 
@@ -157,9 +157,6 @@ export default {
     data() {
         return {
             search: "",
-            filter: {
-                keyword: null,
-            },
             selectedItem: {},
             isLoading: false,
             errors: {},
@@ -168,7 +165,6 @@ export default {
     methods: {
         resetSearch() {
             this.search = "";
-            this.filter.keyword = null;
         },
         addItem() {
             this.selectedItem = {};
@@ -179,6 +175,21 @@ export default {
         deleteItem(item) {
             this.selectedItem = item;
         },
+        async doLogin() {
+            this.isLoading = true;
+
+            try {
+                let response = await axios.post("/login", this.filter);
+                window.location = response.data.redirect;
+            } catch (error) {
+                console.log(error);
+                this.errors = error.response.data.errors;
+                this.filter.password = "";
+            } finally {
+                this.isLoading = false;
+            }
+        },
+
         hasErrors(key) {
             if (this.errors[key]) {
                 return true;
