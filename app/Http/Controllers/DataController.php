@@ -43,6 +43,7 @@ class DataController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:100',
             'description' => 'nullable|string|max:500',
+            'value' => 'nullable',
             'notes' => 'nullable|string|max:250',
         ]);
 

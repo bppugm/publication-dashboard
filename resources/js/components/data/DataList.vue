@@ -47,10 +47,12 @@
                     aria-labelledby="data-tab"
                 >
                     <div class="d-flex my-3 justify-content-between">
-                        <button type="button" class="btn btn-outline-primary">
-                            <i class="mdi mdi-filter-variant"></i> Filter
-                        </button>
-                        <div class="input-group w-50 w-md-75">
+                        <div class="flex-shrink-0">
+                          <button type="button" class="btn btn-outline-primary">
+                              <i class="mdi mdi-filter-variant"></i> Filter
+                          </button>
+                        </div>
+                        <div class="input-group mx-3">
                             <input
                                 id="search"
                                 name="search"
@@ -60,7 +62,7 @@
                                 v-model="search"
                             />
                             <div
-                                v-show="filter.keyword || search"
+                                v-show="search"
                                 class="input-group-append"
                             >
                                 <button
@@ -80,43 +82,46 @@
                                 </button>
                             </div>
                         </div>
-                        <button
-                            type="button"
-                            class="btn btn-primary"
-                            data-bs-toggle="modal"
-                            data-bs-target="#data-form-modal"
-                            @click="addItem()"
-                        >
-                            <i class="mdi mdi-plus"></i> Add Data
-                        </button>
+                        <div class="flex-shrink-0">
+                          <button
+                              type="button"
+                              class="btn btn-primary"
+                              data-bs-toggle="modal"
+                              data-bs-target="#data-form-modal"
+                              @click="addItem()"
+                          >
+                              <i class="mdi mdi-plus"></i> Add Data
+                          </button>
+                        </div>
                     </div>
-                    <table class="table table-bordered">
-                        <thead class="table-light">
-                            <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Category</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Value</th>
-                                <th scope="col">Assigned User</th>
-                                <th scope="col">Last Update</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr
-                                v-for="(item, index) in filteredItems"
-                                :key="index"
-                            >
-                                <td>{{ item.name }}</td>
-                                <td>-</td>
-                                <td>{{ item.description }}</td>
-                                <td>{{ item.value }}</td>
-                                <td>-</td>
-                                <td>{{ item.updated_at }}</td>
-                                <td>
+                    <div class="table-responsive">
+                      <table class="table table-bordered">
+                          <thead class="table-light">
+                              <tr>
+                                  <th scope="col">Name</th>
+                                  <th scope="col">Category</th>
+                                  <th scope="col">Description</th>
+                                  <th scope="col">Value</th>
+                                  <th scope="col">Assigned User</th>
+                                  <th scope="col">Last Update</th>
+                                  <th scope="col">Action</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr
+                                  v-for="(item, index) in filteredItems"
+                                  :key="index"
+                              >
+                                  <td class="align-middle">{{ item.name }}</td>
+                                  <td class="align-middle">-</td>
+                                  <td class="align-middle">{{ item.description }}</td>
+                                  <td class="align-middle">{{ item.value }}</td>
+                                  <td class="align-middle">-</td>
+                                  <td class="align-middle">{{ formatDateTime(item.updated_at) }}</td>
+                                  <td>
                                     <button
                                         type="button"
-                                        class="btn btn-outline-primary"
+                                        class="btn btn-outline-primary my-1"
                                         data-bs-toggle="modal"
                                         data-bs-target="#data-form-modal"
                                         @click="editItem(item)"
@@ -125,17 +130,18 @@
                                     </button>
                                     <button
                                         type="button"
-                                        class="btn btn-outline-danger"
+                                        class="btn btn-outline-danger my-1"
                                         data-bs-toggle="modal"
                                         data-bs-target="#data-delete-modal"
                                         @click="deleteItem(item)"
                                     >
                                         Delete
                                     </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -145,6 +151,7 @@
 </template>
 
 <script>
+import { format } from 'date-fns'
 export default {
     props: {
         data: {
@@ -166,9 +173,15 @@ export default {
         };
     },
     methods: {
+        formatDateTime(dateTimeString) {
+          const date = new Date(dateTimeString)
+          if (date instanceof Date && !isNaN(date)) {
+            return format(new Date(dateTimeString), 'dd-MM-yyyy HH:mm')
+          }
+          return dateTimeString
+        },
         resetSearch() {
             this.search = "";
-            this.filter.keyword = null;
         },
         addItem() {
             this.selectedItem = {};

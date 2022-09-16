@@ -47,7 +47,7 @@
                     aria-labelledby="category-tab"
                 >
                     <div class="d-flex my-3 justify-content-between">
-                        <div class="input-group w-50 w-md-75">
+                        <div class="input-group me-3">
                             <input
                                 id="search"
                                 name="search"
@@ -74,15 +74,17 @@
                                 </button>
                             </div>
                         </div>
-                        <button
-                            type="button"
-                            class="btn btn-primary"
-                            data-bs-toggle="modal"
-                            data-bs-target="#category-form-modal"
-                            @click="addItem()"
-                        >
-                            <i class="mdi mdi-plus"></i> Add Category
-                        </button>
+                        <div class="flex-shrink-0">
+                          <button
+                              type="button"
+                              class="btn btn-primary"
+                              data-bs-toggle="modal"
+                              data-bs-target="#category-form-modal"
+                              @click="addItem()"
+                          >
+                              <i class="mdi mdi-plus"></i> Add Category
+                          </button>
+                        </div>
                     </div>
                     <table class="table table-bordered">
                         <thead class="table-light">
@@ -99,22 +101,22 @@
                                 v-for="(item, index) in filteredItems"
                                 :key="index"
                             >
-                                <td class="text-center">
-                                        <i
-                                            class="mdi mdi-square"
-                                            :style="{
-                                                color: item.colour,
-                                                fontSize: '1.5rem',
-                                            }"
-                                        ></i>
+                                <td class="align-middle text-center">
+                                  <i
+                                      class="mdi mdi-square"
+                                      :style="{
+                                          color: item.colour,
+                                          fontSize: '1.5rem',
+                                      }"
+                                  ></i>
                                 </td>
-                                <td>{{ item.name }}</td>
-                                <td>{{ item.description }}</td>
-                                <td>{{ item.created_at }}</td>
-                                <td>
+                                <td class="align-middle">{{ item.name }}</td>
+                                <td class="align-middle">{{ item.description }}</td>
+                                <td class="align-middle">{{ formatDateTime(item.created_at) }}</td>
+                                <td class="align-middle">
                                     <button
                                         type="button"
-                                        class="btn btn-outline-primary"
+                                        class="btn btn-outline-primary my-1"
                                         data-bs-toggle="modal"
                                         data-bs-target="#category-form-modal"
                                         @click="editItem(item)"
@@ -123,7 +125,7 @@
                                     </button>
                                     <button
                                         type="button"
-                                        class="btn btn-outline-danger"
+                                        class="btn btn-outline-danger my-1"
                                         data-bs-toggle="modal"
                                         data-bs-target="#category-delete-modal"
                                         @click="deleteItem(item)"
@@ -145,6 +147,7 @@
 </template>
 
 <script>
+import { format } from 'date-fns'
 export default {
     props: {
         data: {
@@ -163,6 +166,13 @@ export default {
         };
     },
     methods: {
+        formatDateTime(dateTimeString) {
+          const date = new Date(dateTimeString)
+          if (date instanceof Date && !isNaN(date)) {
+            return format(new Date(dateTimeString), 'dd-MM-yyyy HH:mm')
+          }
+          return dateTimeString
+        },
         resetSearch() {
             this.search = "";
         },
