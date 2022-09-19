@@ -5754,12 +5754,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: {
-    selectedData: {
-      type: Object,
-      required: true
-    }
-  },
   data: function data() {
     return {
       form: {
@@ -5773,14 +5767,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       errors: {},
       isLoading: false
     };
-  },
-  watch: {
-    selectedData: {
-      immediate: true,
-      handler: function handler() {
-        this.initModal();
-      }
-    }
   },
   methods: {
     initModal: function initModal() {

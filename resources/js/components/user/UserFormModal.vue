@@ -158,12 +158,6 @@
 
 <script>
 export default {
-    props: {
-        selectedData: {
-            type: Object,
-            required: true,
-        },
-    },
     data() {
         return {
             form: {
@@ -177,14 +171,6 @@ export default {
             errors: {},
             isLoading: false,
         };
-    },
-    watch: {
-        selectedData: {
-            immediate: true,
-            handler() {
-                this.initModal();
-            },
-        },
     },
     methods: {
         initModal() {
