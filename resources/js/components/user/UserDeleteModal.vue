@@ -87,6 +87,7 @@ export default {
                 return location.reload();
             } catch (error) {
                 this.errors = error.response.data.errors;
+                alert("Failed to delete " + this.selectedData.name);
             } finally {
                 this.isLoading = false;
             }

@@ -5580,18 +5580,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _context.prev = 7;
                 _context.t0 = _context["catch"](1);
                 _this.errors = _context.t0.response.data.errors;
+                alert("Failed to delete " + _this.selectedData.name);
 
-              case 10:
-                _context.prev = 10;
+              case 11:
+                _context.prev = 11;
                 _this.isLoading = false;
-                return _context.finish(10);
+                return _context.finish(11);
 
-              case 13:
+              case 14:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[1, 7, 10, 13]]);
+        }, _callee, null, [[1, 7, 11, 14]]);
       }))();
     },
     hasErrors: function hasErrors(key) {
