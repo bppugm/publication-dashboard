@@ -93,7 +93,6 @@ class UserFeatureTest extends TestCase
     public function admin_can_update_user_name_only()
     {
         $this->login();
-
         $user = User::factory()->create();
 
         $response = $this->putJson(route('user.update', $user), [
@@ -102,7 +101,6 @@ class UserFeatureTest extends TestCase
             //'password' => 'password4',
             //'password_confirmation' => 'password4',
         ]);
-
         $response->assertStatus(200);
 
         $this->assertDatabaseHas('users', [
@@ -115,7 +113,6 @@ class UserFeatureTest extends TestCase
     public function admin_can_update_user_email_only()
     {
         $this->login();
-
         $user = User::factory()->create();
 
         $response = $this->putJson(route('user.update', $user), [
@@ -126,7 +123,6 @@ class UserFeatureTest extends TestCase
         ]);
 
         $response->assertStatus(200);
-
         $this->assertDatabaseHas('users', [
             'name' => $user->name,
             'email' => 'admin4@mail.com'
@@ -137,7 +133,6 @@ class UserFeatureTest extends TestCase
     public function admin_can_update_user_password_only()
     {
         $this->login();
-
         $user = User::factory()->create();
 
         $response = $this->putJson(route('user.update', $user), [
@@ -146,7 +141,19 @@ class UserFeatureTest extends TestCase
         ]);
 
         $response->assertStatus(200);
-
         $this->assertTrue(Hash::check('password123', $user->fresh()->password));
+    }
+
+    /** @test */
+    public function admin_can_not_delete_themself()
+    {
+        $this->login();
+
+        $response = $this->deleteJson(route('user.destroy', $this->user));
+
+        $response->assertStatus(403);
+        $this->assertDatabaseHas('users', [
+            'id' => $this->user->id
+        ]);
     }
 }

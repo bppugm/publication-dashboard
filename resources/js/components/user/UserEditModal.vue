@@ -1,15 +1,17 @@
 <template>
     <div
-        id="user-form-modal"
+        id="user-edit-modal"
         class="modal fade"
         tabindex="-1"
-        aria-labelledby="userFormModal"
+        aria-labelledby="userEditModal"
         aria-hidden="true"
     >
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit User</h5>
+                    <h5 class="modal-title">
+                        Edit User
+                    </h5>
                     <button
                         type="button"
                         class="btn-close"
@@ -19,7 +21,7 @@
                 </div>
                 <!-- Modal Body -->
                 <div class="modal-body">
-                    <div class="mb-3 required-field">
+                    <div class="mb-3">
                         <label for="name" class="form-label">Nama</label>
                         <input
                             id="name"
@@ -34,7 +36,7 @@
                             {{ getErrors("name") }}
                         </div>
                     </div>
-                    <div class="mb-3 required-field">
+                    <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
                         <input
                             id="email"
@@ -49,7 +51,7 @@
                             {{ getErrors("email") }}
                         </div>
                     </div>
-                    <div class="mb-3 required-field">
+                    <div class="mb-3">
                         <label for="password" class="form-label"
                             >Password</label
                         >
@@ -85,7 +87,7 @@
                             {{ getErrors("password") }}
                         </div>
                     </div>
-                    <div class="mb-3 required-field">
+                    <div class="mb-3">
                         <label for="password" class="form-label"
                             >Password Confirmation</label
                         >
@@ -150,7 +152,7 @@
                             Save
                         </button>
                     </div>
-                </div>
+            </div>
             </div>
         </div>
     </div>
@@ -188,7 +190,7 @@ export default {
     },
     methods: {
         initModal() {
-            this.resetForm();
+            this.form = { ...this.selectedData };
         },
         resetForm() {
             Object.keys(this.form).forEach((key) => {
@@ -201,7 +203,7 @@ export default {
         async submitForm() {
             this.isLoading = true;
             try {
-                await axios.post(`/user`, this.form);
+                await axios.put(`/user/${this.selectedData.id}`, this.form);
                 return location.reload();
             } catch (error) {
                 this.errors = error.response.data.errors;
