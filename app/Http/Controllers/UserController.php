@@ -12,7 +12,7 @@ class UserController extends Controller
     {
         $this->authorize('viewAny', User::class);
 
-        $users = User::latest()->filter(request(['search']))->paginate(10);
+        $users = User::latest()->filter(request(['search']))->paginate(10)->appends(request()->query());
 
         return view('user.index')->with('users', $users);
     }
