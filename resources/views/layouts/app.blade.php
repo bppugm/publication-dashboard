@@ -23,7 +23,7 @@
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
 </head>
 <body>
-    <div id="app" class="d-flex flex-column justify-content-between" style="min-height: 100vh !important">
+    <div id="app" class="d-flex flex-column" style="min-height: 100vh !important">
         <div>
             <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm py-0">
                 <div class="container">
@@ -71,11 +71,8 @@
                     </div>
                 </div>
             </nav>
-            <nav class="navbar navbar-expand-md bg-primary shadow-sm py-1">
+            <nav class="navbar navbar-expand-md bg-primary shadow-sm py-0">
                 <div class="container">
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        <img src="/images/logo-bpp-horizontal.svg" alt="logo"/>
-                    </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -83,23 +80,32 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <!-- Left Side Of Navbar -->
                         <ul class="navbar-nav me-auto">
-
+                            <a class="navbar-brand py-0" href="{{ url('/') }}">
+                                <img class="py-2" src="/images/logo-bpp-horizontal.svg" alt="logo"/>
+                            </a>
                         </ul>
 
                         <!-- Right Side Of Navbar -->
                         <ul class="navbar-nav ms-auto">
+                            @auth
+                                <li class="nav-item">
+                                    <a class="nav-link {{ request()->is('data') ? 'active-nav-custom' : ''}}" href="{{ route('data.index') }}">DATA</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ request()->is('user') ? 'active-nav-custom' : ''}}" href="{{ route('user.index') }}">USER</a>
+                                </li>
+                            @endauth
                         </ul>
                     </div>
                 </div>
             </nav>
-
         </div>
 
         <main>
             @yield('content')
         </main>
 
-        <footer class="d-md-flex bg-light">
+        <footer class="d-md-flex bg-light mt-auto">
             <div class="container d-flex justify-content-between">
                 <ul class="navbar-nav me-auto d-flex flex-row">
                     <i class="mdi mdi-email"></i>
