@@ -64,9 +64,6 @@ export default {
         };
     },
     methods: {
-        resetSearch() {
-            this.search = "";
-        },
         editItem(item) {
             this.selectedItem = item;
         },

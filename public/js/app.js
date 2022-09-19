@@ -5886,9 +5886,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
-    resetSearch: function resetSearch() {
-      this.search = "";
-    },
     editItem: function editItem(item) {
       this.selectedItem = item;
     },
