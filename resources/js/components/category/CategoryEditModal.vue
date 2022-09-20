@@ -24,7 +24,7 @@
                 </div>
                 <div class="modal-body py-0">
                     <!-- name -->
-                    <div class="mb-3 required-field">
+                    <div class="mb-3">
                         <label for="name" class="form-label fw-bold"
                             >Name</label
                         >

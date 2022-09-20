@@ -7088,7 +7088,7 @@ var render = function render() {
   }, [_vm._m(0), _vm._v(" "), _c("div", {
     staticClass: "modal-body py-0"
   }, [_c("div", {
-    staticClass: "mb-3 required-field"
+    staticClass: "mb-3"
   }, [_c("label", {
     staticClass: "form-label fw-bold",
     attrs: {
