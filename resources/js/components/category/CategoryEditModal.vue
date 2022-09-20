@@ -1,9 +1,9 @@
 <template>
     <div
-        id="category-form-modal"
+        id="category-edit-modal"
         class="modal fade"
         tabindex="-1"
-        aria-labelledby="CategoryFormModal"
+        aria-labelledby="categoryEditModal"
         aria-hidden="true"
     >
         <div class="modal-dialog">
@@ -84,7 +84,11 @@
                             </small>
                             <small
                                 class="float-end"
-                                :class="{'text-danger': countError, 'text-muted': !countError}">
+                                :class="{
+                                    'text-danger': countError,
+                                    'text-muted': !countError,
+                                }"
+                            >
                                 {{ count }} to 500
                             </small>
                         </div>
@@ -117,12 +121,19 @@
 
 <script>
 export default {
+    props: {
+        selectedData: {
+            type: Object,
+            required: true,
+        },
+    },
     data() {
         return {
             form: {
-                colour: null,
                 name: null,
                 description: null,
+                notes: null,
+                value: null,
             },
             errors: {},
             isLoading: false,
@@ -130,10 +141,22 @@ export default {
             countError: false,
         };
     },
+
+    watch: {
+        selectedData: {
+            immediate: true,
+            handler() {
+                this.initModal();
+            },
+        },
+    },
     methods: {
         counting() {
             this.count = this.form.description.length;
             this.countError = this.count > 500 ? true : false;
+        },
+        initModal() {
+            this.form = { ...this.selectedData };
         },
         resetForm() {
             Object.keys(this.form).forEach((key) => {
@@ -143,15 +166,13 @@ export default {
         doSubmit() {
             this.submitForm();
         },
-
         async submitForm() {
             this.isLoading = true;
             try {
-                await axios.post(`/category`, this.form);
+                await axios.put(`/category/${this.selectedData.id}`, this.form);
                 return location.reload();
             } catch (error) {
                 this.errors = error.response.data.errors;
-                alert("Failed to add category");
             } finally {
                 this.isLoading = false;
             }

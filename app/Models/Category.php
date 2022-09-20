@@ -9,4 +9,14 @@ class Category extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? false, fn ($query, $search) =>
+            $query->where(fn ($query) =>
+                $query->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('description', 'like', '%' . $search . '%')
+            )
+        );
+    }
 }
