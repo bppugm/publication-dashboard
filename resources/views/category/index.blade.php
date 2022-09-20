@@ -2,18 +2,44 @@
 
 @section('content')
     <div class="container h-100">
-        <div>
-            <div class="d-flex justify-content-between mb-3">
-                <h5 class="text-primary card-title mb-0">
-                    <b>Category</b>
-                </h5>
-                <div class="text-dark"><b>Category List</b></div>
-            </div>
-            <div class="card border-0 shadow-sm p-3">
-                <div id="vategories" role="category-list" aria-labelledby="Category-list">
-                    <div class="card-header text-primary bg-transparent">
-                        <h5>Category List</h5>
-                    </div>
+        <div class="d-flex justify-content-between mb-3">
+            <h5 class="text-primary card-title mb-0">
+                <b>DATA</b>
+            </h5>
+            <div class="text-dark"><b>Category List</b></div>
+        </div>
+        <div class="card border-0 shadow-sm p-3">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a href="/data" class="text-decoration-none">
+                        <button class="nav-link disabled"
+                        id="category-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#category"
+                        type="button"
+                        role="tab"
+                        aria-controls="category"
+                        aria-selected="true">
+                            Data List
+                        </button>
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a href="/category" class="text-decoration-none">
+                        <button class="nav-link nav-tabs active border-0"
+                        id="category-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#category"
+                        type="button" role="tab"
+                        aria-controls="category"
+                        aria-selected="true">
+                            Category
+                        </button>
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div id="category" class="tab-pane fade show active" role="tabpanel" aria-labelledby="category-tab">
                     <!-- Heading Table -->
                     <div class="d-flex my-3 justify-content-between">
                         <!-- Search bar -->
@@ -24,13 +50,13 @@
                                         class="form-control" value="{{ request('search') }}">
 
                                     @if (request('search'))
-                                    <a href="{{ route('category.index') }}">
-                                        <span class="input-group-btn">
-                                            <button type="button" class="btn btn-search-append" title="Refresh Page">
-                                                <i class="mdi mdi-close"></i>
-                                            </button>
-                                        </span>
-                                    </a>
+                                        <a href="{{ route('category.index') }}">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-search-append" title="Refresh Page">
+                                                    <i class="mdi mdi-close"></i>
+                                                </button>
+                                            </span>
+                                        </a>
                                     @endif
 
                                     <span class="input-group-btn">
@@ -53,7 +79,7 @@
                     </category-list>
                 </div>
             </div>
-            <category-form-modal></category-form-modal>
         </div>
+        <category-form-modal></category-form-modal>
     </div>
 @endsection
