@@ -91,6 +91,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link {{ request()->is(['data', 'category']) ? 'active-nav-custom' : ''}}" href="{{ route('data.index') }}">DATA</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ request()->is('user') ? 'active-nav-custom' : ''}}" href="{{ route('user.index') }}">USER</a>
+                                </li>
                             @endauth
                         </ul>
                     </div>
