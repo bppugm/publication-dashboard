@@ -8459,7 +8459,7 @@ var staticRenderFns = [function () {
       href: "/category"
     }
   }, [_c("button", {
-    staticClass: "nav-link disabled",
+    staticClass: "nav-tabs nav-link disabled",
     attrs: {
       id: "category-tab",
       "data-bs-toggle": "tab",
