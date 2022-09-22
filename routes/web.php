@@ -28,4 +28,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::middleware('auth')->resource('data', DataController::class);
 
 Route::middleware('auth')->resource('dashboard', DashboardController::class);
-Route::middleware("auth")->resource("user", UserController::class);
+Route::middleware('auth')->resource('user', UserController::class);
