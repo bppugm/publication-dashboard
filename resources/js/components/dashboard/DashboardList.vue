@@ -43,6 +43,12 @@
                             </button>
                         </td>
                     </tr>
+                    <!-- make table row if data is not found -->
+                    <tr v-if="data.length == 0">
+                        <td colspan="4" class="text-center">
+                            No dashboard found
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <slot></slot>
