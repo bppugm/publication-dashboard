@@ -25,7 +25,7 @@
                 <li class="nav-item" role="presentation">
                     <a href="/category" class="text-decoration-none">
                         <button
-                            class="nav-link disabled"
+                            class="nav-tabs nav-link disabled"
                             id="category-tab"
                             data-bs-toggle="tab"
                             data-bs-target="#category"

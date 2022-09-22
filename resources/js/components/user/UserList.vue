@@ -1,46 +1,36 @@
 <template>
     <div>
+        <!-- Table -->
         <table class="table table-bordered">
             <thead class="table-light">
                 <tr>
-                    <th scope="col">Colour</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Created Date</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Assigned Data</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(item, index) in data" :key="index">
-                    <td class="align-middle text-center">
-                        <i
-                            class="mdi mdi-square"
-                            :style="{
-                                color: item.colour,
-                                fontSize: '1.5rem',
-                            }"
-                        ></i>
-                    </td>
-                    <td class="align-middle">{{ item.name }}</td>
-                    <td class="align-middle">{{ item.description }}</td>
-                    <td class="align-middle">
-                        {{ formatDateTime(item.created_at) }}
-                    </td>
-                    <td class="align-middle">
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.email }}</td>
+                    <td>{{ item.assigned_data }}</td>
+                    <!-- Action -->
+                    <td>
                         <button
                             type="button"
-                            class="btn btn-outline-primary my-1"
+                            class="btn btn-outline-primary"
                             data-bs-toggle="modal"
-                            data-bs-target="#category-edit-modal"
+                            data-bs-target="#user-edit-modal"
                             @click="editItem(item)"
                         >
                             Edit
                         </button>
                         <button
                             type="button"
-                            class="btn btn-outline-danger my-1"
+                            class="btn btn-outline-danger"
                             data-bs-toggle="modal"
-                            data-bs-target="#category-delete-modal"
+                            data-bs-target="#user-delete-modal"
                             @click="deleteItem(item)"
                         >
                             Delete
@@ -50,13 +40,12 @@
             </tbody>
         </table>
         <slot></slot>
-        <category-edit-modal :selectedData="selectedItem"></category-edit-modal>
-        <category-delete-modal :selectedData="selectedItem"></category-delete-modal>
+        <user-edit-modal :selectedData="selectedItem"></user-edit-modal>
+        <user-delete-modal :selectedData="selectedItem"></user-delete-modal>
     </div>
 </template>
 
 <script>
-import { format } from "date-fns";
 export default {
     props: {
         data: {
@@ -75,13 +64,6 @@ export default {
         };
     },
     methods: {
-        formatDateTime(dateTimeString) {
-            const date = new Date(dateTimeString);
-            if (date instanceof Date && !isNaN(date)) {
-                return format(new Date(dateTimeString), "dd-MM-yyyy HH:mm");
-            }
-            return dateTimeString;
-        },
         editItem(item) {
             this.selectedItem = item;
         },

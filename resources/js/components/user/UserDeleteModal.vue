@@ -1,9 +1,9 @@
 <template>
     <div
-        id="category-delete-modal"
+        id="user-delete-modal"
         class="modal fade"
         tabindex="-1"
-        aria-labelledby="CategoryDeleteModal"
+        aria-labelledby="userDeleteModal"
         aria-hidden="true"
     >
         <div class="modal-dialog">
@@ -13,10 +13,11 @@
                         type="button"
                         class="btn-close"
                         data-bs-dismiss="modal"
-                        aria-label="Close"></button>
+                        aria-label="Close"
+                    ></button>
                     <div class="pt-2 w-100">
                         <h5 class="modal-title text-primary fw-bold">
-                            Delete Category
+                            Delete Data
                         </h5>
                         <hr />
                     </div>
@@ -82,14 +83,11 @@ export default {
         async deleteForm() {
             this.isLoading = true;
             try {
-                await axios.delete(
-                    `/category/${this.selectedData.id}`,
-                    this.data
-                );
+                await axios.delete(`/user/${this.selectedData.id}`, this.data);
                 return location.reload();
             } catch (error) {
                 this.errors = error.response.data.errors;
-                alert("Failed to delete category");
+                alert("Failed to delete " + this.selectedData.name);
             } finally {
                 this.isLoading = false;
             }

@@ -16,7 +16,9 @@ class CategoryController extends Controller
     {
         $this->authorize('viewAny', Category::class);
 
-        $categories = Category::all();
+        $categories = Category::filter(request(['search']))
+        ->orderby('name')->paginate(10)->appends(request()->query());
+
         return view('category.index')->with('categories', $categories);
     }
 

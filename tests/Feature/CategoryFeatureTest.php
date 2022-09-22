@@ -27,8 +27,8 @@ class CategoryFeatureTest extends TestCase
     {
         $this->login();
         $category = Category::factory()->create();
-        $update = ['colour' => 'updated', 'name' => 'updated', 'description' => 'updated'];
 
+        $update = ['colour' => 'updated', 'name' => 'updated', 'description' => 'updated'];
         $response = $this->putJson(route('category.update', $category), $update);
 
         $response->assertOk();
