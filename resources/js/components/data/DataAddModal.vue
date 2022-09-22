@@ -1,9 +1,9 @@
 <template>
   <div 
-    id="data-form-modal" 
+    id="data-add-modal" 
     class="modal fade" 
     tabindex="-1"
-    aria-labelledby="dataFormModal" 
+    aria-labelledby="dataAddModal" 
     aria-hidden="true"
   >
     <div class="modal-dialog">
@@ -11,7 +11,7 @@
         <div class="modal-header border-0 flex-column pb-0">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           <div class="pt-2 w-100">
-            <h5 class="modal-title text-primary fw-bold">{{ isEdit ? 'Edit' : 'Add'}} Data</h5>
+            <h5 class="modal-title text-primary fw-bold">Add Data</h5>
             <hr>
           </div>
         </div>
@@ -90,12 +90,6 @@
 
 <script>
 export default {
-  props: {
-    selectedData: {
-      type: Object,
-      required: true,
-    },
-  },
   data() {
     return {
       form: {
@@ -108,30 +102,7 @@ export default {
       isLoading: false,
     };
   },
-  computed: {
-    isEdit() {
-      if (Object.keys(this.selectedData).length === 0) {
-        return false; 
-      };
-      return true;
-    },
-  },
-  watch: {
-    selectedData: {
-      immediate: true,
-      handler() {
-        this.initModal();
-      },
-    },
-  }, 
   methods: {
-    initModal() {
-      if (this.isEdit) {
-        this.form = { ...this.selectedData };
-      } else {
-        this.resetForm();
-      }
-    },
     resetForm() {
       Object.keys(this.form).forEach((key) => {
         this.form[key] = null;
@@ -143,11 +114,7 @@ export default {
     async submitForm() {
       this.isLoading = true;
       try {
-        if (this.isEdit) {
-          await axios.put(`/data/${this.selectedData.id}`, this.form);
-        } else {
-          await axios.post(`/data`, this.form);
-        }
+        await axios.post(`/data`, this.form);
         return location.reload();
       } catch (error) {
         this.errors = error.response.data.errors;
