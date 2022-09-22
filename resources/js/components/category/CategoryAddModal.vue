@@ -1,9 +1,9 @@
 <template>
     <div
-        id="category-form-modal"
+        id="category-add-modal"
         class="modal fade"
         tabindex="-1"
-        aria-labelledby="CategoryFormModal"
+        aria-labelledby="CategoryAddModal"
         aria-hidden="true"
     >
         <div class="modal-dialog">

@@ -43,35 +43,36 @@
                     <!-- Heading Table -->
                     <div class="d-flex my-3 justify-content-between">
                         <!-- Search bar -->
-                        <div class="w-50 w-md-75">
-                            <form method="GET" action="{{ route('category.index') }}">
-                                <div class="input-group">
-                                    <input type="text" name="search" placeholder="Search name or email"
-                                        class="form-control" value="{{ request('search') }}">
+                        <form method="GET" class="d-flex justify-content-between w-100" action="{{ route('category.index') }}">
+                            <div class="input-group me-3 w-100">
+                                <input type="text" name="search" placeholder="Search category"
+                                    class="form-control" value="{{ request('search') }}">
 
-                                    @if (request('search'))
-                                        <a href="{{ route('category.index') }}">
-                                            <span class="input-group-btn">
-                                                <button type="button" class="btn btn-search-append" title="Refresh Page">
-                                                    <i class="mdi mdi-close"></i>
-                                                </button>
-                                            </span>
-                                        </a>
-                                    @endif
+                                @if (request('search'))
+                                    <a href="{{ route('category.index') }}">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-search-append" title="Reset Search">
+                                                <i class="mdi mdi-close"></i>
+                                            </button>
+                                        </span>
+                                    </a>
+                                @endif
 
-                                    <span class="input-group-btn">
-                                        <button type="submit" class="btn btn-input-append btn-outline-primary">
-                                            Search
-                                        </button>
-                                    </span>
-                                </div>
-                            </form>
-                        </div>
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-input-append btn-outline-primary">
+                                        Search
+                                    </button>
+                                </span>
+                            </div>
+                        </form>
                         <!-- Add Category -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#category-form-modal">
-                            <i class="mdi mdi-plus"></i> Add Category
-                        </button>
+                        <div class="flex-shrink-0">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#category-add-modal">
+                                <i class="mdi mdi-plus"></i> Add Category
+                            </button>
+                        </div>
+                        <category-add-modal></category-add-modal>
                     </div>
                     <!-- Table -->
                     <category-list :data='{{ json_encode($categories->items()) }}'>
@@ -80,6 +81,5 @@
                 </div>
             </div>
         </div>
-        <category-form-modal></category-form-modal>
     </div>
 @endsection
