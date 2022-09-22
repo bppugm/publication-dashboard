@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class DashboardFeatureTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
 
     /** @test */
     public function user_can_create_dashboard()
@@ -32,5 +32,18 @@ class DashboardFeatureTest extends TestCase
 
         $response->assertNoContent();
         $this->assertDeleted($dashboard);
+    }
+
+    /** @test */
+    public function user_can_create_dashboard_with_description()
+    {
+        $this->login();
+        $data = Dashboard::factory()->make([
+            'description' => "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur,"
+        ])->toArray();
+
+        $response = $this->postJson(route('dashboard.store'), $data);
+
+        $response->assertCreated();
     }
 }
