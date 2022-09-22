@@ -50,7 +50,8 @@ class DashboardFeatureTest extends TestCase
             'name' => 'New name',
         ]);
     }
-    
+
+    /** @test */
     public function user_can_create_dashboard_with_description()
     {
         $this->login();
