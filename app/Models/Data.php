@@ -9,4 +9,9 @@ class Data extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+
+    public function dashboards()
+    {
+        return $this->belongsToMany(\App\Models\Dashboard::class);
+    }
 }
