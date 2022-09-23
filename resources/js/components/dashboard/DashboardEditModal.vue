@@ -146,7 +146,7 @@ export default {
         async submitForm() {
             this.isLoading = true;
             try {
-                await axios.put(`/user/${this.selectedData.id}`, this.form);
+                await axios.put(`/dashboard/${this.selectedData.id}`, this.form);
                 return location.reload();
             } catch (error) {
                 this.errors = error.response.data.errors;
