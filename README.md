@@ -1,64 +1,49 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Publication Dashboard
+Source code for BPP UGM Publication Dashboard
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## System Requirements
+- PHP 7.4
+- PHP extensions: OpenSSL, PDO, Mbstring, Tokenizer, XML, Ctype, JSON, BCMath
+- MySQL Database
+- Composer
+- NodeJS >= 14.x
 
-## About Laravel
+## How to Install
+1. Clone this repo to your machine
+2. Run `composer install`
+3. Make `.env` from `.env.example`
+4. Fill database section in `.env`
+6. run `php artisan key:generate`
+7. run `php artisan migrate --seed`
+8. run `php artisan storage:link`
+10. run `npm install`
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Queue Configuration
+### local environment
+- Make sure you have changed `.env` `QUEUE_CONNECTION` to `database` or `redis`. 
+- In your project root, run `php artisan queue:work`. 
+- For more information about Laravel Queue Feature, visit [the official documentation page](https://laravel.com/docs/queues).
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Broadcasting Configuration
+### Via Pusher
+- Create a new Pusher Channel app https://dashboard.pusher.com/
+- Fill `PUSHER_APP_ID`, `PUSHER_APP_KEY`, `PUSHER_APP_SECRET`, `PUSHER_APP_CLUSTER`, in `.env` based on your Pusher Channel App Keys
+- Change `BROADCAST_DRIVER` to `pusher` in `.env`
+### Via Redis and Socket.io
+- Prepare a Laravel Echo Server (https://github.com/tlaverdure/laravel-echo-server)
+- Change `BROADCAST_DRIVER` to `redis` in `.env`
+- Fill `REDIS_BROADCAST_HOST` `REDIS_BROADCAST_PASSWORD` `REDIS_BROADCAST_PORT` `REDIS_BROADCAST_DB` in `.env` according to your Laraver Echo Server Configuration
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Credits
+### Main Contributors
+- [Wildan Ainurrahman](https://github.com/w1lldone)
+- [Michael Roberto](https://github.com/michaelr1300)
+- [Aldiansyah Triewicaksono](https://github.com/ebifurei)
+### Supporting Contributors
+- Bagus Gilang R
+### Development
+- Built using [Laravel 8](https://laravel.com/)
+- Frontend framework using [VueJs 2](https://vuejs.org/)
+- HTML, CSS, and Javascript framework using [Bootstrap 5](https://getbootstrap.com/)
+- [Pusher](https://pusher.com/) and [Laravel Echo Server](https://github.com/tlaverdure/laravel-echo-server) for Broadcasting Service
 
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

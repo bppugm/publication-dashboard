@@ -25,6 +25,12 @@
     },
     "dependencies": {
         "date-fns": "^2.29.3",
-        "vue-dataset": "^1.1.16"
+        "vue-dataset": "^1.1.16",
+        "chart.js": "^3.9.1",
+        "expr-eval": "^2.0.2",
+        "highcharts": "^10.2.1",
+        "highcharts-vue": "^1.4.0",
+        "vue-chartjs": "^4.1.1",
+        "vue-grid-layout": "^2.4.0"
     }
 }

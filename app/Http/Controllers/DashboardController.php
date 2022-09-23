@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Data;
+use App\Models\Dashboard;
 use Illuminate\Http\Request;
 
-class DataController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,13 +14,12 @@ class DataController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny', Data::class);
+        $dashboards = Dashboard::select('id', 'name', 'description')
+            ->filter(request(['search']))
+            ->paginate(8)
+            ->appends(request()->query());
 
-        $data = Data::filter(request(['search']))
-        ->orderby('name')->paginate(10)->appends(request()->query());
-
-        return view('data.index')->with('data', $data);
-
+        return view('dashboard.index', compact('dashboards'));
     }
 
     /**
@@ -41,40 +40,40 @@ class DataController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create', Data::class);
+        $this->authorize('create', Dashboard::class);
 
         $data = $request->validate([
             'name' => 'required|string|max:100',
-            'description' => 'nullable|string|max:500',
-            'value' => 'nullable',
-            'notes' => 'nullable|string|max:250',
+            'description' => 'nullable|string|max:300',
         ]);
 
-        $data = Data::create($data);
+        $dashboard = Dashboard::create($data);
 
-        return $data;
+        return $dashboard;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Data  $data
+     * @param  \App\Models\Dashboard  $dashboard
      * @return \Illuminate\Http\Response
      */
-    public function show(Data $data)
+    public function show(Dashboard $dashboard)
     {
-        $this->authorize('view', $data);
+        $this->authorize('view', $dashboard);
 
-        return $data;
+        $dashboard->load('data');
+
+        return view('dashboard.view', compact('dashboard'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Data  $data
+     * @param  \App\Models\Dashboard  $dashboard
      * @return \Illuminate\Http\Response
      */
-    public function edit(Data $data)
+    public function edit(Dashboard $dashboard)
     {
         //
     }
@@ -83,36 +82,33 @@ class DataController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Data  $data
+     * @param  \App\Models\Dashboard  $dashboard
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Data $data)
+    public function update(Request $request, Dashboard $dashboard)
     {
-        $this->authorize('update', $data);
-
-        $update = $request->validate([
+        $data = $request->validate([
             'name' => 'string|max:100',
-            'description' => 'nullable|string|max:250',
-            'value' => 'nullable',
-            'notes' => 'nullable|string|max:500',
+            'description' => 'string|max:300|nullable',
+            'widgets' => 'nullable|array'
         ]);
 
-        $data->update($update);
+        $dashboard->update($data);
 
-        return $data;
+        return $dashboard->fresh();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Data  $data
+     * @param  \App\Models\Dashboard  $dashboard
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Data $data)
+    public function destroy(Dashboard $dashboard)
     {
-        $this->authorize('delete', $data);
+        $this->authorize('delete', $dashboard);
 
-        $data->delete();
+        $dashboard->delete();
 
         return response()->noContent();
     }
