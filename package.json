@@ -24,6 +24,8 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "date-fns": "^2.29.3",
+        "vue-dataset": "^1.1.16",
         "chart.js": "^3.9.1",
         "expr-eval": "^2.0.2",
         "highcharts": "^10.2.1",

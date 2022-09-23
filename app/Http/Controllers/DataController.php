@@ -16,16 +16,8 @@ class DataController extends Controller
     {
         $this->authorize('viewAny', Data::class);
 
-        $data = new Data();
-
-        if ($request->filled('search')) {
-            $data = $data->where(function ($query) use ($request)
-            {
-                $query->orWhere('name', 'like', "%$request->search%")->orWhere('description', 'like', "%$request->search%");
-            });
-        }
-
-        $data = $data->paginate();
+        $data = Data::filter(request(['search']))
+        ->orderby('name')->paginate(10)->appends(request()->query());
 
         if ($request->wantsJson()) {
             return $data;
@@ -57,6 +49,7 @@ class DataController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:100',
             'description' => 'nullable|string|max:500',
+            'value' => 'nullable',
             'notes' => 'nullable|string|max:250',
         ]);
 
