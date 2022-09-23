@@ -35,6 +35,23 @@ class DashboardFeatureTest extends TestCase
     }
 
     /** @test */
+    public function user_can_update_dashboard()
+    {
+        $this->login();
+        $dashboard = Dashboard::factory()->create();
+
+        $response = $this->putJson(route('dashboard.update', $dashboard->id), [
+            'name' => 'New name',
+        ]);
+
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('dashboards', [
+            'id' => $dashboard->id,
+            'name' => 'New name',
+        ]);
+    }
+
+    /** @test */
     public function user_can_create_dashboard_with_description()
     {
         $this->login();

@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,6 +23,7 @@
     <!-- MDI Font -->
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
 </head>
+
 <body>
     <div id="app" class="d-flex flex-column" style="min-height: 100vh !important">
         <div>
@@ -50,7 +52,8 @@
                                 @endif
                             @else
                                 <li class="nav-item dropdown">
-                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                         {{ Auth::user()->name }}
                                     </a>
 
@@ -61,7 +64,8 @@
                                             {{ __('Logout') }}
                                         </a>
 
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                            class="d-none">
                                             @csrf
                                         </form>
                                     </div>
@@ -73,7 +77,9 @@
             </nav>
             <nav class="navbar navbar-expand-md bg-primary shadow-sm py-0">
                 <div class="container">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
@@ -81,7 +87,7 @@
                         <!-- Left Side Of Navbar -->
                         <ul class="navbar-nav me-auto">
                             <a class="navbar-brand py-0" href="{{ url('/') }}">
-                                <img class="py-2" src="/images/logo-bpp-horizontal.svg" alt="logo"/>
+                                <img class="py-2" src="/images/logo-bpp-horizontal.svg" alt="logo" />
                             </a>
                         </ul>
 
@@ -89,10 +95,16 @@
                         <ul class="navbar-nav ms-auto">
                             @auth
                                 <li class="nav-item">
-                                    <a class="nav-link {{ request()->is('data') ? 'active-nav-custom' : ''}}" href="{{ route('data.index') }}">DATA</a>
+                                    <a class="nav-link {{ request()->is('dashboard') ? 'active-nav-custom' : '' }}"
+                                        href="{{ route('dashboard.index') }}">DASHBOARD</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link {{ request()->is('user') ? 'active-nav-custom' : ''}}" href="{{ route('user.index') }}">USER</a>
+                                    <a class="nav-link {{ request()->is('data') ? 'active-nav-custom' : '' }}"
+                                        href="{{ route('data.index') }}">DATA</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ request()->is('user') ? 'active-nav-custom' : '' }}"
+                                        href="{{ route('user.index') }}">USER</a>
                                 </li>
                             @endauth
                         </ul>
@@ -120,4 +132,5 @@
         </footer>
     </div>
 </body>
+
 </html>
