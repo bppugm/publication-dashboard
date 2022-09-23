@@ -10916,6 +10916,10 @@ textarea.form-control-lg {
   color: #FDCB2C;
 }
 
+.nav-tabs.nav-link.active {
+  background-color: #FDCB2C;
+}
+
 .required-field label:after {
   content: "*";
   color: red;
