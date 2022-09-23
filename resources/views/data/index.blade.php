@@ -87,7 +87,9 @@
                         <data-add-modal></data-add-modal>
                     </div>
                 </div>
-                <data-list :data='{{ json_encode($data) }}'></data-list>
+                <data-list :data='{{ json_encode($data->items()) }}'>
+                    {{ $data->links() }}
+                </data-list>
             </div>
         </div>
     </div>

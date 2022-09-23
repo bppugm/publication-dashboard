@@ -12,11 +12,13 @@ class DataController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         $this->authorize('viewAny', Data::class);
 
-        $data = Data::all();
+        $data = Data::filter(request(['search']))
+        ->orderby('name')->paginate(10)->appends(request()->query());
+
         return view('data.index')->with('data', $data);
     }
 

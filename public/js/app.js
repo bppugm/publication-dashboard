@@ -8610,7 +8610,7 @@ var render = function render() {
         }
       }
     }, [_vm._v("\n                    Delete\n                ")])])]);
-  }), 0)]), _vm._v(" "), _c("data-edit-modal", {
+  }), 0)]), _vm._v(" "), _vm._t("default"), _vm._v(" "), _c("data-edit-modal", {
     attrs: {
       selectedData: _vm.selectedItem
     }
@@ -8618,7 +8618,7 @@ var render = function render() {
     attrs: {
       selectedData: _vm.selectedItem
     }
-  })], 1);
+  })], 2);
 };
 
 var staticRenderFns = [function () {

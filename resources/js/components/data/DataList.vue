@@ -46,6 +46,7 @@
             </tr>
         </tbody>
     </table>
+    <slot></slot>
     <data-edit-modal :selectedData="selectedItem"></data-edit-modal>
     <data-delete-modal :selectedData="selectedItem"></data-delete-modal>
   </div>
