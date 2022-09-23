@@ -12,8 +12,14 @@ class DataController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
+        $this->authorize('viewAny', Data::class);
+
+        $data = Data::filter(request(['search']))
+        ->orderby('name')->paginate(10)->appends(request()->query());
+
+        return view('data.index')->with('data', $data);
 
     }
 
@@ -40,6 +46,7 @@ class DataController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:100',
             'description' => 'nullable|string|max:500',
+            'value' => 'nullable',
             'notes' => 'nullable|string|max:250',
         ]);
 

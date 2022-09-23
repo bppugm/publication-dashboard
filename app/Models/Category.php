@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Data extends Model
+class Category extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-    
+
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? false, fn ($query, $search) =>
@@ -18,9 +18,5 @@ class Data extends Model
                     ->orWhere('description', 'like', '%' . $search . '%')
             )
         );
-    }
-    public function dashboards()
-    {
-        return $this->belongsToMany(\App\Models\Dashboard::class);
     }
 }

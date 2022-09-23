@@ -11,7 +11,7 @@
     <div class="card-body">
       <form @submit.prevent="doRegister">
         <div class="mb-3 required-field">
-          <label for="name" class="form-label">Nama</label>
+          <label for="name" class="form-label fw-bold">Nama</label>
           <input 
             id="name" 
             name="name" 
@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="mb-3 required-field">
-          <label for="email" class="form-label">Email</label>
+          <label for="email" class="form-label fw-bold">Email</label>
           <input 
             id="email" 
             name="email" 
@@ -41,7 +41,7 @@
           </div>
         </div>
         <div class="mb-3 required-field">
-          <label for="password" class="form-label">Password</label>
+          <label for="password" class="form-label fw-bold">Password</label>
           <div class="input-group">
             <input 
               id="password" 
@@ -69,7 +69,7 @@
           </div>
         </div>
         <div class="mb-3 required-field">
-          <label for="password" class="form-label">Password Confirmation</label>
+          <label for="password" class="form-label fw-bold">Password Confirmation</label>
           <div class="input-group">
             <input 
               id="password_confirmation" 
