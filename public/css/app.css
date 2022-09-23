@@ -1,5 +1,23 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);
-@charset "UTF-8"; /*!
+@charset "UTF-8";
+@font-face {
+  font-family: "Gama Sans", sans-serif;
+  src: url("/fonts/Gama-Sans-Light.otf");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Gama Sans", sans-serif;
+  src: url("/fonts/Gama-Regular-Light");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Gama Sans", sans-serif;
+  src: url("/fonts/Gama-Serif-Bold.otf");
+  font-weight: 700;
+  font-style: normal;
+}
+/*!
  * Bootstrap  v5.2.0 (https://getbootstrap.com/)
  * Copyright 2011-2022 The Bootstrap Authors
  * Copyright 2011-2022 Twitter, Inc.
@@ -10911,6 +10929,10 @@ textarea.form-control-lg {
     width: 50% !important;
   }
 }
+body {
+  font-family: "Gama Sans", sans-serif;
+}
+
 .active-nav-custom, .active-nav-custom:hover {
   border-bottom: 2px solid #FDCB2C;
   color: #FDCB2C;
