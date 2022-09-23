@@ -15,12 +15,12 @@ class DashboardSeeder extends Seeder
      */
     public function run()
     {
-        $scopus = Data::factory()->create(['value' => 1767]);
-        $sinta1 = Data::factory()->create(['value' => 10]);
-        $sinta2 = Data::factory()->create(['value' => 20]);
-        $sinta3 = Data::factory()->create(['value' => 48]);
-        $citationCurrent = Data::factory()->create(['value' => 16207]);
-        $citationTotal = Data::factory()->create(['value' => 112779]);
+        $scopus = Data::factory()->create(['value' => 1767, 'name' => 'scopus']);
+        $sinta1 = Data::factory()->create(['value' => 10, 'name' => 'sinta 1']);
+        $sinta2 = Data::factory()->create(['value' => 20, 'name' => 'sinta 2']);
+        $sinta3 = Data::factory()->create(['value' => 48, 'name' => 'sinta 3']);
+        $citationCurrent = Data::factory()->create(['value' => 16207, 'name' => 'citation current']);
+        $citationTotal = Data::factory()->create(['value' => 112779, 'name' => 'citation total']);
 
         $dashboard = Dashboard::create([
             'name' => 'default dashboard',

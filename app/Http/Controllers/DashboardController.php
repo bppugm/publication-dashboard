@@ -64,7 +64,7 @@ class DashboardController extends Controller
 
         $dashboard->load('data');
 
-        return view('dashboard.view', compact('dashboard'));
+        return view('dashboard.show', compact('dashboard'));
     }
 
     /**

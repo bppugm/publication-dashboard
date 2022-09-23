@@ -1,25 +1,44 @@
 <template>
   <div>
-    <div class="mb-4 mt-3 card card-body">
-      <div
-        class="
-          d-flex
-          justify-content-between
-          border-bottom border-3 border-warning
-        "
-      >
-        <h3>UGM Publication achivements</h3>
-        <h4>Jumat, 16 September 2022</h4>
+    <div class="card card-body p-4">
+      <div class="d-flex justify-content-between">
+        <h2 class="text-primary">{{ dashboard.name }}</h2>
+        <div class="form-check form-switch">
+          <label class="form-check-label" for="flexSwitchCheckChecked"
+            >Edit mode</label
+          >
+          <input
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            id="flexSwitchCheckChecked"
+            v-model="editMode"
+          />
+        </div>
       </div>
-      <div class="bg-warning"></div>
+      <hr />
+      <div class="row">
+        <div class="col-md-9">
+          <b>{{ dashboard.description }}</b>
+        </div>
+        <div class="col-md-3" v-show="editMode">
+          <button class="btn btn-outline-danger">Delete</button>
+          <dashboard-show-edit-info-modal
+            class="d-inline"
+            @updated="handleUpdatedInfo"
+            :dashboard="dashboard"
+          ></dashboard-show-edit-info-modal>
+          <dashboard-show-widget-form class="d-inline" :widgets="dashboard.widgets"></dashboard-show-widget-form>
+        </div>
+      </div>
     </div>
 
     <grid-layout
       :layout.sync="dashboard.widgets"
       :col-num="12"
       :row-height="30"
-      :is-draggable="true"
-      :is-resizable="true"
+      :is-draggable="editMode"
+      :is-resizable="editMode"
       :is-mirrored="false"
       :vertical-compact="true"
       :margin="[10, 10]"
@@ -93,11 +112,9 @@ export default {
   },
   data() {
     return {
-      dashboard: {
-        widgets: [],
-        data: []
-      },
+      dashboard: { ...this.initialDashboard },
       parser: new Parser(),
+      editMode: true,
     };
   },
   mounted() {
@@ -138,6 +155,10 @@ export default {
       });
 
       return this.parser.evaluate(value.text, subs);
+    },
+    handleUpdatedInfo(event) {
+      this.dashboard.name = event.name;
+      this.dashboard.description = event.description;
     },
   },
 };

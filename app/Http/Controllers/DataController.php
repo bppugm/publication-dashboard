@@ -14,7 +14,24 @@ class DataController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('viewAny', Data::class);
 
+        $data = new Data();
+
+        if ($request->filled('search')) {
+            $data = $data->where(function ($query) use ($request)
+            {
+                $query->orWhere('name', 'like', "%$request->search%")->orWhere('description', 'like', "%$request->search%");
+            });
+        }
+
+        $data = $data->paginate();
+
+        if ($request->wantsJson()) {
+            return $data;
+        }
+
+        return view('data.index')->with('data', $data);
     }
 
     /**
