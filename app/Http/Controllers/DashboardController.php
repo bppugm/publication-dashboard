@@ -14,9 +14,12 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $dashboards = Dashboard::select('id', 'name', 'description')->paginate();
+        $dashboards = Dashboard::select('id', 'name', 'description')
+            ->filter(request(['search']))
+            ->paginate(8)
+            ->appends(request()->query());
 
-        return $dashboards;
+        return view('dashboard.index', compact('dashboards'));
     }
 
     /**
