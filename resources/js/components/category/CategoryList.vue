@@ -3,7 +3,7 @@
         <table class="table table-bordered">
             <thead class="table-light">
                 <tr>
-                    <th scope="col">Colour</th>
+                    <th scope="col" class="text-center">Colour</th>
                     <th scope="col">Name</th>
                     <th scope="col">Description</th>
                     <th scope="col">Created Date</th>

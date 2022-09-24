@@ -8539,6 +8539,7 @@ var staticRenderFns = [function () {
   return _c("thead", {
     staticClass: "table-light"
   }, [_c("tr", [_c("th", {
+    staticClass: "text-center",
     attrs: {
       scope: "col"
     }
