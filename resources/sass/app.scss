@@ -46,11 +46,23 @@ body {
 
 
 // navbar item
-.active-nav-custom, .active-nav-custom:hover {
-  border-bottom: 2px solid #FDCB2C;
-  color:  #FDCB2C;
+.nav-custom {
+  border-bottom: 2px solid transparent;
 }
 
+.active-nav-custom, .active-nav-custom:hover, .nav-custom:hover {
+  border-bottom-color: #FDCB2C !important;
+}
+
+li.active-nav-custom > a > span, li.nav-custom > a:hover {
+  color: #FDCB2C !important;
+}
+
+li.nav-custom > a {
+  color: white;
+}
+ 
+ 
 .nav-tabs.nav-link.active  {
   background-color: #FDCB2C;
 }
