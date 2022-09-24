@@ -28,12 +28,17 @@
             @updated="handleUpdatedInfo"
             :dashboard="dashboard"
           ></dashboard-show-edit-info-modal>
-          <dashboard-show-widget-form class="d-inline" :widgets="dashboard.widgets"></dashboard-show-widget-form>
+          <dashboard-show-widget-form
+            class="d-inline"
+            :widgets="dashboard.widgets"
+            @submitted="handleWidgetSubmitted"
+          ></dashboard-show-widget-form>
         </div>
       </div>
     </div>
 
     <grid-layout
+      v-if="dashboard.widgets != null"
       :layout.sync="dashboard.widgets"
       :col-num="12"
       :row-height="30"
@@ -66,11 +71,22 @@
             :chart-options="item.chartOptions.options"
           ></bar>
         </div>
-        <div class="my-auto" v-if="item.type == 'value'">
+        <div class="my-auto" v-if="item.type == 'numeric'">
           <span class="h1" style="font-weight: 800">{{
-            interpretValue(item.value)
+            interpretValue(item.values)
           }}</span>
           <span>{{ item.unit }}</span>
+        </div>
+        <div
+          v-if="editMode"
+          style="position: absolute; bottom: 10px; right: 20px"
+          class="d-flex justify-content-end"
+        >
+          <span class="mx-1" style="cursor: grab"><i class="mdi mdi-clipboard"></i></span>
+          <span class="mx-1" style="cursor: grab"><i class="mdi mdi-pencil-box-outline"></i></span>
+          <span class="mx-1" style="cursor: grab" @click="removeWidget(index)"
+            ><i class="mdi mdi-delete"></i
+          ></span>
         </div>
       </grid-item>
     </grid-layout>
@@ -117,27 +133,34 @@ export default {
       editMode: true,
     };
   },
+  watch: {
+    editMode(newValue, oldValue) {
+      if (newValue == false) {
+        this.updateDashboard();
+      }
+    },
+  },
   mounted() {
     this.dashboard = this.initialDashboard;
   },
   methods: {
-    interpretValue(value) {
+    interpretValue(values) {
       // check wheter the value is an equation or plain value
-      if (Array.isArray(value)) {
-        let values = [];
-        value.forEach((item) => {
+      if (Array.isArray(values)) {
+        let interpretedValues = [];
+        values.forEach((item) => {
           if (item.type == "expression") {
-            values.push(this.calculateValue(item));
+            interpretedValues.push(this.calculateValue(item));
           } else if (item.type == "data") {
-            values.push(this.getDataValue(item.text));
+            interpretedValues.push(this.getDataValue(item.text));
           } else if (item.type == "text") {
-            values.push(item.text);
+            interpretedValues.push(item.text);
           }
         });
-        return values.join(" ");
+        return interpretedValues.join(" ");
       }
 
-      return value;
+      return values;
     },
     getDataValue(id) {
       let data = this.dashboard.data.find(function (item) {
@@ -159,6 +182,30 @@ export default {
     handleUpdatedInfo(event) {
       this.dashboard.name = event.name;
       this.dashboard.description = event.description;
+    },
+    handleWidgetSubmitted(event) {
+      if (this.dashboard.widgets == null) {
+        this.dashboard.widgets = [];
+      }
+
+      this.dashboard.widgets.push(event.widget);
+
+      event.data.forEach((item) => {
+        this.dashboard.data.push(item);
+      });
+    },
+    removeWidget(index) {
+      this.dashboard.widgets.splice(index, 1);
+    },
+    async updateDashboard() {
+      try {
+        let response = await axios.put(
+          `/dashboard/${this.dashboard.id}`,
+          this.dashboard
+        );
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };

@@ -31,4 +31,27 @@ class Dashboard extends Model
     {
         return $this->belongsToMany(\App\Models\Data::class);
     }
+
+    public function extractedDataIds()
+    {
+        $dataIds = [];
+
+        foreach ($this->widgets as $widget) {
+            if ($widget['type']  == 'numeric') {
+                if (is_array($widget['values'])) {
+                    foreach ($widget['values'] as $data) {
+                        if ($data['type'] == 'data') {
+                            $dataIds[] = (int)$data['text'];
+                        } elseif ($data['type'] == 'expression') {
+                            foreach ($data['variables'] as $variable) {
+                                $dataIds[] = $variable['data_id'];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $dataIds;
+    }
 }

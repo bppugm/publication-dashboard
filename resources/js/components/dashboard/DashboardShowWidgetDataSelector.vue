@@ -6,7 +6,16 @@
     v-model="selected"
     @search="handleSearch"
     @option:selected="handleSelected"
-  ></v-select>
+  >
+    <template #search="{ attributes, events }">
+      <input
+        class="vs__search"
+        :required="!selected.id"
+        v-bind="attributes"
+        v-on="events"
+      />
+    </template>
+  </v-select>
 </template>
 
 <script>
@@ -46,7 +55,8 @@ export default {
       this.debouncedFetch();
     },
     handleSelected() {
-      return this.$emit("input", this.selected.id);
+      this.$emit("input", this.selected.id);
+      this.$emit("selected", this.selected);
     },
   },
 };

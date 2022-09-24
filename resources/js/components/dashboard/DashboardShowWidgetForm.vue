@@ -47,7 +47,7 @@
             ></button>
           </div>
           <div class="modal-body">
-            <form @submit.prevent="">
+            <form @submit.prevent="submit()" v-if="form.type">
               <!-- RIBBON -->
               <div class="form-group">
                 <label class="form-label"><b>Ribbon</b></label>
@@ -147,14 +147,14 @@
 
               <div
                 class="mt-2"
-                v-for="(value, index) in form.value"
+                v-for="(value, index) in form.values"
                 :key="index"
               >
                 <div class="row row-cols-md-3 g-2">
                   <div class="col-md-3">
                     <select
                       class="form-control form-select"
-                      v-model="form.value[index].type"
+                      v-model="form.values[index].type"
                     >
                       <option
                         v-for="type in valueTypes"
@@ -167,8 +167,9 @@
                   </div>
                   <div class="col-md-8">
                     <dashboard-show-widget-data-selector
-                      v-if="form.value[index].type == 'data'"
-                      v-model="form.value[index].text"
+                      v-if="form.values[index].type == 'data'"
+                      v-model="form.values[index].text"
+                      @selected="onSelectedData"
                     ></dashboard-show-widget-data-selector>
                     <input
                       v-else
@@ -176,7 +177,8 @@
                       class="form-control"
                       placeholder="Enter value"
                       maxlength="12"
-                      v-model="form.value[index].text"
+                      required
+                      v-model="form.values[index].text"
                     />
                   </div>
                   <div class="col-md-1">
@@ -202,12 +204,7 @@
                   </button>
                 </div>
                 <div class="col-md-6 d-grid">
-                  <button
-                    type="submit"
-                    class="btn btn-primary"
-                  >
-                    Save
-                  </button>
+                  <button type="submit" class="btn btn-primary">Save</button>
                 </div>
               </div>
             </form>
@@ -227,21 +224,23 @@ export default {
   data() {
     return {
       form: {},
+      selectedData: [],
+      modal: null,
     };
   },
   computed: {
     initialWidget() {
-      var i = this.widgets.length - 1;
+      var i = this.widgets ? this.widgets.length : 0;
       return {
         x: 0,
         y: 0,
-        w: 3,
-        h: 3,
+        w: 4,
+        h: 4,
         i: i,
-        type: "value",
+        type: "numeric",
         title: "",
         description: "",
-        value: [{...this.defaultValue}],
+        values: [{ ...this.defaultValue }],
         unit: "",
         ribbonText: "",
         ribbonColour: "#404d68",
@@ -253,23 +252,36 @@ export default {
     defaultValue() {
       return {
         type: this.valueTypes[0],
-        text: "",
+        text: null,
         variables: [],
       };
     },
   },
   mounted() {
     this.initializeForm();
+    this.modal = new bootstrap.Modal(document.getElementById("addWidget"));
   },
   methods: {
     initializeForm() {
-      this.form = {...this.initialWidget};
+      this.form = { ...this.initialWidget };
+      this.selectedData = [];
     },
     addValue() {
-      this.form.value.push({...this.defaultValue});
+      this.form.values.push({ ...this.defaultValue });
     },
     removeValue(index) {
-      this.form.value.splice(index, 1);
+      this.form.values.splice(index, 1);
+    },
+    onSelectedData(event) {
+      this.selectedData.push(event);
+    },
+    submit() {
+      this.$emit("submitted", {
+        widget: this.form,
+        data: this.selectedData,
+      });
+      this.initializeForm();
+      this.modal.hide();
     },
   },
 };

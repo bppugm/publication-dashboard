@@ -32,9 +32,9 @@ class DashboardSeeder extends Seeder
                     "w" => 4,
                     "h" => 5,
                     "i" => "0",
-                    "type" => "value",
+                    "type" => "numeric",
                     "title" => "Publikasi Terindeks di Scopus 2022",
-                    "value" => [["text" => $scopus->id, "type" => "data"]],
+                    "values" => [["text" => $scopus->id, "type" => "data"]],
                     "unit" => "judul",
                     "ribbonText" => "Scopus",
                 ],
@@ -44,9 +44,9 @@ class DashboardSeeder extends Seeder
                     "w" => 4,
                     "h" => 5,
                     "i" => "1",
-                    "type" => "value",
+                    "type" => "numeric",
                     "title" => "Sitasi di Scopus 2022 / Akumulasi",
-                    "value" => [
+                    "values" => [
                         ["text" => $citationCurrent->id, "type" => "data"],
                         ["text" => "/", "type" => "text"],
                         ["text" => $citationTotal->id, "type" => "data"],
@@ -58,9 +58,9 @@ class DashboardSeeder extends Seeder
                     "w" => 4,
                     "h" => 5,
                     "i" => "2",
-                    "type" => "value",
+                    "type" => "numeric",
                     "title" => "Publikasi Books and Chapters",
-                    "value" => 155,
+                    "values" => 155,
                     "unit" => "judul",
                 ],
                 [
@@ -99,9 +99,9 @@ class DashboardSeeder extends Seeder
                     "w" => 4,
                     "h" => 5,
                     "i" => "4",
-                    "type" => "value",
+                    "type" => "numeric",
                     "title" => "Jurnal terakreditasi SINTA",
-                    "value" => [
+                    "values" => [
                         [
                             "text" => "s1 + s2 + s3",
                             "type" => "expression",
@@ -149,9 +149,9 @@ class DashboardSeeder extends Seeder
                     "w" => 4,
                     "h" => 5,
                     "i" => "6",
-                    "type" => "value",
+                    "type" => "numeric",
                     "title" => "Jurnal terindeks Scopus",
-                    "value" => 10,
+                    "values" => 10,
                     "unit" => "jurnal",
                 ],
             ]
