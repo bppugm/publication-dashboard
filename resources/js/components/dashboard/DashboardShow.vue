@@ -99,13 +99,25 @@
           style="position: absolute; bottom: 10px; right: 20px"
           class="d-flex justify-content-end"
         >
-          <span title="Duplicate this widget" class="mx-1 text-primary" style="cursor: grab" @click="duplicateWidget(index)"
+          <span
+            title="Duplicate this widget"
+            class="mx-1 text-primary"
+            style="cursor: grab"
+            @click="duplicateWidget(index)"
             ><i class="mdi mdi-plus-box-multiple-outline"></i
           ></span>
-          <span title="Edit this widget" class="mx-1 text-primary" style="cursor: grab" @click="editWidget(index)"
+          <span
+            title="Edit this widget"
+            class="mx-1 text-primary"
+            style="cursor: grab"
+            @click="editWidget(index)"
             ><i class="mdi mdi-pencil-outline"></i
           ></span>
-          <span title="Remove this widget" class="mx-1 text-danger" style="cursor: grab" @click="removeWidget(index)"
+          <span
+            title="Remove this widget"
+            class="mx-1 text-danger"
+            style="cursor: grab"
+            @click="removeWidget(index)"
             ><i class="mdi mdi-trash-can-outline"></i
           ></span>
         </div>
@@ -210,10 +222,10 @@ export default {
       return this.parser.evaluate(value.text, subs);
     },
     duplicateWidget(index) {
-        var newI = this.dashboard.widgets.length
-        var widget = {...this.dashboard.widgets[index]}
-        widget.i = newI
-        this.dashboard.widgets.push(widget)
+      var newI = this.dashboard.widgets.length;
+      var widget = { ...this.dashboard.widgets[index] };
+      widget.i = newI;
+      this.dashboard.widgets.push(widget);
     },
     editWidget(index) {
       this.editedWidget = this.dashboard.widgets[index];
@@ -228,6 +240,10 @@ export default {
         this.dashboard.widgets = [];
       }
 
+      event.data.forEach((item) => {
+        this.dashboard.data.push(item);
+      });
+
       if (event.index === null) {
         this.dashboard.widgets.push(event.widget);
       } else {
@@ -235,10 +251,6 @@ export default {
         this.editedWidget = {};
         this.editedWidgetIndex = null;
       }
-
-      event.data.forEach((item) => {
-        this.dashboard.data.push(item);
-      });
     },
     removeWidget(index) {
       this.dashboard.widgets.splice(index, 1);

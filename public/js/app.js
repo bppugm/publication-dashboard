@@ -6533,6 +6533,10 @@ chart_js__WEBPACK_IMPORTED_MODULE_2__.Chart.register(chart_js__WEBPACK_IMPORTED_
         this.dashboard.widgets = [];
       }
 
+      event.data.forEach(function (item) {
+        _this3.dashboard.data.push(item);
+      });
+
       if (event.index === null) {
         this.dashboard.widgets.push(event.widget);
       } else {
@@ -6540,10 +6544,6 @@ chart_js__WEBPACK_IMPORTED_MODULE_2__.Chart.register(chart_js__WEBPACK_IMPORTED_
         this.editedWidget = {};
         this.editedWidgetIndex = null;
       }
-
-      event.data.forEach(function (item) {
-        _this3.dashboard.data.push(item);
-      });
     },
     removeWidget: function removeWidget(index) {
       this.dashboard.widgets.splice(index, 1);
@@ -6729,6 +6729,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   mounted: function mounted() {
     if (this.value) {
+      // Fetch data details to populate the selected data
       this.fetchDataDetails();
     }
 
@@ -6808,7 +6809,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.debouncedFetch();
     },
     handleSelected: function handleSelected() {
-      this.$emit("input", this.selected.id);
+      // Event input for v-model handler
+      this.$emit("input", this.selected.id); // Event selected for passing data value
+
       this.$emit("selected", this.selected);
     }
   }
@@ -6881,6 +6884,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   watch: {
     editedWidget: {
       handler: function handler(newVal, oldVal) {
+        // if a widget is being edited
+        // populate the form with edited widget data
+        //  and show the modal
         if (newVal.title) {
           this.form = _objectSpread(_objectSpread({}, this.form), newVal);
           this.modal.show();
@@ -6890,7 +6896,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   mounted: function mounted() {
-    this.initializeForm();
+    this.initializeForm(); // Initialize bootstrap modal for manual action
+
     this.modal = new bootstrap.Modal(document.getElementById("addWidget"));
   },
   methods: {

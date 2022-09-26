@@ -113,7 +113,9 @@
                 />
                 <div class="d-flex justify-content-between">
                   <small class="form-text">Maximum 12 characters</small>
-                  <small class="form-text">{{ form.unit ? form.unit.length : 0 }} of 12</small>
+                  <small class="form-text"
+                    >{{ form.unit ? form.unit.length : 0 }} of 12</small
+                  >
                 </div>
               </div>
               <!-- END UNIT -->
@@ -266,6 +268,9 @@ export default {
   watch: {
     editedWidget: {
       handler: function (newVal, oldVal) {
+        // if a widget is being edited
+        // populate the form with edited widget data
+        //  and show the modal
         if (newVal.title) {
           this.form = { ...this.form, ...newVal };
           this.modal.show();
@@ -276,6 +281,7 @@ export default {
   },
   mounted() {
     this.initializeForm();
+    // Initialize bootstrap modal for manual action
     this.modal = new bootstrap.Modal(document.getElementById("addWidget"));
   },
   methods: {

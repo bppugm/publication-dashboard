@@ -44,6 +44,7 @@ export default {
   },
   mounted() {
     if (this.value) {
+      // Fetch data details to populate the selected data
       this.fetchDataDetails();
     }
 
@@ -75,7 +76,10 @@ export default {
       this.debouncedFetch();
     },
     handleSelected() {
+      // Event input for v-model handler
       this.$emit("input", this.selected.id);
+
+      // Event selected for passing data value
       this.$emit("selected", this.selected);
     },
   },
