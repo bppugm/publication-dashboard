@@ -119,11 +119,13 @@ export default {
   methods: {
     initModal() {
       this.form = { ...this.selectedData };
+      this.errors = {};
     },
     resetForm() {
       Object.keys(this.form).forEach((key) => {
-        this.form[key] = null;
+        this.form[key] = this.selectedData[key] ?? null;
       });
+      this.errors = {};
     },
     doSubmit() {
       this.submitForm()
