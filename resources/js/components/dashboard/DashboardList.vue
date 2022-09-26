@@ -2,7 +2,7 @@
     <div>
         <!-- Table -->
         <div class="table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-bordered mb-4">
                 <thead class="table-light">
                     <tr>
                         <th scope="col" style="width: 83px;">Display</th>

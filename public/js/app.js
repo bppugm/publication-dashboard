@@ -8982,7 +8982,7 @@ var render = function render() {
   return _c("div", [_c("div", {
     staticClass: "table-responsive"
   }, [_c("table", {
-    staticClass: "table table-bordered"
+    staticClass: "table table-bordered mb-4"
   }, [_vm._m(0), _vm._v(" "), _c("tbody", [_vm._l(_vm.data, function (item, index) {
     return _c("tr", {
       key: index
