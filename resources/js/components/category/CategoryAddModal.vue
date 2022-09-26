@@ -25,9 +25,7 @@
                 <div class="modal-body py-0">
                     <!-- name -->
                     <div class="mb-3 required-field">
-                        <label for="name" class="form-label fw-bold"
-                            >Name</label
-                        >
+                        <label for="name" class="form-label fw-bold">Name</label>
                         <div class="d-flex">
                             <div>
                                 <input
@@ -139,6 +137,7 @@ export default {
             Object.keys(this.form).forEach((key) => {
                 this.form[key] = null;
             });
+            this.errors = {};
         },
         doSubmit() {
             this.submitForm();

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container h-100">
-    <div class="d-flex justify-content-between mb-3">
+    <div class="d-flex justify-content-between my-3">
         <h5 class="text-primary card-title mb-0">
             <b>DATA</b>
         </h5>
@@ -57,7 +57,7 @@
                                 type="text"
                                 name="search"
                                 placeholder="Search Data"
-                                class="form-control"
+                                class="form-control search-input"
                                 value="{{ request('search') }}"
                             >
 

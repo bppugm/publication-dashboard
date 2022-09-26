@@ -32,21 +32,16 @@
               id="password"
               name="password"
               :type="showPassword ? 'text': 'password'"
-              class="form-control"
+              class="form-control icon-append"
               placeholder="Enter Password"
               v-model="form.password"
               :class="{ 'is-invalid': hasErrors('password') }"
             />
-            <div class="input-group-append">
-              <button
-                type="button"
-                class="btn btn-input-append border-secondary"
-                @click="showPassword = !showPassword"
-              >
-                  <i
-                    :class="showPassword ? 'mdi mdi-eye-off': 'mdi mdi-eye'"
-                  ></i>
-              </button>
+            <div
+              class="d-flex icon-input-append h-100 px-3"
+              @click="showPassword = !showPassword"
+            >
+              <i class="my-auto" :class="showPassword ? 'mdi mdi-eye-off': 'mdi mdi-eye'"></i>
             </div>
           </div>
           <div class="invalid-feedback">
