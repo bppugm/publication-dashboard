@@ -85,26 +85,35 @@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <!-- Left Side Of Navbar -->
-                        <ul class="navbar-nav me-auto">
-                            <a class="navbar-brand py-0" href="{{ url('/') }}">
-                                <img class="py-2" src="/images/logo-bpp-horizontal.svg" alt="logo" />
+                        <ul class="navbar-nav me-auto" style="height: 64px">
+                            <a class="navbar-brand d-flex py-0 h-100" href="{{ url('/') }}">
+                                <img class="my-auto" src="/images/logo-bpp-horizontal.svg" alt="logo" />
                             </a>
                         </ul>
 
                         <!-- Right Side Of Navbar -->
-                        <ul class="navbar-nav ms-auto">
+                        <ul class="navbar-nav ms-auto" style="height: 64px">
                             @auth
-                                <li class="nav-item">
-                                    <a class="nav-link {{ request()->is('dashboard') ? 'active-nav-custom' : '' }}"
-                                        href="{{ route('dashboard.index') }}">DASHBOARD</a>
+                                <li class="nav-item nav-custom px-2 {{ request()->is('dashboard') ? 'active-nav-custom' : '' }}">
+                                    <a class="nav-link d-flex h-100" href="{{ route('dashboard.index') }}">
+                                        <span class="my-auto">
+                                            DASHBOARD
+                                        </span>
+                                    </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {{ request()->is('data') ? 'active-nav-custom' : '' }}"
-                                        href="{{ route('data.index') }}">DATA</a>
+                                <li class="nav-item nav-custom px-2 {{ request()->is('data', 'category') ? 'active-nav-custom' : '' }}">
+                                    <a class="nav-link d-flex h-100" href="{{ route('data.index') }}">
+                                        <span class="my-auto">
+                                            DATA
+                                        </span>
+                                    </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {{ request()->is('user') ? 'active-nav-custom' : '' }}"
-                                        href="{{ route('user.index') }}">USER</a>
+                                <li class="nav-item nav-custom px-2 {{ request()->is('user') ? 'active-nav-custom' : '' }}">
+                                    <a class="nav-link d-flex h-100" href="{{ route('user.index') }}">
+                                        <span class="my-auto">
+                                            USER
+                                        </span>
+                                    </a>
                                 </li>
                             @endauth
                         </ul>

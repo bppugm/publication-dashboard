@@ -2,9 +2,10 @@
 
 @section('content')
     <div class="container h-100">
-        <div class="d-flex justify-content-between mb-3">
+        {{-- Header title --}}
+        <div class="d-flex justify-content-between my-3">
             <h5 class="text-primary card-title mb-0">
-                <b>DATA</b>
+                <b>CATEGORY</b>
             </h5>
             <div class="text-dark"><b>Category List</b></div>
         </div>
@@ -46,7 +47,7 @@
                         <form method="GET" class="d-flex justify-content-between w-100" action="{{ route('category.index') }}">
                             <div class="input-group me-3 w-100">
                                 <input type="text" name="search" placeholder="Search category"
-                                    class="form-control" value="{{ request('search') }}">
+                                    class="form-control search-input" value="{{ request('search') }}">
 
                                 @if (request('search'))
                                     <a href="{{ route('category.index') }}">
