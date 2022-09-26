@@ -9,7 +9,7 @@
                     <b>DASHBOARD</b>
                 </h5>
                 <div class="text-end">
-                    <nav class="breadcrumb">
+                    <nav class="breadcrumb m-0">
                         <a class="breadcrumb-item" href="/dashboard" style="text-decoration: none"><b>Dashboard List</b></a>
                         <a class="breadcrumb-item" href="#" style="text-decoration: none"><span> placeholder </span></a>
                     </nav>
