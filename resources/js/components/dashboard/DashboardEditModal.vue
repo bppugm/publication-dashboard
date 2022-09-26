@@ -136,9 +136,7 @@ export default {
             this.form = { ...this.selectedData };
         },
         resetForm() {
-            Object.keys(this.form).forEach((key) => {
-                this.form[key] = null;
-            });
+            this.form = { ...this.selectedData };       
         },
         doSubmit() {
             this.submitForm();

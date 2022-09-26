@@ -5,24 +5,24 @@
             <table class="table table-bordered">
                 <thead class="table-light">
                     <tr>
-                        <th scope="col">Display</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Description</th>
+                        <th scope="col" style="width: 83px;">Display</th>
+                        <th scope="col" style="width: 234px;">Name</th>
+                        <th scope="col" style="width: 464px;">Description</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(item, index) in data" :key="index">
                         <!-- placeholder for display, waiting for feature-->
-                        <td class="text-center" style="zoom: 1.5">
+                        <td class="align-middle text-center" style="zoom: 1.5">
                             <input type="checkbox" />
                         </td>
-                        <td>
+                        <td class="align-middle">
                             <a :href="`/dashboard/${item.id}`"> {{ item.name }}</a>
                         </td>
-                        <td>{{ item.description }}</td>
+                        <td class="align-middle">{{ item.description }}</td>
                         <!-- Action -->
-                        <td>
+                        <td class="align-middle">
                             <button
                                 type="button"
                                 class="btn btn-outline-primary"
@@ -51,7 +51,9 @@
                     </tr>
                 </tbody>
             </table>
-            <slot></slot>
+            <div class="d-flex justify-content-between">
+                <slot></slot>
+            </div>
             <dashboard-edit-modal
                 :selectedData="selectedItem"
             ></dashboard-edit-modal>
