@@ -21,7 +21,7 @@
                 </div>
                 <!-- Modal Body -->
                 <div class="modal-body">
-                    <div class="mb-3">
+                    <div class="mb-3 required-field">
                         <label for="name" class="form-label">Nama</label>
                         <input
                             id="name"
@@ -36,7 +36,7 @@
                             {{ getErrors("name") }}
                         </div>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3 required-field">
                         <label for="email" class="form-label">Email</label>
                         <input
                             id="email"
@@ -160,11 +160,13 @@ export default {
     methods: {
         initModal() {
             this.form = { ...this.selectedData };
+            this.errors = {};
         },
         resetForm() {
-            Object.keys(this.form).forEach((key) => {
-                this.form[key] = null;
-            });
+          Object.keys(this.form).forEach((key) => {
+            this.form[key] = this.selectedData[key] ?? null;
+          });
+          this.errors = {};
         },
         doSubmit() {
             this.submitForm();

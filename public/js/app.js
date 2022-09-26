@@ -5551,6 +5551,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       Object.keys(this.form).forEach(function (key) {
         _this.form[key] = null;
       });
+      this.errors = {};
     },
     doSubmit: function doSubmit() {
       this.submitForm();
@@ -5777,13 +5778,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     initModal: function initModal() {
       this.form = _objectSpread({}, this.selectedData);
+      this.errors = {};
     },
     resetForm: function resetForm() {
       var _this = this;
 
       Object.keys(this.form).forEach(function (key) {
-        _this.form[key] = null;
+        var _this$selectedData$ke;
+
+        _this.form[key] = (_this$selectedData$ke = _this.selectedData[key]) !== null && _this$selectedData$ke !== void 0 ? _this$selectedData$ke : null;
       });
+      this.errors = {};
     },
     doSubmit: function doSubmit() {
       this.submitForm();
@@ -6526,6 +6531,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       Object.keys(this.form).forEach(function (key) {
         _this.form[key] = null;
       });
+      this.errors = {};
     },
     doSubmit: function doSubmit() {
       this.submitForm();
@@ -6744,13 +6750,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: {
     initModal: function initModal() {
       this.form = _objectSpread({}, this.selectedData);
+      this.errors = {};
     },
     resetForm: function resetForm() {
       var _this = this;
 
       Object.keys(this.form).forEach(function (key) {
-        _this.form[key] = null;
+        var _this$selectedData$ke;
+
+        _this.form[key] = (_this$selectedData$ke = _this.selectedData[key]) !== null && _this$selectedData$ke !== void 0 ? _this$selectedData$ke : null;
       });
+      this.errors = {};
     },
     doSubmit: function doSubmit() {
       this.submitForm();
@@ -6923,6 +6933,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       Object.keys(this.form).forEach(function (key) {
         _this.form[key] = null;
       });
+      this.errors = {};
     },
     doSubmit: function doSubmit() {
       this.submitForm();
@@ -7144,13 +7155,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: {
     initModal: function initModal() {
       this.form = _objectSpread({}, this.selectedData);
+      this.errors = {};
     },
     resetForm: function resetForm() {
       var _this = this;
 
       Object.keys(this.form).forEach(function (key) {
-        _this.form[key] = null;
+        var _this$selectedData$ke;
+
+        _this.form[key] = (_this$selectedData$ke = _this.selectedData[key]) !== null && _this$selectedData$ke !== void 0 ? _this$selectedData$ke : null;
       });
+      this.errors = {};
     },
     doSubmit: function doSubmit() {
       this.submitForm();
@@ -8295,7 +8310,7 @@ var render = function render() {
   }, [_vm._m(0), _vm._v(" "), _c("div", {
     staticClass: "modal-body py-0"
   }, [_c("div", {
-    staticClass: "mb-3"
+    staticClass: "mb-3 required-field"
   }, [_c("label", {
     staticClass: "form-label fw-bold",
     attrs: {
@@ -10257,7 +10272,7 @@ var render = function render() {
   }, [_vm._m(0), _vm._v(" "), _c("div", {
     staticClass: "modal-body"
   }, [_c("div", {
-    staticClass: "mb-3"
+    staticClass: "mb-3 required-field"
   }, [_c("label", {
     staticClass: "form-label",
     attrs: {
@@ -10293,7 +10308,7 @@ var render = function render() {
   }), _vm._v(" "), _c("div", {
     staticClass: "invalid-feedback"
   }, [_vm._v("\n                        " + _vm._s(_vm.getErrors("name")) + "\n                    ")])]), _vm._v(" "), _c("div", {
-    staticClass: "mb-3"
+    staticClass: "mb-3 required-field"
   }, [_c("label", {
     staticClass: "form-label",
     attrs: {

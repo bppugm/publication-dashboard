@@ -10996,3 +10996,8 @@ input.icon-append {
   border-top-right-radius: 0.375rem !important;
   border-bottom-right-radius: 0.375rem !important;
 }
+
+input.is-invalid.icon-append {
+  padding-right: 70px !important;
+  background-position: right calc(40px + 0.1875rem) center;
+}

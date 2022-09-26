@@ -145,6 +145,7 @@ export default {
             Object.keys(this.form).forEach((key) => {
                 this.form[key] = null;
             });
+            this.errors = {};
         },
         doSubmit() {
             this.submitForm();
