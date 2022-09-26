@@ -18,7 +18,7 @@
             class="dropdown-item"
             data-bs-toggle="modal"
             data-bs-target="#addWidget"
-            @click="initializeForm"
+            @click="addWidget()"
           >
             Numeric widget
           </button>
@@ -201,7 +201,7 @@
                   <button
                     type="button"
                     class="btn btn-danger"
-                    @click="initializeForm()"
+                    @click="resetForm()"
                   >
                     Reset
                   </button>
@@ -234,6 +234,7 @@ export default {
       form: {},
       selectedData: [],
       modal: null,
+      mode: "create",
     };
   },
   computed: {
@@ -272,7 +273,8 @@ export default {
         // populate the form with edited widget data
         //  and show the modal
         if (newVal.title) {
-          this.form = { ...this.form, ...newVal };
+          this.populateFrom();
+          this.mode = "edit";
           this.modal.show();
         }
       },
@@ -285,12 +287,28 @@ export default {
     this.modal = new bootstrap.Modal(document.getElementById("addWidget"));
   },
   methods: {
+    populateFrom() {
+      // Reset form using edited widget value
+      // JSON parse is used for deep copy
+      this.form = JSON.parse(JSON.stringify(this.editedWidget));
+    },
+    addWidget() {
+      this.mode = "create";
+      this.initializeForm();
+    },
     initializeForm() {
       this.form = { ...this.initialWidget };
       this.selectedData = [];
     },
     addValue() {
       this.form.values.push({ ...this.defaultValue });
+    },
+    resetForm() {
+      if (this.mode == "edit") {
+        this.populateFrom();
+      } else if (this.mode == "create") {
+        this.initializeForm();
+      }
     },
     removeValue(index) {
       this.form.values.splice(index, 1);

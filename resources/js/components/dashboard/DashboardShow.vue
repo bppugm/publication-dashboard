@@ -40,9 +40,9 @@
           <dashboard-show-widget-form
             class="d-inline"
             :widgets="dashboard.widgets"
-            @submitted="handleWidgetSubmitted"
             :edited-widget="editedWidget"
             :edited-widget-index="editedWidgetIndex"
+            @submitted="handleWidgetSubmitted"
           ></dashboard-show-widget-form>
         </div>
       </div>
@@ -95,7 +95,7 @@
           <span>{{ item.unit }}</span>
         </div>
         <div>
-            {{ item.description }}
+          {{ item.description }}
         </div>
         <div
           v-if="editMode"

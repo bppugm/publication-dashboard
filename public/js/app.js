@@ -6854,7 +6854,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       form: {},
       selectedData: [],
-      modal: null
+      modal: null,
+      mode: "create"
     };
   },
   computed: {
@@ -6893,7 +6894,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         // populate the form with edited widget data
         //  and show the modal
         if (newVal.title) {
-          this.form = _objectSpread(_objectSpread({}, this.form), newVal);
+          this.populateFrom();
+          this.mode = "edit";
           this.modal.show();
         }
       },
@@ -6906,12 +6908,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.modal = new bootstrap.Modal(document.getElementById("addWidget"));
   },
   methods: {
+    populateFrom: function populateFrom() {
+      // Reset form using edited widget value
+      // JSON parse is used for deep copy
+      this.form = JSON.parse(JSON.stringify(this.editedWidget));
+    },
+    addWidget: function addWidget() {
+      this.mode = "create";
+      this.initializeForm();
+    },
     initializeForm: function initializeForm() {
       this.form = _objectSpread({}, this.initialWidget);
       this.selectedData = [];
     },
     addValue: function addValue() {
       this.form.values.push(_objectSpread({}, this.defaultValue));
+    },
+    resetForm: function resetForm() {
+      if (this.mode == "edit") {
+        this.populateFrom();
+      } else if (this.mode == "create") {
+        this.initializeForm();
+      }
     },
     removeValue: function removeValue(index) {
       this.form.values.splice(index, 1);
@@ -9679,7 +9697,7 @@ var render = function render() {
       staticStyle: {
         "font-weight": "800"
       }
-    }, [_vm._v(_vm._s(_vm.interpretValue(item.values)))]), _vm._v(" "), _c("span", [_vm._v(_vm._s(item.unit))])]) : _vm._e(), _vm._v(" "), _c("div", [_vm._v("\n          " + _vm._s(item.description) + "\n      ")]), _vm._v(" "), _vm.editMode ? _c("div", {
+    }, [_vm._v(_vm._s(_vm.interpretValue(item.values)))]), _vm._v(" "), _c("span", [_vm._v(_vm._s(item.unit))])]) : _vm._e(), _vm._v(" "), _c("div", [_vm._v("\n        " + _vm._s(item.description) + "\n      ")]), _vm._v(" "), _vm.editMode ? _c("div", {
       staticClass: "d-flex justify-content-end",
       staticStyle: {
         position: "absolute",
@@ -10029,7 +10047,9 @@ var render = function render() {
       "data-bs-target": "#addWidget"
     },
     on: {
-      click: _vm.initializeForm
+      click: function click($event) {
+        return _vm.addWidget();
+      }
     }
   }, [_vm._v("\n          Numeric widget\n        ")])]), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _c("div", {
     staticClass: "modal fade",
@@ -10309,7 +10329,7 @@ var render = function render() {
     },
     on: {
       click: function click($event) {
-        return _vm.initializeForm();
+        return _vm.resetForm();
       }
     }
   }, [_vm._v("\n                  Reset\n                ")])]), _vm._v(" "), _vm._m(7)])], 2) : _vm._e()])])])])]);
