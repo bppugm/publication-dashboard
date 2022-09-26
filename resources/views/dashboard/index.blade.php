@@ -10,7 +10,7 @@
                 </h5>
                 <div class="text-end">
                     <nav class="breadcrumb m-0">
-                        <a class="breadcrumb-item" href="/dashboard" style="text-decoration: none"><b>Dashboard List</b></a>
+                        <a class="breadcrumb-item active" aria-current="page" style="text-decoration: none"><b>Dashboard List</b></a>
                     </nav>
                 </div>
             </div>
