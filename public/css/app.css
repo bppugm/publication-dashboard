@@ -11004,7 +11004,7 @@ li.nav-custom > a {
   cursor: pointer;
 }
 
-input {
+input[type=text], input[type=password], input[type=email], input[type=search] {
   background-color: transparent !important;
 }
 
