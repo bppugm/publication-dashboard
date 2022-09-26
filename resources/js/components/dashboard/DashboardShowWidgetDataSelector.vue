@@ -11,7 +11,7 @@
       {{ option.name }} &nbsp;
       <span class="text-secondary"> ({{ option.value }})</span>
     </template>
-    <template #selected-option="option">
+    <template v-if="selected.name" #selected-option="option">
       {{ option.name }} &nbsp;
       <span class="text-secondary"> ({{ option.value }})</span>
     </template>

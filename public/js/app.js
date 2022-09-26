@@ -9942,14 +9942,14 @@ var render = function render() {
           staticClass: "text-secondary"
         }, [_vm._v(" (" + _vm._s(option.value) + ")")])];
       }
-    }, {
+    }, _vm.selected.name ? {
       key: "selected-option",
       fn: function fn(option) {
         return [_vm._v("\n    " + _vm._s(option.name) + "  \n    "), _c("span", {
           staticClass: "text-secondary"
         }, [_vm._v(" (" + _vm._s(option.value) + ")")])];
       }
-    }, {
+    } : null, {
       key: "search",
       fn: function fn(_ref) {
         var attributes = _ref.attributes,
@@ -9961,7 +9961,7 @@ var render = function render() {
           }
         }, "input", attributes, false), events))];
       }
-    }]),
+    }], null, true),
     model: {
       value: _vm.selected,
       callback: function callback($$v) {
