@@ -94,6 +94,9 @@
           }}</span>
           <span>{{ item.unit }}</span>
         </div>
+        <div>
+            {{ item.description }}
+        </div>
         <div
           v-if="editMode"
           style="position: absolute; bottom: 10px; right: 20px"

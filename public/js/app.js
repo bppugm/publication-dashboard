@@ -9667,7 +9667,7 @@ var render = function render() {
       staticStyle: {
         "font-weight": "800"
       }
-    }, [_vm._v(_vm._s(_vm.interpretValue(item.values)))]), _vm._v(" "), _c("span", [_vm._v(_vm._s(item.unit))])]) : _vm._e(), _vm._v(" "), _vm.editMode ? _c("div", {
+    }, [_vm._v(_vm._s(_vm.interpretValue(item.values)))]), _vm._v(" "), _c("span", [_vm._v(_vm._s(item.unit))])]) : _vm._e(), _vm._v(" "), _c("div", [_vm._v("\n          " + _vm._s(item.description) + "\n      ")]), _vm._v(" "), _vm.editMode ? _c("div", {
       staticClass: "d-flex justify-content-end",
       staticStyle: {
         position: "absolute",
