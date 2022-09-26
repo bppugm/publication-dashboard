@@ -7,6 +7,14 @@
     @search="handleSearch"
     @option:selected="handleSelected"
   >
+    <template #option="option">
+      {{ option.name }} &nbsp;
+      <span class="text-secondary"> ({{ option.value }})</span>
+    </template>
+    <template #selected-option="option">
+      {{ option.name }} &nbsp;
+      <span class="text-secondary"> ({{ option.value }})</span>
+    </template>
     <template #search="{ attributes, events }">
       <input
         class="vs__search"
@@ -35,6 +43,10 @@ export default {
     };
   },
   mounted() {
+    if (this.value) {
+      this.fetchDataDetails();
+    }
+
     this.fetch();
   },
   methods: {
@@ -46,6 +58,14 @@ export default {
 
         this.data = response.data.data;
       } catch (error) {}
+    },
+    async fetchDataDetails() {
+      try {
+        let response = await axios.get(`/data/${this.value}`);
+        this.selected = response.data;
+      } catch (error) {
+        console.log(error);
+      }
     },
     debouncedFetch: _.debounce(function () {
       this.fetch();

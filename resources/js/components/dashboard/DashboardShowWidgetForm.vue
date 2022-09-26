@@ -23,7 +23,7 @@
             Numeric widget
           </button>
         </li>
-        <li><button class="dropdown-item">Chart widget</button></li>
+        <li><button class="dropdown-item disabled">Chart widget</button></li>
       </ul>
     </div>
 
@@ -70,7 +70,8 @@
                     <div class="d-flex justify-content-between">
                       <small class="form-text">Maximum 12 characters</small>
                       <small class="form-text"
-                        >{{ form.ribbonText.length }} of 12</small
+                        >{{ form.ribbonText ? form.ribbonText.length : 0 }} of
+                        12</small
                       >
                     </div>
                   </div>
@@ -112,7 +113,7 @@
                 />
                 <div class="d-flex justify-content-between">
                   <small class="form-text">Maximum 12 characters</small>
-                  <small class="form-text">{{ form.unit.length }} of 12</small>
+                  <small class="form-text">{{ form.unit ? form.unit.length : 0 }} of 12</small>
                 </div>
               </div>
               <!-- END UNIT -->
@@ -159,7 +160,7 @@
                       <option
                         v-for="type in valueTypes"
                         :value="type"
-                        :key="type"
+                        :key="`${index}.${type}`"
                       >
                         {{ type }}
                       </option>
@@ -220,6 +221,11 @@
 export default {
   props: {
     widgets: Array,
+    editedWidget: {
+      type: Object,
+      default: null,
+    },
+    editedWidgetIndex: Number,
   },
   data() {
     return {
@@ -247,7 +253,7 @@ export default {
       };
     },
     valueTypes() {
-      return ["data", "text", "expression"];
+      return ["text", "data", "expression"];
     },
     defaultValue() {
       return {
@@ -255,6 +261,17 @@ export default {
         text: null,
         variables: [],
       };
+    },
+  },
+  watch: {
+    editedWidget: {
+      handler: function (newVal, oldVal) {
+        if (newVal.title) {
+          this.form = { ...this.form, ...newVal };
+          this.modal.show();
+        }
+      },
+      deep: true,
     },
   },
   mounted() {
@@ -279,6 +296,7 @@ export default {
       this.$emit("submitted", {
         widget: this.form,
         data: this.selectedData,
+        index: this.editedWidgetIndex,
       });
       this.initializeForm();
       this.modal.hide();

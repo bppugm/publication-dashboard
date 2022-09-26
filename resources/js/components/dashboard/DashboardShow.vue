@@ -22,7 +22,16 @@
           <b>{{ dashboard.description }}</b>
         </div>
         <div class="col-md-3" v-show="editMode">
-          <button class="btn btn-outline-danger">Delete</button>
+          <dashboard-delete-modal
+            :selected-data="dashboard"
+          ></dashboard-delete-modal>
+          <button
+            class="btn btn-outline-danger"
+            data-bs-toggle="modal"
+            data-bs-target="#dashboard-delete-modal"
+          >
+            Delete
+          </button>
           <dashboard-show-edit-info-modal
             class="d-inline"
             @updated="handleUpdatedInfo"
@@ -32,6 +41,8 @@
             class="d-inline"
             :widgets="dashboard.widgets"
             @submitted="handleWidgetSubmitted"
+            :edited-widget="editedWidget"
+            :edited-widget-index="editedWidgetIndex"
           ></dashboard-show-widget-form>
         </div>
       </div>
@@ -51,7 +62,7 @@
     >
       <grid-item
         class="card card-body pt-1"
-        v-for="item in dashboard.widgets"
+        v-for="(item, index) in dashboard.widgets"
         :x="item.x"
         :y="item.y"
         :w="item.w"
@@ -60,8 +71,14 @@
         :key="item.i"
       >
         <div class="mb-3">
-          <div class="ribbon bg-danger text-white">
-            {{ item.i }} {{ item.ribbonText }}
+          <div
+            class="ribbon text-white"
+            v-show="item.ribbonText"
+            :style="{
+              background: getRibbonColour(item.ribbonColour),
+            }"
+          >
+            {{ item.ribbonText }}
           </div>
         </div>
         <h5>{{ item.title }}</h5>
@@ -82,10 +99,14 @@
           style="position: absolute; bottom: 10px; right: 20px"
           class="d-flex justify-content-end"
         >
-          <span class="mx-1" style="cursor: grab"><i class="mdi mdi-clipboard"></i></span>
-          <span class="mx-1" style="cursor: grab"><i class="mdi mdi-pencil-box-outline"></i></span>
-          <span class="mx-1" style="cursor: grab" @click="removeWidget(index)"
-            ><i class="mdi mdi-delete"></i
+          <span title="Duplicate this widget" class="mx-1 text-primary" style="cursor: grab" @click="duplicateWidget(index)"
+            ><i class="mdi mdi-plus-box-multiple-outline"></i
+          ></span>
+          <span title="Edit this widget" class="mx-1 text-primary" style="cursor: grab" @click="editWidget(index)"
+            ><i class="mdi mdi-pencil-outline"></i
+          ></span>
+          <span title="Remove this widget" class="mx-1 text-danger" style="cursor: grab" @click="removeWidget(index)"
+            ><i class="mdi mdi-trash-can-outline"></i
           ></span>
         </div>
       </grid-item>
@@ -131,6 +152,8 @@ export default {
       dashboard: { ...this.initialDashboard },
       parser: new Parser(),
       editMode: true,
+      editedWidget: {},
+      editedWidgetIndex: null,
     };
   },
   watch: {
@@ -144,6 +167,13 @@ export default {
     this.dashboard = this.initialDashboard;
   },
   methods: {
+    getRibbonColour(hex) {
+      if (hex) {
+        return hex;
+      }
+
+      return "rgb(var(--bs-primary-rgb))";
+    },
     interpretValue(values) {
       // check wheter the value is an equation or plain value
       if (Array.isArray(values)) {
@@ -179,6 +209,16 @@ export default {
 
       return this.parser.evaluate(value.text, subs);
     },
+    duplicateWidget(index) {
+        var newI = this.dashboard.widgets.length
+        var widget = {...this.dashboard.widgets[index]}
+        widget.i = newI
+        this.dashboard.widgets.push(widget)
+    },
+    editWidget(index) {
+      this.editedWidget = this.dashboard.widgets[index];
+      this.editedWidgetIndex = index;
+    },
     handleUpdatedInfo(event) {
       this.dashboard.name = event.name;
       this.dashboard.description = event.description;
@@ -188,7 +228,13 @@ export default {
         this.dashboard.widgets = [];
       }
 
-      this.dashboard.widgets.push(event.widget);
+      if (event.index === null) {
+        this.dashboard.widgets.push(event.widget);
+      } else {
+        this.dashboard.widgets[event.index] = event.widget;
+        this.editedWidget = {};
+        this.editedWidgetIndex = null;
+      }
 
       event.data.forEach((item) => {
         this.dashboard.data.push(item);
@@ -203,7 +249,13 @@ export default {
           `/dashboard/${this.dashboard.id}`,
           this.dashboard
         );
+        this.$toast.success("Dashboard updated", {
+          position: "top",
+        });
       } catch (error) {
+        this.$toast.errpr("Update dashboard failed", {
+          position: "top",
+        });
         console.log(error);
       }
     },

@@ -37,6 +37,8 @@ class DashboardSeeder extends Seeder
                     "values" => [["text" => $scopus->id, "type" => "data"]],
                     "unit" => "judul",
                     "ribbonText" => "Scopus",
+                    "description" => "",
+                    "ribbonColour" => "",
                 ],
                 [
                     "x" => 0,
@@ -51,6 +53,9 @@ class DashboardSeeder extends Seeder
                         ["text" => "/", "type" => "text"],
                         ["text" => $citationTotal->id, "type" => "data"],
                     ],
+                    "ribbonText" => "Scopus",
+                    "description" => "",
+                    "ribbonColour" => "",
                 ],
                 [
                     "x" => 4,
@@ -60,8 +65,13 @@ class DashboardSeeder extends Seeder
                     "i" => "2",
                     "type" => "numeric",
                     "title" => "Publikasi Books and Chapters",
-                    "values" => 155,
+                    "values" => [
+                        ['type' => 'text', 'text' => 155]
+                    ],
                     "unit" => "judul",
+                    "ribbonText" => "Scopus",
+                    "description" => "",
+                    "ribbonColour" => "",
                 ],
                 [
                     "x" => 4,
@@ -71,6 +81,9 @@ class DashboardSeeder extends Seeder
                     "i" => "3",
                     "type" => "chart",
                     "title" => "Perjanjian Kerja - IKU",
+                    "ribbonText" => "Scopus",
+                    "description" => "",
+                    "ribbonColour" => "",
                     "chartOptions" => [
                         "data" => [
                             "labels" => ["Target", "Capaian"],
@@ -92,6 +105,9 @@ class DashboardSeeder extends Seeder
                         ],
                         "options" => ["scales" => ["y" => ["beginAtZero" => true]]],
                     ],
+                    "ribbonText" => "Scopus",
+                    "description" => "",
+                    "ribbonColour" => "",
                 ],
                 [
                     "x" => 8,
@@ -113,6 +129,9 @@ class DashboardSeeder extends Seeder
                         ],
                     ],
                     "unit" => "Jurnal",
+                    "ribbonText" => "Scopus",
+                    "description" => "",
+                    "ribbonColour" => "",
                 ],
                 [
                     "x" => 8,
@@ -151,7 +170,9 @@ class DashboardSeeder extends Seeder
                     "i" => "6",
                     "type" => "numeric",
                     "title" => "Jurnal terindeks Scopus",
-                    "values" => 10,
+                    "values" => [
+                        ['type' => 'text', 'text' => '10']
+                    ],
                     "unit" => "jurnal",
                 ],
             ]

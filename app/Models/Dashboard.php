@@ -32,12 +32,18 @@ class Dashboard extends Model
         return $this->belongsToMany(\App\Models\Data::class);
     }
 
+    /**
+     * Extract data IDs from widgets
+     *
+     * @return array
+     */
     public function extractedDataIds()
     {
         $dataIds = [];
 
         foreach ($this->widgets as $widget) {
-            if ($widget['type']  == 'numeric') {
+            // Extract data IDs from numeric widgets
+            if (optional($widget)['type']  == 'numeric') {
                 if (is_array($widget['values'])) {
                     foreach ($widget['values'] as $data) {
                         if ($data['type'] == 'data') {

@@ -6449,7 +6449,9 @@ chart_js__WEBPACK_IMPORTED_MODULE_2__.Chart.register(chart_js__WEBPACK_IMPORTED_
     return {
       dashboard: _objectSpread({}, this.initialDashboard),
       parser: new expr_eval__WEBPACK_IMPORTED_MODULE_0__.Parser(),
-      editMode: true
+      editMode: true,
+      editedWidget: {},
+      editedWidgetIndex: null
     };
   },
   watch: {
@@ -6463,6 +6465,13 @@ chart_js__WEBPACK_IMPORTED_MODULE_2__.Chart.register(chart_js__WEBPACK_IMPORTED_
     this.dashboard = this.initialDashboard;
   },
   methods: {
+    getRibbonColour: function getRibbonColour(hex) {
+      if (hex) {
+        return hex;
+      }
+
+      return "rgb(var(--bs-primary-rgb))";
+    },
     interpretValue: function interpretValue(values) {
       var _this = this;
 
@@ -6501,6 +6510,18 @@ chart_js__WEBPACK_IMPORTED_MODULE_2__.Chart.register(chart_js__WEBPACK_IMPORTED_
       });
       return this.parser.evaluate(value.text, subs);
     },
+    duplicateWidget: function duplicateWidget(index) {
+      var newI = this.dashboard.widgets.length;
+
+      var widget = _objectSpread({}, this.dashboard.widgets[index]);
+
+      widget.i = newI;
+      this.dashboard.widgets.push(widget);
+    },
+    editWidget: function editWidget(index) {
+      this.editedWidget = this.dashboard.widgets[index];
+      this.editedWidgetIndex = index;
+    },
     handleUpdatedInfo: function handleUpdatedInfo(event) {
       this.dashboard.name = event.name;
       this.dashboard.description = event.description;
@@ -6512,7 +6533,14 @@ chart_js__WEBPACK_IMPORTED_MODULE_2__.Chart.register(chart_js__WEBPACK_IMPORTED_
         this.dashboard.widgets = [];
       }
 
-      this.dashboard.widgets.push(event.widget);
+      if (event.index === null) {
+        this.dashboard.widgets.push(event.widget);
+      } else {
+        this.dashboard.widgets[event.index] = event.widget;
+        this.editedWidget = {};
+        this.editedWidgetIndex = null;
+      }
+
       event.data.forEach(function (item) {
         _this3.dashboard.data.push(item);
       });
@@ -6535,20 +6563,30 @@ chart_js__WEBPACK_IMPORTED_MODULE_2__.Chart.register(chart_js__WEBPACK_IMPORTED_
 
               case 3:
                 response = _context.sent;
-                _context.next = 9;
+
+                _this4.$toast.success("Dashboard updated", {
+                  position: "top"
+                });
+
+                _context.next = 11;
                 break;
 
-              case 6:
-                _context.prev = 6;
+              case 7:
+                _context.prev = 7;
                 _context.t0 = _context["catch"](0);
+
+                _this4.$toast.errpr("Update dashboard failed", {
+                  position: "top"
+                });
+
                 console.log(_context.t0);
 
-              case 9:
+              case 11:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 6]]);
+        }, _callee, null, [[0, 7]]);
       }))();
     }
   }
@@ -6690,6 +6728,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   mounted: function mounted() {
+    if (this.value) {
+      this.fetchDataDetails();
+    }
+
     this.fetch();
   },
   methods: {
@@ -6724,6 +6766,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee, null, [[0, 7]]);
+      }))();
+    },
+    fetchDataDetails: function fetchDataDetails() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return axios.get("/data/".concat(_this2.value));
+
+              case 3:
+                response = _context2.sent;
+                _this2.selected = response.data;
+                _context2.next = 10;
+                break;
+
+              case 7:
+                _context2.prev = 7;
+                _context2.t0 = _context2["catch"](0);
+                console.log(_context2.t0);
+
+              case 10:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[0, 7]]);
       }))();
     },
     debouncedFetch: _.debounce(function () {
@@ -6761,7 +6835,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    widgets: Array
+    widgets: Array,
+    editedWidget: {
+      type: Object,
+      "default": null
+    },
+    editedWidgetIndex: Number
   },
   data: function data() {
     return {
@@ -6789,7 +6868,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       };
     },
     valueTypes: function valueTypes() {
-      return ["data", "text", "expression"];
+      return ["text", "data", "expression"];
     },
     defaultValue: function defaultValue() {
       return {
@@ -6797,6 +6876,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         text: null,
         variables: []
       };
+    }
+  },
+  watch: {
+    editedWidget: {
+      handler: function handler(newVal, oldVal) {
+        if (newVal.title) {
+          this.form = _objectSpread(_objectSpread({}, this.form), newVal);
+          this.modal.show();
+        }
+      },
+      deep: true
     }
   },
   mounted: function mounted() {
@@ -6820,7 +6910,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     submit: function submit() {
       this.$emit("submitted", {
         widget: this.form,
-        data: this.selectedData
+        data: this.selectedData,
+        index: this.editedWidgetIndex
       });
       this.initializeForm();
       this.modal.hide();
@@ -9486,9 +9577,17 @@ var render = function render() {
       expression: "editMode"
     }],
     staticClass: "col-md-3"
-  }, [_c("button", {
-    staticClass: "btn btn-outline-danger"
-  }, [_vm._v("Delete")]), _vm._v(" "), _c("dashboard-show-edit-info-modal", {
+  }, [_c("dashboard-delete-modal", {
+    attrs: {
+      "selected-data": _vm.dashboard
+    }
+  }), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-outline-danger",
+    attrs: {
+      "data-bs-toggle": "modal",
+      "data-bs-target": "#dashboard-delete-modal"
+    }
+  }, [_vm._v("\n          Delete\n        ")]), _vm._v(" "), _c("dashboard-show-edit-info-modal", {
     staticClass: "d-inline",
     attrs: {
       dashboard: _vm.dashboard
@@ -9499,7 +9598,9 @@ var render = function render() {
   }), _vm._v(" "), _c("dashboard-show-widget-form", {
     staticClass: "d-inline",
     attrs: {
-      widgets: _vm.dashboard.widgets
+      widgets: _vm.dashboard.widgets,
+      "edited-widget": _vm.editedWidget,
+      "edited-widget-index": _vm.editedWidgetIndex
     },
     on: {
       submitted: _vm.handleWidgetSubmitted
@@ -9521,7 +9622,7 @@ var render = function render() {
         return _vm.$set(_vm.dashboard, "widgets", $event);
       }
     }
-  }, _vm._l(_vm.dashboard.widgets, function (item) {
+  }, _vm._l(_vm.dashboard.widgets, function (item, index) {
     return _c("grid-item", {
       key: item.i,
       staticClass: "card card-body pt-1",
@@ -9535,8 +9636,17 @@ var render = function render() {
     }, [_c("div", {
       staticClass: "mb-3"
     }, [_c("div", {
-      staticClass: "ribbon bg-danger text-white"
-    }, [_vm._v("\n          " + _vm._s(item.i) + " " + _vm._s(item.ribbonText) + "\n        ")])]), _vm._v(" "), _c("h5", [_vm._v(_vm._s(item.title))]), _vm._v(" "), item.type == "chart" ? _c("div", {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: item.ribbonText,
+        expression: "item.ribbonText"
+      }],
+      staticClass: "ribbon text-white",
+      style: {
+        background: _vm.getRibbonColour(item.ribbonColour)
+      }
+    }, [_vm._v("\n          " + _vm._s(item.ribbonText) + "\n        ")])]), _vm._v(" "), _c("h5", [_vm._v(_vm._s(item.title))]), _vm._v(" "), item.type == "chart" ? _c("div", {
       staticClass: "my-auto"
     }, [_c("bar", {
       attrs: {
@@ -9558,31 +9668,50 @@ var render = function render() {
         right: "20px"
       }
     }, [_c("span", {
-      staticClass: "mx-1",
-      staticStyle: {
-        cursor: "grab"
-      }
-    }, [_c("i", {
-      staticClass: "mdi mdi-clipboard"
-    })]), _vm._v(" "), _c("span", {
-      staticClass: "mx-1",
-      staticStyle: {
-        cursor: "grab"
-      }
-    }, [_c("i", {
-      staticClass: "mdi mdi-pencil-box-outline"
-    })]), _vm._v(" "), _c("span", {
-      staticClass: "mx-1",
+      staticClass: "mx-1 text-primary",
       staticStyle: {
         cursor: "grab"
       },
+      attrs: {
+        title: "Duplicate this widget"
+      },
       on: {
         click: function click($event) {
-          return _vm.removeWidget(_vm.index);
+          return _vm.duplicateWidget(index);
         }
       }
     }, [_c("i", {
-      staticClass: "mdi mdi-delete"
+      staticClass: "mdi mdi-plus-box-multiple-outline"
+    })]), _vm._v(" "), _c("span", {
+      staticClass: "mx-1 text-primary",
+      staticStyle: {
+        cursor: "grab"
+      },
+      attrs: {
+        title: "Edit this widget"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.editWidget(index);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "mdi mdi-pencil-outline"
+    })]), _vm._v(" "), _c("span", {
+      staticClass: "mx-1 text-danger",
+      staticStyle: {
+        cursor: "grab"
+      },
+      attrs: {
+        title: "Remove this widget"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.removeWidget(index);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "mdi mdi-trash-can-outline"
     })])]) : _vm._e()]);
   }), 1) : _vm._e()], 1);
 };
@@ -9800,6 +9929,20 @@ var render = function render() {
       "option:selected": _vm.handleSelected
     },
     scopedSlots: _vm._u([{
+      key: "option",
+      fn: function fn(option) {
+        return [_vm._v("\n    " + _vm._s(option.name) + "  \n    "), _c("span", {
+          staticClass: "text-secondary"
+        }, [_vm._v(" (" + _vm._s(option.value) + ")")])];
+      }
+    }, {
+      key: "selected-option",
+      fn: function fn(option) {
+        return [_vm._v("\n    " + _vm._s(option.name) + "  \n    "), _c("span", {
+          staticClass: "text-secondary"
+        }, [_vm._v(" (" + _vm._s(option.value) + ")")])];
+      }
+    }, {
       key: "search",
       fn: function fn(_ref) {
         var attributes = _ref.attributes,
@@ -9948,7 +10091,7 @@ var render = function render() {
     staticClass: "form-text"
   }, [_vm._v("Maximum 12 characters")]), _vm._v(" "), _c("small", {
     staticClass: "form-text"
-  }, [_vm._v(_vm._s(_vm.form.ribbonText.length) + " of 12")])])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v(_vm._s(_vm.form.ribbonText ? _vm.form.ribbonText.length : 0) + " of\n                      12")])])])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_vm._m(3), _vm._v(" "), _c("input", {
     directives: [{
@@ -10011,7 +10154,7 @@ var render = function render() {
     staticClass: "form-text"
   }, [_vm._v("Maximum 12 characters")]), _vm._v(" "), _c("small", {
     staticClass: "form-text"
-  }, [_vm._v(_vm._s(_vm.form.unit.length) + " of 12")])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v(_vm._s(_vm.form.unit ? _vm.form.unit.length : 0) + " of 12")])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group mt-3"
   }, [_vm._m(5), _vm._v(" "), _c("textarea", {
     directives: [{
@@ -10079,7 +10222,7 @@ var render = function render() {
       }
     }, _vm._l(_vm.valueTypes, function (type) {
       return _c("option", {
-        key: type,
+        key: "".concat(index, ".").concat(type),
         domProps: {
           value: type
         }
@@ -10158,7 +10301,7 @@ var staticRenderFns = [function () {
       _c = _vm._self._c;
 
   return _c("li", [_c("button", {
-    staticClass: "dropdown-item"
+    staticClass: "dropdown-item disabled"
   }, [_vm._v("Chart widget")])]);
 }, function () {
   var _vm = this,

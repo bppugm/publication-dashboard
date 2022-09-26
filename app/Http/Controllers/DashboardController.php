@@ -95,7 +95,10 @@ class DashboardController extends Controller
 
         $dashboard->update($data);
 
-        return $dashboard->fresh();
+        $dataIds = $dashboard->fresh()->extractedDataIds();
+        $dashboard->data()->sync($dataIds);
+
+        return $dashboard;
     }
 
     /**
