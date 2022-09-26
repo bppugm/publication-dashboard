@@ -16,7 +16,7 @@ class DashboardController extends Controller
     {
         $dashboards = Dashboard::select('id', 'name', 'description')
             ->filter(request(['search']))
-            ->paginate(8)
+            ->paginate(10)
             ->appends(request()->query());
 
         return view('dashboard.index', compact('dashboards'));

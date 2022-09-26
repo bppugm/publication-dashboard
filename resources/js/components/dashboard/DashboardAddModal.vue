@@ -1,9 +1,9 @@
 <template>
     <div
-        id="dashboard-form-modal"
+        id="dashboard-add-modal"
         class="modal fade"
         tabindex="-1"
-        aria-labelledby="dashboardFormModal"
+        aria-labelledby="dashboardAddModal"
         aria-hidden="true"
     >
         <div class="modal-dialog">

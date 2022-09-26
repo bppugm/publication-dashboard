@@ -4,17 +4,21 @@
     <div class="container h-100">
         <div>
             {{-- Header title --}}
-            <div class="d-flex justify-content-between my-3">
+            <div class="d-flex justify-content-between my-30">
                 <h5 class="text-primary card-title mb-0">
                     <b>DASHBOARD</b>
                 </h5>
-                <div class="text-dark"><b>Dashboard List</b></div>
+                <div class="text-end">
+                    <nav class="breadcrumb m-0">
+                        <a class="breadcrumb-item active" aria-current="dashboard" style="text-decoration: none"><b>Dashboard List</b></a>
+                    </nav>
+                </div>
             </div>
 
             {{-- Placeholder for displayed dashboard --}}
-            <div class="card border-0 shadow-sm p-3">
+            <div class="card border-0 shadow-sm p-30">
                 <div id="displayed-dashboard" role="displayed-dashboard" aria-labelledby="displayed-dashboard">
-                    <div class="card-header text-primary bg-transparent">
+                    <div class="card-header text-primary bg-transparent p-0 pb-1">
                         <h5><b>Displayed Dashboard List</b></h5>
                     </div>
                     <div class="card-body text-primary bg-transparent">
@@ -24,10 +28,10 @@
             </div>
 
             {{-- Dashboard list --}}
-            <div class="card border-0 shadow-sm p-3 mt-3">
+            <div class="card border-0 shadow-sm p-30" style="margin-top: 2rem">
                 <div id="dashboards" role="dashboard-list" aria-labelledby="dashboard-list">
-                    <div class="card-header text-primary bg-transparent">
-                        <h5><b>All Dashboard List</b></h5>
+                    <div class="card-header text-primary bg-transparent p-0 pb-1">
+                        <h5><b>All Dashboards List</b></h5>
                     </div>
                     <!-- Heading Table -->
                     <div class="d-flex my-3 justify-content-between">
@@ -57,18 +61,32 @@
                         <!-- Add Dashboard Button -->
                         <div class="flex-shrink-0">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#dashboard-form-modal">
-                                <i class="mdi mdi-plus"></i> Add Dashboard
+                                data-bs-target="#dashboard-add-modal">
+                                <i class="mdi mdi-plus" style="margin-right: 10px"></i>
+                                <span class="d-none d-sm-inline"> Add Dashboard</span>
+                                <span class="d-inline d-sm-none"> Add</span>
                             </button>
                         </div>
                     </div>
+
+                    <div class="mb-3">
+                        <p class="text-justify">
+                            Click the checkbox on The “Display” column to display dashboard on the public page. You can only
+                            display <b>maximum 6</b> dashboards.
+                        </p>
+                    </div>
+
                     <!-- Table -->
                     <dashboard-list :data='{{ json_encode($dashboards->items()) }}'>
-                        {{ $dashboards->links() }}
+                        <div class="align-self-center">
+                            Showing {{ $dashboards->firstItem() }} to {{ $dashboards->lastItem() }} out of
+                            {{ $dashboards->total() }} results
+                        </div>
+                            {{ $dashboards->OnEachSide(0)->links() }}
                     </dashboard-list>
                 </div>
             </div>
-            <dashboard-form-modal></dashboard-form-modal>
+            <dashboard-add-modal></dashboard-add-modal>
         </div>
     </div>
 @endsection
