@@ -5781,30 +5781,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.errors = {};
     },
     resetForm: function resetForm() {
-      var _this = this;
-
-      Object.keys(this.form).forEach(function (key) {
-        var _this$selectedData$ke;
-
-        _this.form[key] = (_this$selectedData$ke = _this.selectedData[key]) !== null && _this$selectedData$ke !== void 0 ? _this$selectedData$ke : null;
-      });
-      this.errors = {};
+      this.form = _objectSpread({}, this.selectedData);
     },
     doSubmit: function doSubmit() {
       this.submitForm();
     },
     submitForm: function submitForm() {
-      var _this2 = this;
+      var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this2.isLoading = true;
+                _this.isLoading = true;
                 _context.prev = 1;
                 _context.next = 4;
-                return axios.put("/category/".concat(_this2.selectedData.id), _this2.form);
+                return axios.put("/category/".concat(_this.selectedData.id), _this.form);
 
               case 4:
                 return _context.abrupt("return", location.reload());
@@ -5812,11 +5805,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 7:
                 _context.prev = 7;
                 _context.t0 = _context["catch"](1);
-                _this2.errors = _context.t0.response.data.errors;
+                _this.errors = _context.t0.response.data.errors;
 
               case 10:
                 _context.prev = 10;
-                _this2.isLoading = false;
+                _this.isLoading = false;
                 return _context.finish(10);
 
               case 13:
@@ -6749,30 +6742,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.errors = {};
     },
     resetForm: function resetForm() {
-      var _this = this;
-
-      Object.keys(this.form).forEach(function (key) {
-        var _this$selectedData$ke;
-
-        _this.form[key] = (_this$selectedData$ke = _this.selectedData[key]) !== null && _this$selectedData$ke !== void 0 ? _this$selectedData$ke : null;
-      });
-      this.errors = {};
+      this.form = _objectSpread({}, this.selectedData);
     },
     doSubmit: function doSubmit() {
       this.submitForm();
     },
     submitForm: function submitForm() {
-      var _this2 = this;
+      var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this2.isLoading = true;
+                _this.isLoading = true;
                 _context.prev = 1;
                 _context.next = 4;
-                return axios.put("/data/".concat(_this2.selectedData.id), _this2.form);
+                return axios.put("/data/".concat(_this.selectedData.id), _this.form);
 
               case 4:
                 return _context.abrupt("return", location.reload());
@@ -6780,11 +6766,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 7:
                 _context.prev = 7;
                 _context.t0 = _context["catch"](1);
-                _this2.errors = _context.t0.response.data.errors;
+                _this.errors = _context.t0.response.data.errors;
 
               case 10:
                 _context.prev = 10;
-                _this2.isLoading = false;
+                _this.isLoading = false;
                 return _context.finish(10);
 
               case 13:
@@ -7154,30 +7140,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.errors = {};
     },
     resetForm: function resetForm() {
-      var _this = this;
-
-      Object.keys(this.form).forEach(function (key) {
-        var _this$selectedData$ke;
-
-        _this.form[key] = (_this$selectedData$ke = _this.selectedData[key]) !== null && _this$selectedData$ke !== void 0 ? _this$selectedData$ke : null;
-      });
-      this.errors = {};
+      this.form = _objectSpread({}, this.selectedData);
     },
     doSubmit: function doSubmit() {
       this.submitForm();
     },
     submitForm: function submitForm() {
-      var _this2 = this;
+      var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this2.isLoading = true;
+                _this.isLoading = true;
                 _context.prev = 1;
                 _context.next = 4;
-                return axios.put("/user/".concat(_this2.selectedData.id), _this2.form);
+                return axios.put("/user/".concat(_this.selectedData.id), _this.form);
 
               case 4:
                 return _context.abrupt("return", location.reload());
@@ -7185,11 +7164,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 7:
                 _context.prev = 7;
                 _context.t0 = _context["catch"](1);
-                _this2.errors = _context.t0.response.data.errors;
+                _this.errors = _context.t0.response.data.errors;
 
               case 10:
                 _context.prev = 10;
-                _this2.isLoading = false;
+                _this.isLoading = false;
                 return _context.finish(10);
 
               case 13:
