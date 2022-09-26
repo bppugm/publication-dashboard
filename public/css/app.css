@@ -10965,10 +10965,21 @@ li.nav-custom > a {
 
 .btn-search-append, .btn-search-append:hover, .btn-search-append:focus {
   border-radius: 0px 0px;
-  background-color: transparent;
   border-color: #CED4DA !important;
   border-left: none;
   border-right: none;
+}
+
+.icon-input-append {
+  position: absolute;
+  right: 0;
+  background: transparent;
+  color: #6c757d;
+  z-index: 4;
+}
+
+.icon-input-append:hover {
+  cursor: pointer;
 }
 
 input {
@@ -10977,6 +10988,11 @@ input {
 
 input.search-input {
   padding-left: 40px;
-  padding-right: 40px;
   background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='gray' width='16' height='16' class='ri-search-line' viewBox='0 0 28 28'%3E%3Cpath d='M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15z'%3E%3C/path%3E%3C/svg%3E") no-repeat 13px 10px;
+}
+
+input.icon-append {
+  padding-right: 40px;
+  border-top-right-radius: 0.375rem !important;
+  border-bottom-right-radius: 0.375rem !important;
 }

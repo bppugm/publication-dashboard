@@ -52,80 +52,49 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="password" class="form-label"
-                            >Password</label
-                        >
+                        <label for="password" class="form-label">Password</label>
                         <div class="input-group">
                             <input
                                 id="password"
                                 name="password"
                                 :type="showPassword ? 'text' : 'password'"
-                                class="form-control"
+                                class="form-control icon-append"
                                 placeholder="Enter Password"
                                 v-model="form.password"
                                 :class="{
-                                    'is-invalid': hasErrors('password'),
+                                  'is-invalid': hasErrors('password'),
                                 }"
                             />
-                            <div class="input-group-append">
-                                <button
-                                    type="button"
-                                    class="btn btn-input-append border-secondary"
-                                    @click="showPassword = !showPassword"
-                                >
-                                    <i
-                                        :class="
-                                            showPassword
-                                                ? 'mdi mdi-eye-off'
-                                                : 'mdi mdi-eye'
-                                        "
-                                    ></i>
-                                </button>
-                            </div>
+                          <div
+                            class="d-flex icon-input-append h-100 px-3"
+                            @click="showPassword = !showPassword"
+                          >
+                            <i class="my-auto" :class="showPassword ? 'mdi mdi-eye-off': 'mdi mdi-eye'"></i>
+                          </div>
                         </div>
                         <div class="invalid-feedback">
                             {{ getErrors("password") }}
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="password" class="form-label"
-                            >Password Confirmation</label
-                        >
+                        <label for="password" class="form-label">Password Confirmation</label>
                         <div class="input-group">
                             <input
                                 id="password_confirmation"
                                 name="password_confirmation"
-                                :type="
-                                    showPasswordConfirmation
-                                        ? 'text'
-                                        : 'password'
-                                "
-                                class="form-control"
+                                :type="showPasswordConfirmation ? 'text' : 'password'"
+                                class="form-control icon-append"
                                 placeholder="Enter Password Confirmation"
                                 v-model="form.password_confirmation"
                                 :class="{
-                                    'is-invalid': hasErrors(
-                                        'password_confirmation'
-                                    ),
+                                  'is-invalid': hasErrors('password_confirmation'),
                                 }"
                             />
-                            <div class="input-group-append">
-                                <button
-                                    type="button"
-                                    class="btn btn-input-append border-secondary"
-                                    @click="
-                                        showPasswordConfirmation =
-                                            !showPasswordConfirmation
-                                    "
-                                >
-                                    <i
-                                        :class="
-                                            showPasswordConfirmation
-                                                ? 'mdi mdi-eye-off'
-                                                : 'mdi mdi-eye'
-                                        "
-                                    ></i>
-                                </button>
+                            <div
+                              class="d-flex icon-input-append h-100 px-3"
+                              @click="showPasswordConfirmation = !showPasswordConfirmation"
+                            >
+                              <i class="my-auto" :class="showPasswordConfirmation ? 'mdi mdi-eye-off': 'mdi mdi-eye'"></i>
                             </div>
                         </div>
                         <div class="invalid-feedback">

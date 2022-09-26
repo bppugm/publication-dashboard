@@ -41,7 +41,7 @@
                     <!-- Add User -->
                     <div class="flex-shrink-0">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#user-form-modal">
+                            data-bs-target="#user-add-modal">
                             <i class="mdi mdi-plus"></i> Add User
                         </button>
                     </div>
@@ -52,6 +52,6 @@
                 </user-list>
             </div>
         </div>
-        <user-form-modal></user-form-modal>
+        <user-add-modal></user-add-modal>
     </div>
 @endsection
