@@ -9,3 +9,12 @@ $line-height-base: 1.6;
 // color
 $blue:    #073C64 !default;
 $light:    #E2E6E9 !default;
+
+// breadcrumb
+$breadcrumb-margin-bottom:          0;
+
+// modals
+.modal-title {
+    font-weight: 800;
+    color: $blue;
+}

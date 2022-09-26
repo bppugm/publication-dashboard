@@ -51,4 +51,18 @@ class DataFeatureTest extends TestCase
         $response->assertNoContent();
         $this->assertDeleted($data);
     }
+
+    /** @test */
+    public function user_can_search_data()
+    {
+        $this->login();
+        Data::factory(2)->create(['name' => 'somethings']);
+        Data::factory(2)->create();
+
+        $response = $this->getJson(route('data.index', [
+            'search' => 'somethings'
+        ]));
+
+        $response->assertOk()->assertJsonCount(2, 'data');
+    }
 }

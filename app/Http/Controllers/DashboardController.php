@@ -64,7 +64,7 @@ class DashboardController extends Controller
 
         $dashboard->load('data');
 
-        return view('dashboard.view', compact('dashboard'));
+        return view('dashboard.show', compact('dashboard'));
     }
 
     /**
@@ -95,7 +95,10 @@ class DashboardController extends Controller
 
         $dashboard->update($data);
 
-        return $dashboard->fresh();
+        $dataIds = $dashboard->fresh()->extractedDataIds();
+        $dashboard->data()->sync($dataIds);
+
+        return $dashboard;
     }
 
     /**

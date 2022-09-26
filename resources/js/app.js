@@ -8,6 +8,21 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 
+window.bootstrap = require('bootstrap')
+
+// Vue toast
+import VueToast from "vue-toast-notification";
+// Import one of the available themes
+//import 'vue-toast-notification/dist/theme-default.css';
+import "vue-toast-notification/dist/theme-sugar.css";
+Vue.use(VueToast);
+
+// Vue Select
+import vSelect from "vue-select";
+import "vue-select/dist/vue-select.css";
+
+Vue.component("v-select", vSelect);
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

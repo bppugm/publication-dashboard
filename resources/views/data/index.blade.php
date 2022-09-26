@@ -51,13 +51,13 @@
                             <button type="button" class="btn btn-outline-primary">
                                 <i class="mdi mdi-filter-variant"></i> Filter
                             </button>
-                        </div>        
+                        </div>
                         <div class="input-group mx-3 w-100">
-                            <input 
-                                type="text" 
-                                name="search" 
+                            <input
+                                type="text"
+                                name="search"
                                 placeholder="Search Data"
-                                class="form-control search-input" 
+                                class="form-control search-input"
                                 value="{{ request('search') }}"
                             >
 
@@ -83,7 +83,7 @@
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#data-add-modal">
                             <i class="mdi mdi-plus"></i> Add Data
-                        </button>  
+                        </button>
                         <data-add-modal></data-add-modal>
                     </div>
                 </div>

@@ -1,25 +1,60 @@
 <template>
   <div>
-    <div class="mb-4 mt-3 card card-body">
-      <div
-        class="
-          d-flex
-          justify-content-between
-          border-bottom border-3 border-warning
-        "
-      >
-        <h3>UGM Publication achivements</h3>
-        <h4>Jumat, 16 September 2022</h4>
+    <div class="card card-body p-4">
+      <div class="d-flex justify-content-between">
+        <h2 class="text-primary">{{ dashboard.name }}</h2>
+        <div class="form-check form-switch">
+          <label class="form-check-label" for="flexSwitchCheckChecked"
+            >Edit mode</label
+          >
+          <input
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            id="flexSwitchCheckChecked"
+            v-model="editMode"
+          />
+        </div>
       </div>
-      <div class="bg-warning"></div>
+      <hr />
+      <div class="row">
+        <div class="col-md-9">
+          <b>{{ dashboard.description }}</b>
+        </div>
+        <div class="col-md-3" v-show="editMode">
+          <dashboard-delete-modal
+            :selected-data="dashboard"
+          ></dashboard-delete-modal>
+          <button
+            class="btn btn-outline-danger"
+            data-bs-toggle="modal"
+            data-bs-target="#dashboard-delete-modal"
+          >
+            Delete
+          </button>
+          <dashboard-show-edit-info-modal
+            class="d-inline"
+            @updated="handleUpdatedInfo"
+            :dashboard="dashboard"
+          ></dashboard-show-edit-info-modal>
+          <dashboard-show-widget-form
+            class="d-inline"
+            :widgets="dashboard.widgets"
+            :edited-widget="editedWidget"
+            :edited-widget-index="editedWidgetIndex"
+            @submitted="handleWidgetSubmitted"
+          ></dashboard-show-widget-form>
+        </div>
+      </div>
     </div>
 
     <grid-layout
+      v-if="dashboard.widgets != null"
       :layout.sync="dashboard.widgets"
       :col-num="12"
       :row-height="30"
-      :is-draggable="true"
-      :is-resizable="true"
+      :is-draggable="editMode"
+      :is-resizable="editMode"
       :is-mirrored="false"
       :vertical-compact="true"
       :margin="[10, 10]"
@@ -27,7 +62,7 @@
     >
       <grid-item
         class="card card-body pt-1"
-        v-for="item in dashboard.widgets"
+        v-for="(item, index) in dashboard.widgets"
         :x="item.x"
         :y="item.y"
         :w="item.w"
@@ -36,8 +71,14 @@
         :key="item.i"
       >
         <div class="mb-3">
-          <div class="ribbon bg-danger text-white">
-            {{ item.i }} {{ item.ribbonText }}
+          <div
+            class="ribbon text-white"
+            v-show="item.ribbonText"
+            :style="{
+              background: getRibbonColour(item.ribbonColour),
+            }"
+          >
+            {{ item.ribbonText }}
           </div>
         </div>
         <h5>{{ item.title }}</h5>
@@ -47,11 +88,41 @@
             :chart-options="item.chartOptions.options"
           ></bar>
         </div>
-        <div class="my-auto" v-if="item.type == 'value'">
+        <div class="my-auto" v-if="item.type == 'numeric'">
           <span class="h1" style="font-weight: 800">{{
-            interpretValue(item.value)
+            interpretValue(item.values)
           }}</span>
           <span>{{ item.unit }}</span>
+        </div>
+        <div>
+          {{ item.description }}
+        </div>
+        <div
+          v-if="editMode"
+          style="position: absolute; bottom: 10px; right: 20px"
+          class="d-flex justify-content-end"
+        >
+          <span
+            title="Duplicate this widget"
+            class="mx-1 text-primary"
+            style="cursor: grab"
+            @click="duplicateWidget(index)"
+            ><i class="mdi mdi-plus-box-multiple-outline"></i
+          ></span>
+          <span
+            title="Edit this widget"
+            class="mx-1 text-primary"
+            style="cursor: grab"
+            @click="editWidget(index)"
+            ><i class="mdi mdi-pencil-outline"></i
+          ></span>
+          <span
+            title="Remove this widget"
+            class="mx-1 text-danger"
+            style="cursor: grab"
+            @click="removeWidget(index)"
+            ><i class="mdi mdi-trash-can-outline"></i
+          ></span>
         </div>
       </grid-item>
     </grid-layout>
@@ -93,34 +164,48 @@ export default {
   },
   data() {
     return {
-      dashboard: {
-        widgets: [],
-        data: []
-      },
+      dashboard: { ...this.initialDashboard },
       parser: new Parser(),
+      editMode: true,
+      editedWidget: {},
+      editedWidgetIndex: null,
     };
+  },
+  watch: {
+    editMode(newValue, oldValue) {
+      if (newValue == false) {
+        this.updateDashboard();
+      }
+    },
   },
   mounted() {
     this.dashboard = this.initialDashboard;
   },
   methods: {
-    interpretValue(value) {
-      // check wheter the value is an equation or plain value
-      if (Array.isArray(value)) {
-        let values = [];
-        value.forEach((item) => {
-          if (item.type == "expression") {
-            values.push(this.calculateValue(item));
-          } else if (item.type == "data") {
-            values.push(this.getDataValue(item.text));
-          } else if (item.type == "text") {
-            values.push(item.text);
-          }
-        });
-        return values.join(" ");
+    getRibbonColour(hex) {
+      if (hex) {
+        return hex;
       }
 
-      return value;
+      return "rgb(var(--bs-primary-rgb))";
+    },
+    interpretValue(values) {
+      // check wheter the value is an equation or plain value
+      if (Array.isArray(values)) {
+        let interpretedValues = [];
+        values.forEach((item) => {
+          if (item.type == "expression") {
+            interpretedValues.push(this.calculateValue(item));
+          } else if (item.type == "data") {
+            interpretedValues.push(this.getDataValue(item.text));
+          } else if (item.type == "text") {
+            interpretedValues.push(item.text);
+          }
+        });
+        return interpretedValues.join(" ");
+      }
+
+      return values;
     },
     getDataValue(id) {
       let data = this.dashboard.data.find(function (item) {
@@ -138,6 +223,56 @@ export default {
       });
 
       return this.parser.evaluate(value.text, subs);
+    },
+    duplicateWidget(index) {
+      var newI = this.dashboard.widgets.length;
+      var widget = { ...this.dashboard.widgets[index] };
+      widget.i = newI;
+      this.dashboard.widgets.push(widget);
+    },
+    editWidget(index) {
+      this.editedWidget = this.dashboard.widgets[index];
+      this.editedWidgetIndex = index;
+    },
+    handleUpdatedInfo(event) {
+      this.dashboard.name = event.name;
+      this.dashboard.description = event.description;
+    },
+    handleWidgetSubmitted(event) {
+      if (this.dashboard.widgets == null) {
+        this.dashboard.widgets = [];
+      }
+
+      event.data.forEach((item) => {
+        this.dashboard.data.push(item);
+      });
+
+      if (event.index === null) {
+        this.dashboard.widgets.push(event.widget);
+      } else {
+        this.dashboard.widgets[event.index] = event.widget;
+        this.editedWidget = {};
+        this.editedWidgetIndex = null;
+      }
+    },
+    removeWidget(index) {
+      this.dashboard.widgets.splice(index, 1);
+    },
+    async updateDashboard() {
+      try {
+        let response = await axios.put(
+          `/dashboard/${this.dashboard.id}`,
+          this.dashboard
+        );
+        this.$toast.success("Dashboard updated", {
+          position: "top",
+        });
+      } catch (error) {
+        this.$toast.errpr("Update dashboard failed", {
+          position: "top",
+        });
+        console.log(error);
+      }
     },
   },
 };

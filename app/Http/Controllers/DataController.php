@@ -12,15 +12,18 @@ class DataController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('viewAny', Data::class);
 
         $data = Data::filter(request(['search']))
         ->orderby('name')->paginate(10)->appends(request()->query());
 
-        return view('data.index')->with('data', $data);
+        if ($request->wantsJson()) {
+            return $data;
+        }
 
+        return view('data.index')->with('data', $data);
     }
 
     /**
@@ -61,9 +64,13 @@ class DataController extends Controller
      * @param  \App\Models\Data  $data
      * @return \Illuminate\Http\Response
      */
-    public function show(Data $data)
+    public function show(Request $request, Data $data)
     {
         $this->authorize('view', $data);
+
+        if ($request->wantsJson()) {
+            return $data;
+        }
 
         return $data;
     }
