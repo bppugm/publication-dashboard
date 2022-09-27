@@ -7259,30 +7259,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.errors = {};
     },
     resetForm: function resetForm() {
-      var _this = this;
-
-      Object.keys(this.form).forEach(function (key) {
-        var _this$selectedData$ke;
-
-        _this.form[key] = (_this$selectedData$ke = _this.selectedData[key]) !== null && _this$selectedData$ke !== void 0 ? _this$selectedData$ke : null;
-      });
-      this.errors = {};
+      this.initModal();
     },
     doSubmit: function doSubmit() {
       this.submitForm();
     },
     submitForm: function submitForm() {
-      var _this2 = this;
+      var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this2.isLoading = true;
+                _this.isLoading = true;
                 _context.prev = 1;
                 _context.next = 4;
-                return axios.put("/data/".concat(_this2.selectedData.id), _this2.form);
+                return axios.put("/data/".concat(_this.selectedData.id), _this.form);
 
               case 4:
                 return _context.abrupt("return", location.reload());
@@ -7290,11 +7283,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 7:
                 _context.prev = 7;
                 _context.t0 = _context["catch"](1);
-                _this2.errors = _context.t0.response.data.errors;
+                _this.errors = _context.t0.response.data.errors;
 
               case 10:
                 _context.prev = 10;
-                _this2.isLoading = false;
+                _this.isLoading = false;
                 return _context.finish(10);
 
               case 13:
@@ -7362,7 +7355,7 @@ __webpack_require__.r(__webpack_exports__);
       var date = new Date(dateTimeString);
 
       if (date instanceof Date && !isNaN(date)) {
-        return (0,date_fns__WEBPACK_IMPORTED_MODULE_0__["default"])(new Date(dateTimeString), 'dd-MM-yyyy HH:mm');
+        return (0,date_fns__WEBPACK_IMPORTED_MODULE_0__["default"])(new Date(dateTimeString), "dd-MM-yyyy HH:mm");
       }
 
       return dateTimeString;
@@ -7664,30 +7657,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.errors = {};
     },
     resetForm: function resetForm() {
-      var _this = this;
-
-      Object.keys(this.form).forEach(function (key) {
-        var _this$selectedData$ke;
-
-        _this.form[key] = (_this$selectedData$ke = _this.selectedData[key]) !== null && _this$selectedData$ke !== void 0 ? _this$selectedData$ke : null;
-      });
-      this.errors = {};
+      this.form = _objectSpread({}, this.selectedData);
     },
     doSubmit: function doSubmit() {
       this.submitForm();
     },
     submitForm: function submitForm() {
-      var _this2 = this;
+      var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this2.isLoading = true;
+                _this.isLoading = true;
                 _context.prev = 1;
                 _context.next = 4;
-                return axios.put("/user/".concat(_this2.selectedData.id), _this2.form);
+                return axios.put("/user/".concat(_this.selectedData.id), _this.form);
 
               case 4:
                 return _context.abrupt("return", location.reload());
@@ -7695,11 +7681,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 7:
                 _context.prev = 7;
                 _context.t0 = _context["catch"](1);
-                _this2.errors = _context.t0.response.data.errors;
+                _this.errors = _context.t0.response.data.errors;
 
               case 10:
                 _context.prev = 10;
-                _this2.isLoading = false;
+                _this.isLoading = false;
                 return _context.finish(10);
 
               case 13:
@@ -11097,22 +11083,24 @@ var render = function render() {
 
   return _c("div", [_c("table", {
     staticClass: "table table-bordered"
-  }, [_vm._m(0), _vm._v(" "), _c("tbody", _vm._l(_vm.data, function (item, index) {
+  }, [_vm._m(0), _vm._v(" "), _c("tbody", [_vm._l(_vm.data, function (item, index) {
     return _c("tr", {
       key: index
     }, [_c("td", {
       staticClass: "align-middle"
-    }, [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c("td", {
+    }, [_c("a", {
+      attrs: {
+        href: "/data/".concat(item.id)
+      }
+    }, [_vm._v(" " + _vm._s(item.name))])]), _vm._v(" "), _c("td", {
       staticClass: "align-middle"
     }, [_vm._v("-")]), _vm._v(" "), _c("td", {
-      staticClass: "align-middle"
-    }, [_vm._v(_vm._s(item.description))]), _vm._v(" "), _c("td", {
       staticClass: "align-middle"
     }, [_vm._v(_vm._s(item.value))]), _vm._v(" "), _c("td", {
       staticClass: "align-middle"
     }, [_vm._v("-")]), _vm._v(" "), _c("td", {
       staticClass: "align-middle"
-    }, [_vm._v(_vm._s(_vm.formatDateTime(item.updated_at)))]), _vm._v(" "), _c("td", [_c("button", {
+    }, [_vm._v("\n                    " + _vm._s(_vm.formatDateTime(item.updated_at)) + "\n                ")]), _vm._v(" "), _c("td", [_c("button", {
       staticClass: "btn btn-outline-primary my-1",
       attrs: {
         type: "button",
@@ -11124,7 +11112,7 @@ var render = function render() {
           return _vm.editItem(item);
         }
       }
-    }, [_vm._v("\n                    Edit\n                ")]), _vm._v(" "), _c("button", {
+    }, [_vm._v("\n                        Edit\n                    ")]), _vm._v(" "), _c("button", {
       staticClass: "btn btn-outline-danger my-1",
       attrs: {
         type: "button",
@@ -11136,8 +11124,15 @@ var render = function render() {
           return _vm.deleteItem(item);
         }
       }
-    }, [_vm._v("\n                    Delete\n                ")])])]);
-  }), 0)]), _vm._v(" "), _vm._t("default"), _vm._v(" "), _c("data-edit-modal", {
+    }, [_vm._v("\n                        Delete\n                    ")])])]);
+  }), _vm._v(" "), _vm.data.length == 0 ? _c("tr", [_c("td", {
+    staticClass: "text-center",
+    attrs: {
+      colspan: "6"
+    }
+  }, [_vm._v("\n                        No data found\n                    ")])]) : _vm._e()], 2)]), _vm._v(" "), _c("div", {
+    staticClass: "d-flex justify-content-between"
+  }, [_vm._t("default")], 2), _vm._v(" "), _c("data-edit-modal", {
     attrs: {
       selectedData: _vm.selectedItem
     }
@@ -11145,7 +11140,7 @@ var render = function render() {
     attrs: {
       selectedData: _vm.selectedItem
     }
-  })], 2);
+  })], 1);
 };
 
 var staticRenderFns = [function () {
@@ -11155,26 +11150,37 @@ var staticRenderFns = [function () {
   return _c("thead", {
     staticClass: "table-light"
   }, [_c("tr", [_c("th", {
+    staticStyle: {
+      width: "185px"
+    },
     attrs: {
       scope: "col"
     }
   }, [_vm._v("Name")]), _vm._v(" "), _c("th", {
+    staticStyle: {
+      width: "364px"
+    },
     attrs: {
       scope: "col"
     }
   }, [_vm._v("Category")]), _vm._v(" "), _c("th", {
-    attrs: {
-      scope: "col"
-    }
-  }, [_vm._v("Description")]), _vm._v(" "), _c("th", {
+    staticStyle: {
+      width: "78px"
+    },
     attrs: {
       scope: "col"
     }
   }, [_vm._v("Value")]), _vm._v(" "), _c("th", {
+    staticStyle: {
+      width: "126px"
+    },
     attrs: {
       scope: "col"
     }
   }, [_vm._v("Assigned User")]), _vm._v(" "), _c("th", {
+    staticStyle: {
+      width: "219px"
+    },
     attrs: {
       scope: "col"
     }
@@ -11549,7 +11555,7 @@ var staticRenderFns = [function () {
     staticClass: "modal-header"
   }, [_c("h5", {
     staticClass: "modal-title"
-  }, [_vm._v("Edit User")]), _vm._v(" "), _c("button", {
+  }, [_vm._v("Add User")]), _vm._v(" "), _c("button", {
     staticClass: "btn-close",
     attrs: {
       type: "button",
@@ -11999,7 +12005,7 @@ var staticRenderFns = [function () {
     staticClass: "modal-header"
   }, [_c("h5", {
     staticClass: "modal-title"
-  }, [_vm._v("\n                    Edit User\n                ")]), _vm._v(" "), _c("button", {
+  }, [_vm._v("Edit User")]), _vm._v(" "), _c("button", {
     staticClass: "btn-close",
     attrs: {
       type: "button",
@@ -12029,9 +12035,11 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div", [_c("table", {
+  return _c("div", [_c("div", {
+    staticClass: "table-responsive"
+  }, [_c("table", {
     staticClass: "table table-bordered"
-  }, [_vm._m(0), _vm._v(" "), _c("tbody", _vm._l(_vm.data, function (item, index) {
+  }, [_vm._m(0), _vm._v(" "), _c("tbody", [_vm._l(_vm.data, function (item, index) {
     return _c("tr", {
       key: index
     }, [_c("td", [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.email))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.assigned_data))]), _vm._v(" "), _c("td", [_c("button", {
@@ -12046,7 +12054,7 @@ var render = function render() {
           return _vm.editItem(item);
         }
       }
-    }, [_vm._v("\n                        Edit\n                    ")]), _vm._v(" "), _c("button", {
+    }, [_vm._v("\n                            Edit\n                        ")]), _vm._v(" "), _c("button", {
       staticClass: "btn btn-outline-danger",
       attrs: {
         type: "button",
@@ -12058,8 +12066,15 @@ var render = function render() {
           return _vm.deleteItem(item);
         }
       }
-    }, [_vm._v("\n                        Delete\n                    ")])])]);
-  }), 0)]), _vm._v(" "), _vm._t("default"), _vm._v(" "), _c("user-edit-modal", {
+    }, [_vm._v("\n                            Delete\n                        ")])])]);
+  }), _vm._v(" "), _vm.data.length == 0 ? _c("tr", [_c("td", {
+    staticClass: "text-center",
+    attrs: {
+      colspan: "4"
+    }
+  }, [_vm._v("No user found")])]) : _vm._e()], 2)]), _vm._v(" "), _c("div", {
+    staticClass: "d-flex justify-content-between"
+  }, [_vm._t("default")], 2)]), _vm._v(" "), _c("user-edit-modal", {
     attrs: {
       selectedData: _vm.selectedItem
     }
@@ -12067,7 +12082,7 @@ var render = function render() {
     attrs: {
       selectedData: _vm.selectedItem
     }
-  })], 2);
+  })], 1);
 };
 
 var staticRenderFns = [function () {
@@ -12077,10 +12092,16 @@ var staticRenderFns = [function () {
   return _c("thead", {
     staticClass: "table-light"
   }, [_c("tr", [_c("th", {
+    staticStyle: {
+      width: "200px"
+    },
     attrs: {
       scope: "col"
     }
   }, [_vm._v("Username")]), _vm._v(" "), _c("th", {
+    staticStyle: {
+      width: "200px"
+    },
     attrs: {
       scope: "col"
     }
