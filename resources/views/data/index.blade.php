@@ -2,13 +2,13 @@
 
 @section('content')
 <div class="container h-100">
-    <div class="d-flex justify-content-between my-3">
+    <div class="d-flex justify-content-between my-30">
         <h5 class="text-primary card-title mb-0">
             <b>DATA</b>
         </h5>
         <div class="text-dark"><b>Data List</b></div>
     </div>
-    <div class="card border-0 shadow-sm p-3">
+    <div class="card border-0 shadow-sm p-30">
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item" role="presentation">
                 <button
@@ -82,13 +82,18 @@
                     <div class="flex-shrink-0">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#data-add-modal">
-                            <i class="mdi mdi-plus"></i> Add Data
+                            <i class="mdi mdi-plus d-none d-sm-inline" style="margin-right: 10px"></i>
+                            <span class="d-none d-sm-inline"> Add Category</span>
+                            <span class="d-inline d-sm-none"> Add</span>
                         </button>
                         <data-add-modal></data-add-modal>
                     </div>
                 </div>
                 <data-list :data='{{ json_encode($data->items()) }}'>
-                    {{ $data->links() }}
+                    <div class="align-self-center">
+                        Showing {{ $data->firstItem() }} to {{ $data->lastItem() }} of {{ $data->total() }} results
+                    </div>
+                        {{ $data->OnEachSide(0)->links() }}
                 </data-list>
             </div>
         </div>

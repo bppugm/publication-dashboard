@@ -1,9 +1,9 @@
 <template>
-  <div 
-    id="data-edit-modal" 
-    class="modal fade" 
+  <div
+    id="data-edit-modal"
+    class="modal fade"
     tabindex="-1"
-    aria-labelledby="dataEditModal" 
+    aria-labelledby="dataEditModal"
     aria-hidden="true"
   >
     <div class="modal-dialog">
@@ -115,17 +115,14 @@ export default {
         this.initModal();
       },
     },
-  }, 
+  },
   methods: {
     initModal() {
       this.form = { ...this.selectedData };
       this.errors = {};
     },
     resetForm() {
-      Object.keys(this.form).forEach((key) => {
-        this.form[key] = this.selectedData[key] ?? null;
-      });
-      this.errors = {};
+      this.initModal();
     },
     doSubmit() {
       this.submitForm()
