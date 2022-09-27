@@ -8,14 +8,19 @@
     >
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"><b>Add Dashboard</b></h5>
+                <div class="modal-header border-0 flex-column pb-0">
                     <button
                         type="button"
                         class="btn-close"
                         data-bs-dismiss="modal"
                         aria-label="Close"
                     ></button>
+                    <div class="pt-2 w-100">
+                        <h5 class="modal-title text-primary fw-bold">
+                            Add Dashboard
+                        </h5>
+                        <hr />
+                    </div>
                 </div>
                 <!-- Modal Body -->
                 <div class="modal-body">

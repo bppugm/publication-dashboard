@@ -8,14 +8,19 @@
     >
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"><b>Edit Dashboard</b></h5>
+                <div class="modal-header border-0 flex-column pb-0">
                     <button
                         type="button"
                         class="btn-close"
                         data-bs-dismiss="modal"
                         aria-label="Close"
                     ></button>
+                    <div class="pt-2 w-100">
+                        <h5 class="modal-title text-primary fw-bold">
+                            Edit Dashboard
+                        </h5>
+                        <hr />
+                    </div>
                 </div>
                 <!-- Modal Body -->
                 <div class="modal-body">
@@ -83,10 +88,17 @@
                         <button
                             type="button"
                             class="btn btn-primary w-50 ms-2"
-                            :disabled="isLoading"
+                            v-show="isLoading == false"
                             @click="submitForm"
                         >
                             Save
+                        </button>
+                        <button
+                            type="button"
+                            v-show="isLoading"
+                            class="btn btn-primary disabled w-50 ms-2"
+                        >
+                            Saving...
                         </button>
                     </div>
                 </div>
@@ -113,8 +125,17 @@ export default {
             isLoading: false,
             count: 0,
             countError: false,
+            modal: null,
         };
     },
+    mounted() {
+        this.resetForm();
+        var modal = new bootstrap.Modal(
+            document.getElementById("dashboard-edit-modal")
+        );
+        this.modal = modal;
+    },
+
     watch: {
         selectedData: {
             immediate: true,
@@ -136,7 +157,7 @@ export default {
             this.form = { ...this.selectedData };
         },
         resetForm() {
-            this.form = { ...this.selectedData };       
+            this.form = { ...this.selectedData };
         },
         doSubmit() {
             this.submitForm();
@@ -144,11 +165,19 @@ export default {
         async submitForm() {
             this.isLoading = true;
             try {
-                await axios.put(`/dashboard/${this.selectedData.id}`, this.form);
-                return location.reload();
+                let response = await axios.put(
+                    `/dashboard/${this.selectedData.id}`,
+                    this.form
+                );
+                this.$emit("updated", response.data);
+
+                this.$toast.success("Dashboard updated", {
+                    position: "top",
+                    duration: 2000,
+                });
+                this.modal.toggle();
             } catch (error) {
                 this.errors = error.response.data.errors;
-                alert("Failed to save dashboard");
             } finally {
                 this.isLoading = false;
             }

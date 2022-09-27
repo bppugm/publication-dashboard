@@ -5,22 +5,26 @@
             <table class="table table-bordered mb-4">
                 <thead class="table-light">
                     <tr>
-                        <th scope="col" style="width: 83px;">Display</th>
-                        <th scope="col" style="width: 234px;">Name</th>
-                        <th scope="col" style="width: 464px;">Description</th>
+                        <th scope="col" style="width: 83px">Display</th>
+                        <th scope="col" style="width: 234px">Name</th>
+                        <th scope="col" style="width: 464px">Description</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item, index) in data" :key="index">
+                    <tr v-for="(dashboard, index) in dashboards" :key="index">
                         <!-- placeholder for display, waiting for feature-->
                         <td class="align-middle text-center" style="zoom: 1.5">
                             <input type="checkbox" />
                         </td>
                         <td class="align-middle">
-                            <a :href="`/dashboard/${item.id}`"> {{ item.name }}</a>
+                            <a :href="`/dashboard/${dashboard.id}`">
+                                {{ dashboard.name }}</a
+                            >
                         </td>
-                        <td class="align-middle">{{ item.description }}</td>
+                        <td class="align-middle">
+                            {{ dashboard.description }}
+                        </td>
                         <!-- Action -->
                         <td class="align-middle">
                             <button
@@ -28,7 +32,7 @@
                                 class="btn btn-outline-primary"
                                 data-bs-toggle="modal"
                                 data-bs-target="#dashboard-edit-modal"
-                                @click="editItem(item)"
+                                @click="editItem(dashboard, index)"
                             >
                                 Edit
                             </button>
@@ -37,7 +41,7 @@
                                 class="btn btn-outline-danger"
                                 data-bs-toggle="modal"
                                 data-bs-target="#dashboard-delete-modal"
-                                @click="deleteItem(item)"
+                                @click="deleteItem(dashboard)"
                             >
                                 Delete
                             </button>
@@ -55,6 +59,7 @@
                 <slot></slot>
             </div>
             <dashboard-edit-modal
+                @updated="handlerUpdate"
                 :selectedData="selectedItem"
             ></dashboard-edit-modal>
             <dashboard-delete-modal
@@ -76,6 +81,7 @@ export default {
     },
     data() {
         return {
+            dashboards: { ...this.data },
             search: "",
             selectedItem: {},
             isLoading: false,
@@ -83,11 +89,15 @@ export default {
         };
     },
     methods: {
-        editItem(item) {
+        editItem(item, index) {
             this.selectedItem = item;
+            this.selectedItem.index = index;
         },
         deleteItem(item) {
             this.selectedItem = item;
+        },
+        handlerUpdate(event) {
+            this.dashboards[this.selectedItem.index] = event;
         },
         async doLogin() {
             this.isLoading = true;
@@ -103,7 +113,6 @@ export default {
                 this.isLoading = false;
             }
         },
-
         hasErrors(key) {
             if (this.errors[key]) {
                 return true;

@@ -6237,8 +6237,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       errors: {},
       isLoading: false,
       count: 0,
-      countError: false
+      countError: false,
+      modal: null
     };
+  },
+  mounted: function mounted() {
+    this.resetForm();
+    var modal = new bootstrap.Modal(document.getElementById("dashboard-edit-modal"));
+    this.modal = modal;
   },
   watch: {
     selectedData: {
@@ -6271,6 +6277,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var response;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -6281,25 +6288,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 return axios.put("/dashboard/".concat(_this.selectedData.id), _this.form);
 
               case 4:
-                return _context.abrupt("return", location.reload());
+                response = _context.sent;
 
-              case 7:
-                _context.prev = 7;
+                _this.$emit("updated", response.data);
+
+                _this.$toast.success("Dashboard updated", {
+                  position: "top",
+                  duration: 2000
+                });
+
+                _this.modal.toggle();
+
+                _context.next = 13;
+                break;
+
+              case 10:
+                _context.prev = 10;
                 _context.t0 = _context["catch"](1);
                 _this.errors = _context.t0.response.data.errors;
-                alert("Failed to save dashboard");
 
-              case 11:
-                _context.prev = 11;
+              case 13:
+                _context.prev = 13;
                 _this.isLoading = false;
-                return _context.finish(11);
+                return _context.finish(13);
 
-              case 14:
+              case 16:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[1, 7, 11, 14]]);
+        }, _callee, null, [[1, 10, 13, 16]]);
       }))();
     },
     hasErrors: function hasErrors(key) {
@@ -6340,6 +6358,12 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     data: {
@@ -6351,6 +6375,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
+      dashboards: _objectSpread({}, this.data),
       search: "",
       selectedItem: {},
       isLoading: false,
@@ -6358,11 +6383,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
-    editItem: function editItem(item) {
+    editItem: function editItem(item, index) {
       this.selectedItem = item;
+      this.selectedItem.index = index;
     },
     deleteItem: function deleteItem(item) {
       this.selectedItem = item;
+    },
+    handlerUpdate: function handlerUpdate(event) {
+      this.dashboards[this.selectedItem.index] = event;
     },
     doLogin: function doLogin() {
       var _this = this;
@@ -9250,17 +9279,19 @@ var staticRenderFns = [function () {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "modal-header"
-  }, [_c("h5", {
-    staticClass: "modal-title"
-  }, [_c("b", [_vm._v("Add Dashboard")])]), _vm._v(" "), _c("button", {
+    staticClass: "modal-header border-0 flex-column pb-0"
+  }, [_c("button", {
     staticClass: "btn-close",
     attrs: {
       type: "button",
       "data-bs-dismiss": "modal",
       "aria-label": "Close"
     }
-  })]);
+  }), _vm._v(" "), _c("div", {
+    staticClass: "pt-2 w-100"
+  }, [_c("h5", {
+    staticClass: "modal-title text-primary fw-bold"
+  }, [_vm._v("\n                        Add Dashboard\n                    ")]), _vm._v(" "), _c("hr")])]);
 }];
 render._withStripped = true;
 
@@ -9467,15 +9498,31 @@ var render = function render() {
       click: _vm.resetForm
     }
   }, [_vm._v("\n                        Reset\n                    ")]), _vm._v(" "), _c("button", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.isLoading == false,
+      expression: "isLoading == false"
+    }],
     staticClass: "btn btn-primary w-50 ms-2",
     attrs: {
-      type: "button",
-      disabled: _vm.isLoading
+      type: "button"
     },
     on: {
       click: _vm.submitForm
     }
-  }, [_vm._v("\n                        Save\n                    ")])])])])])]);
+  }, [_vm._v("\n                        Save\n                    ")]), _vm._v(" "), _c("button", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.isLoading,
+      expression: "isLoading"
+    }],
+    staticClass: "btn btn-primary disabled w-50 ms-2",
+    attrs: {
+      type: "button"
+    }
+  }, [_vm._v("\n                        Saving...\n                    ")])])])])])]);
 };
 
 var staticRenderFns = [function () {
@@ -9483,17 +9530,19 @@ var staticRenderFns = [function () {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "modal-header"
-  }, [_c("h5", {
-    staticClass: "modal-title"
-  }, [_c("b", [_vm._v("Edit Dashboard")])]), _vm._v(" "), _c("button", {
+    staticClass: "modal-header border-0 flex-column pb-0"
+  }, [_c("button", {
     staticClass: "btn-close",
     attrs: {
       type: "button",
       "data-bs-dismiss": "modal",
       "aria-label": "Close"
     }
-  })]);
+  }), _vm._v(" "), _c("div", {
+    staticClass: "pt-2 w-100"
+  }, [_c("h5", {
+    staticClass: "modal-title text-primary fw-bold"
+  }, [_vm._v("\n                        Edit Dashboard\n                    ")]), _vm._v(" "), _c("hr")])]);
 }];
 render._withStripped = true;
 
@@ -9520,18 +9569,18 @@ var render = function render() {
     staticClass: "table-responsive"
   }, [_c("table", {
     staticClass: "table table-bordered mb-4"
-  }, [_vm._m(0), _vm._v(" "), _c("tbody", [_vm._l(_vm.data, function (item, index) {
+  }, [_vm._m(0), _vm._v(" "), _c("tbody", [_vm._l(_vm.dashboards, function (dashboard, index) {
     return _c("tr", {
       key: index
     }, [_vm._m(1, true), _vm._v(" "), _c("td", {
       staticClass: "align-middle"
     }, [_c("a", {
       attrs: {
-        href: "/dashboard/".concat(item.id)
+        href: "/dashboard/".concat(dashboard.id)
       }
-    }, [_vm._v(" " + _vm._s(item.name))])]), _vm._v(" "), _c("td", {
+    }, [_vm._v("\n                            " + _vm._s(dashboard.name))])]), _vm._v(" "), _c("td", {
       staticClass: "align-middle"
-    }, [_vm._v(_vm._s(item.description))]), _vm._v(" "), _c("td", {
+    }, [_vm._v("\n                        " + _vm._s(dashboard.description) + "\n                    ")]), _vm._v(" "), _c("td", {
       staticClass: "align-middle"
     }, [_c("button", {
       staticClass: "btn btn-outline-primary",
@@ -9542,7 +9591,7 @@ var render = function render() {
       },
       on: {
         click: function click($event) {
-          return _vm.editItem(item);
+          return _vm.editItem(dashboard, index);
         }
       }
     }, [_vm._v("\n                            Edit\n                        ")]), _vm._v(" "), _c("button", {
@@ -9554,7 +9603,7 @@ var render = function render() {
       },
       on: {
         click: function click($event) {
-          return _vm.deleteItem(item);
+          return _vm.deleteItem(dashboard);
         }
       }
     }, [_vm._v("\n                            Delete\n                        ")])])]);
@@ -9568,6 +9617,9 @@ var render = function render() {
   }, [_vm._t("default")], 2), _vm._v(" "), _c("dashboard-edit-modal", {
     attrs: {
       selectedData: _vm.selectedItem
+    },
+    on: {
+      updated: _vm.handlerUpdate
     }
   }), _vm._v(" "), _c("dashboard-delete-modal", {
     attrs: {
