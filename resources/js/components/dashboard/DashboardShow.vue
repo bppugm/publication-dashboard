@@ -243,10 +243,24 @@ export default {
         this.dashboard.widgets = [];
       }
 
+      // Push obtained data
+      // So the widget can get data directly
       event.data.forEach((item) => {
         this.dashboard.data.push(item);
       });
 
+      // Sanitize unused variables
+      event.widget.values.forEach((item, index) => {
+        if (item.type == "expression") {
+          let symbols = this.parser.parse(item.text).symbols();
+          var variables = item.variables.filter((variable) => {
+            return symbols.includes(variable.text);
+          });
+          item.variables = variables;
+        }
+      });
+
+      // Check is it an update or create
       if (event.index === null) {
         this.dashboard.widgets.push(event.widget);
       } else {

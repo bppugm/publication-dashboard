@@ -24,14 +24,18 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
-        "date-fns": "^2.29.3",
-        "vue-dataset": "^1.1.16",
+        "@tiptap/starter-kit": "^2.0.0-beta.197",
+        "@tiptap/vue-2": "^2.0.0-beta.197",
         "chart.js": "^3.9.1",
+        "date-fns": "^2.29.3",
         "expr-eval": "^2.0.2",
+        "floating-vue": "^1.0.0-beta.18",
         "highcharts": "^10.2.1",
         "highcharts-vue": "^1.4.0",
         "vue-chartjs": "^4.1.1",
+        "vue-dataset": "^1.1.16",
         "vue-grid-layout": "^2.4.0",
+        "vue-mention": "^1.0.0-floating-vue1",
         "vue-select": "^3.20.0",
         "vue-toast-notification": "^0.6.3"
     }

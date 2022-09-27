@@ -174,8 +174,14 @@
                       v-model="form.values[index].text"
                       @selected="onSelectedData"
                     ></dashboard-show-widget-data-selector>
+                    <dashboard-show-widget-expression
+                      v-if="form.values[index].type == 'expression'"
+                      v-model="form.values[index].text"
+                      :variables="form.values[index].variables"
+                      @selected="onSelectedExpression(index, $event)"
+                    ></dashboard-show-widget-expression>
                     <input
-                      v-else
+                      v-if="form.values[index].type == 'text'"
                       type="text"
                       class="form-control"
                       placeholder="Enter value"
@@ -220,7 +226,9 @@
 </template>
 
 <script>
+import DashboardShowWidgetExpression from "./DashboardShowWidgetExpression.vue";
 export default {
+  components: { DashboardShowWidgetExpression },
   props: {
     widgets: Array,
     editedWidget: {
@@ -316,7 +324,15 @@ export default {
     onSelectedData(event) {
       this.selectedData.push(event);
     },
+    onSelectedExpression(index, event) {
+      this.form.values[index].variables.push({
+        text: event.text,
+        data_id: event.data_id,
+      });
+      this.onSelectedData(event.original);
+    },
     submit() {
+
       this.$emit("submitted", {
         widget: this.form,
         data: this.selectedData,
