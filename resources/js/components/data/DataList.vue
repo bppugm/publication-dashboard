@@ -12,7 +12,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(item, index) in data" :key="index">
+                <tr v-for="(item, index) in allData" :key="index">
                     <td class="align-middle">
                         <a :href="`/data/${item.id}`"> {{ item.name }}</a>
                     </td>
@@ -28,7 +28,7 @@
                             class="btn btn-outline-primary my-1"
                             data-bs-toggle="modal"
                             data-bs-target="#data-edit-modal"
-                            @click="editItem(item)"
+                            @click="editItem(item, index)"
                         >
                             Edit
                         </button>
@@ -54,7 +54,7 @@
         <div class="d-flex justify-content-between">
             <slot></slot>
         </div>
-        <data-edit-modal :selectedData="selectedItem"></data-edit-modal>
+        <data-edit-modal :selectedData="selectedItem" @updated="handlerUpdate"></data-edit-modal>
         <data-delete-modal :selectedData="selectedItem"></data-delete-modal>
     </div>
 </template>
@@ -72,6 +72,7 @@ export default {
     },
     data() {
         return {
+            allData: { ...this.data },
             search: "",
             filter: {
                 keyword: null,
@@ -92,11 +93,15 @@ export default {
         resetSearch() {
             this.search = "";
         },
-        editItem(item) {
+        editItem(item, index) {
             this.selectedItem = item;
+            this.selectedItem.index = index;
         },
         deleteItem(item) {
             this.selectedItem = item;
+        },
+        handlerUpdate(event) {
+            this.allData[this.selectedItem.index] = event;
         },
         hasErrors(key) {
             if (this.errors[key]) {
