@@ -84,7 +84,7 @@
                         <div class="align-self-center">
                             Showing {{ $categories->firstItem() }} to {{ $categories->lastItem() }} of {{ $categories->total() }} results
                         </div>
-                        {{ $categories->OnEachSide(0)->links() }}
+                        {{ $categories->OnEachSide(1)->links() }}
                     </category-list>
                 </div>
             </div>

@@ -55,7 +55,7 @@
                     <div class="align-self-center">
                         Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} of {{ $users->total() }} results
                     </div>
-                    {{ $users->OnEachSide(0)->links() }}
+                    {{ $users->OnEachSide(1)->links() }}
                 </user-list>
             </div>
         </div>

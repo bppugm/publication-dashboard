@@ -82,7 +82,7 @@
                             Showing {{ $dashboards->firstItem() }} to {{ $dashboards->lastItem() }} out of
                             {{ $dashboards->total() }} results
                         </div>
-                            {{ $dashboards->OnEachSide(0)->links() }}
+                            {{ $dashboards->OnEachSide(1)->links() }}
                     </dashboard-list>
                 </div>
             </div>

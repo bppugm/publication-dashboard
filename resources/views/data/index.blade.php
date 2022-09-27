@@ -82,7 +82,7 @@
                     <div class="align-self-center">
                         Showing {{ $data->firstItem() }} to {{ $data->lastItem() }} of {{ $data->total() }} results
                     </div>
-                    {{ $data->OnEachSide(0)->links() }}
+                    {{ $data->OnEachSide(1)->links() }}
                 </data-list>
             </div>
         </div>
