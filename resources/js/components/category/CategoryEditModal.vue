@@ -17,7 +17,7 @@
                     ></button>
                     <div class="pt-2 w-100">
                         <h5 class="modal-title text-primary fw-bold">
-                            Add Category
+                            Edit Category
                         </h5>
                         <hr />
                     </div>
@@ -25,7 +25,9 @@
                 <div class="modal-body py-0">
                     <!-- name -->
                     <div class="mb-3 required-field">
-                        <label for="name" class="form-label fw-bold">Name</label>
+                        <label for="name" class="form-label fw-bold"
+                            >Name</label
+                        >
                         <div class="d-flex">
                             <div>
                                 <input
@@ -105,10 +107,17 @@
                         <button
                             type="button"
                             class="btn btn-primary w-50 ms-2"
-                            :disabled="isLoading"
+                            v-show="isLoading == false"
                             @click="submitForm"
                         >
                             Save
+                        </button>
+                        <button
+                            type="button"
+                            v-show="isLoading"
+                            class="btn btn-primary disabled w-50 ms-2"
+                        >
+                            Saving...
                         </button>
                     </div>
                 </div>
@@ -137,7 +146,15 @@ export default {
             isLoading: false,
             count: 0,
             countError: false,
+            modal: null,
         };
+    },
+    mounted() {
+        this.resetForm();
+        var modal = new bootstrap.Modal(
+            document.getElementById("category-edit-modal")
+        );
+        this.modal = modal;
     },
 
     watch: {
@@ -166,8 +183,17 @@ export default {
         async submitForm() {
             this.isLoading = true;
             try {
-                await axios.put(`/category/${this.selectedData.id}`, this.form);
-                return location.reload();
+                let response = await axios.put(
+                    `/category/${this.selectedData.id}`,
+                    this.form
+                );
+                this.$emit("updated", response.data);
+
+                this.$toast.success("Category updated", {
+                    position: "top",
+                    duration: 2000,
+                });
+                this.modal.toggle();
             } catch (error) {
                 this.errors = error.response.data.errors;
             } finally {

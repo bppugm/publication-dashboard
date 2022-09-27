@@ -101,10 +101,17 @@
                         <button
                             type="button"
                             class="btn btn-primary w-50 ms-2"
-                            :disabled="isLoading"
+                            v-show="isLoading == false"
                             @click="submitForm"
                         >
                             Save
+                        </button>
+                        <button
+                            type="button"
+                            v-show="isLoading"
+                            class="btn btn-primary disabled w-50 ms-2"
+                        >
+                            Saving...
                         </button>
                     </div>
                 </div>
@@ -150,7 +157,6 @@ export default {
                 return location.reload();
             } catch (error) {
                 this.errors = error.response.data.errors;
-                alert("Failed to add category");
             } finally {
                 this.isLoading = false;
             }
