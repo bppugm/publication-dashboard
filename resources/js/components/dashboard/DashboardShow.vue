@@ -114,6 +114,8 @@
             class="mx-1 text-primary"
             style="cursor: grab"
             @click="editWidget(index)"
+            data-bs-toggle="modal"
+            data-bs-target="#addWidget"
             ><i class="mdi mdi-pencil-outline"></i
           ></span>
           <span

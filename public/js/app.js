@@ -7083,7 +7083,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         if (newVal.title) {
           this.populateFrom();
           this.mode = "edit";
-          this.modal.show();
         }
       },
       deep: true
@@ -9957,7 +9956,9 @@ var render = function render() {
         cursor: "grab"
       },
       attrs: {
-        title: "Edit this widget"
+        title: "Edit this widget",
+        "data-bs-toggle": "modal",
+        "data-bs-target": "#addWidget"
       },
       on: {
         click: function click($event) {

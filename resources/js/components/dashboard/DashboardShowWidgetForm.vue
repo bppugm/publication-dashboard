@@ -283,7 +283,6 @@ export default {
         if (newVal.title) {
           this.populateFrom();
           this.mode = "edit";
-          this.modal.show();
         }
       },
       deep: true,
