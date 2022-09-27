@@ -184,4 +184,14 @@ class DashboardModelTest extends TestCase
             collect($extractedIds)->diff($dataIds)
         );
     }
+
+    /** @test */
+    public function data_extraction_handles_null_widgets()
+    {
+        $dashboard = Dashboard::factory()->create([
+            'widgets' => null
+        ]);
+
+        $this->assertCount(0, $dashboard->extractedDataIds());
+    }
 }

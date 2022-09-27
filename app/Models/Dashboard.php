@@ -41,6 +41,10 @@ class Dashboard extends Model
     {
         $dataIds = [];
 
+        if ($this->widgets == null) {
+            return $dataIds;
+        }
+
         foreach ($this->widgets as $widget) {
             // Extract data IDs from numeric widgets
             if (optional($widget)['type']  == 'numeric') {
