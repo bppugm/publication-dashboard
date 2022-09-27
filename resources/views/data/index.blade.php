@@ -6,37 +6,24 @@
         <h5 class="text-primary card-title mb-0">
             <b>DATA</b>
         </h5>
-        <div class="text-dark"><b>Data List</b></div>
+        <nav class="breadcrumb m-0">
+            <a class="breadcrumb-item active" aria-current="data" style="text-decoration: none"><b>Data List</b></a>
+        </nav>
     </div>
     <div class="card border-0 shadow-sm p-30">
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item" role="presentation">
-                <button
-                    class="nav-tabs nav-link active border-0"
-                    id="data-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#data"
-                    type="button"
-                    role="tab"
-                    aria-controls="data"
-                    aria-selected="true"
-                >
+                <button class="nav-tabs nav-link active border-0" id="data-tab" data-bs-toggle="tab"
+                    data-bs-target="#data" type="button" role="tab" aria-controls="data" aria-selected="true">
                     Data List
                 </button>
             </li>
             <li class="nav-item" role="presentation">
                 <a href="/category" class="text-decoration-none">
-                    <button
-                        class="nav-tabs nav-link disabled"
-                        id="category-tab"
-                        data-bs-toggle="tab"
-                        data-bs-target="#category"
-                        type="button"
-                        role="tab"
-                        aria-controls="category"
-                        aria-selected="true"
-                    >
-                        Category
+                    <button class="nav-tabs nav-link disabled" id="category-tab" data-bs-toggle="tab"
+                        data-bs-target="#category" type="button" role="tab" aria-controls="category"
+                        aria-selected="true">
+                        Category List
                     </button>
                 </a>
             </li>
@@ -53,22 +40,17 @@
                             </button>
                         </div>
                         <div class="input-group mx-3 w-100">
-                            <input
-                                type="text"
-                                name="search"
-                                placeholder="Search Data"
-                                class="form-control search-input"
-                                value="{{ request('search') }}"
-                            >
+                            <input type="text" name="search" placeholder="Search Data" class="form-control search-input"
+                                value="{{ request('search') }}">
 
                             @if (request('search'))
-                                <a href="{{ route('data.index') }}">
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-search-append" title="Reset Search">
-                                            <i class="mdi mdi-close"></i>
-                                        </button>
-                                    </span>
-                                </a>
+                            <a href="{{ route('data.index') }}">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-search-append" title="Reset Search">
+                                        <i class="mdi mdi-close"></i>
+                                    </button>
+                                </span>
+                            </a>
                             @endif
 
                             <span class="input-group-btn">
@@ -93,7 +75,7 @@
                     <div class="align-self-center">
                         Showing {{ $data->firstItem() }} to {{ $data->lastItem() }} of {{ $data->total() }} results
                     </div>
-                        {{ $data->OnEachSide(0)->links() }}
+                    {{ $data->OnEachSide(0)->links() }}
                 </data-list>
             </div>
         </div>

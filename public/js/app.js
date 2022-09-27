@@ -10974,7 +10974,7 @@ var render = function render() {
 
   return _c("div", [_c("table", {
     staticClass: "table table-bordered"
-  }, [_vm._m(0), _vm._v(" "), _c("tbody", _vm._l(_vm.data, function (item, index) {
+  }, [_vm._m(0), _vm._v(" "), _c("tbody", [_vm._l(_vm.data, function (item, index) {
     return _c("tr", {
       key: index
     }, [_c("td", {
@@ -11016,7 +11016,12 @@ var render = function render() {
         }
       }
     }, [_vm._v("\n                        Delete\n                    ")])])]);
-  }), 0)]), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _vm.data.length == 0 ? _c("tr", [_c("td", {
+    staticClass: "text-center",
+    attrs: {
+      colspan: "6"
+    }
+  }, [_vm._v("\n                        No data found\n                    ")])]) : _vm._e()], 2)]), _vm._v(" "), _c("div", {
     staticClass: "d-flex justify-content-between"
   }, [_vm._t("default")], 2), _vm._v(" "), _c("data-edit-modal", {
     attrs: {

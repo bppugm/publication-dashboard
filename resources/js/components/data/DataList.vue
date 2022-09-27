@@ -43,6 +43,12 @@
                         </button>
                     </td>
                 </tr>
+                <!-- make table row if data is not found -->
+                    <tr v-if="data.length == 0">
+                        <td colspan="6" class="text-center">
+                            No data found
+                        </td>
+                    </tr>
             </tbody>
         </table>
         <div class="d-flex justify-content-between">
