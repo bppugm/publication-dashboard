@@ -12,7 +12,7 @@
         </div>
         <div class="card border-0 shadow-sm p-30">
             <div id="users" role="users-list" aria-labelledby="User-list">
-                <div class="card-header text-primary bg-transparent">
+                <div class="card-header text-primary bg-transparent p-0 pb-1">
                     <h5>User List</h5>
                 </div>
                 <!-- Heading Table -->
@@ -55,7 +55,7 @@
                     <div class="align-self-center">
                         Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} of {{ $users->total() }} results
                     </div>
-                    {{ $users->OnEachSide(0)->links() }}
+                    {{ $users->OnEachSide(1)->links() }}
                 </user-list>
             </div>
         </div>

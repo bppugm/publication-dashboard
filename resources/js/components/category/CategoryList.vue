@@ -12,20 +12,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item, index) in data" :key="index">
+                    <tr v-for="(category, index) in categories" :key="index">
                         <td class="align-middle text-center">
                             <i
                                 class="mdi mdi-square"
                                 :style="{
-                                    color: item.colour,
+                                    color: category.colour,
                                     fontSize: '1.5rem',
                                 }"
                             ></i>
                         </td>
-                        <td class="align-middle">{{ item.name }}</td>
-                        <td class="align-middle">{{ item.description }}</td>
+                        <td class="align-middle">{{ category.name }}</td>
+                        <td class="align-middle">{{ category.description }}</td>
                         <td class="align-middle">
-                            {{ formatDateTime(item.created_at) }}
+                            {{ formatDateTime(category.created_at) }}
                         </td>
                         <td class="align-middle">
                             <button
@@ -33,7 +33,7 @@
                                 class="btn btn-outline-primary my-1"
                                 data-bs-toggle="modal"
                                 data-bs-target="#category-edit-modal"
-                                @click="editItem(item)"
+                                @click="editItem(category, index)"
                             >
                                 Edit
                             </button>
@@ -42,7 +42,7 @@
                                 class="btn btn-outline-danger my-1"
                                 data-bs-toggle="modal"
                                 data-bs-target="#category-delete-modal"
-                                @click="deleteItem(item)"
+                                @click="deleteItem(category)"
                             >
                                 Delete
                             </button>
@@ -59,9 +59,7 @@
             <div class="d-flex justify-content-between">
                 <slot></slot>
             </div>
-            <category-edit-modal
-                :selectedData="selectedItem"
-            ></category-edit-modal>
+            <category-edit-modal :selectedData="selectedItem" @updated="handlerUpdate"></category-edit-modal>
             <category-delete-modal
                 :selectedData="selectedItem"
             ></category-delete-modal>
@@ -82,6 +80,7 @@ export default {
     },
     data() {
         return {
+            categories: { ...this.data},
             search: "",
             selectedItem: {},
             isLoading: false,
@@ -96,11 +95,15 @@ export default {
             }
             return dateTimeString;
         },
-        editItem(item) {
+        editItem(item, index) {
             this.selectedItem = item;
+            this.selectedItem.index = index;
         },
         deleteItem(item) {
             this.selectedItem = item;
+        },
+        handlerUpdate(event) {
+            this.categories[this.selectedItem.index] = event;
         },
         async doLogin() {
             this.isLoading = true;
