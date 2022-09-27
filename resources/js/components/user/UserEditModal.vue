@@ -9,9 +9,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">
-                        Edit User
-                    </h5>
+                    <h5 class="modal-title">Edit User</h5>
                     <button
                         type="button"
                         class="btn-close"
@@ -52,7 +50,9 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
+                        <label for="password" class="form-label"
+                            >Password</label
+                        >
                         <div class="input-group">
                             <input
                                 id="password"
@@ -62,39 +62,64 @@
                                 placeholder="Enter Password"
                                 v-model="form.password"
                                 :class="{
-                                  'is-invalid': hasErrors('password'),
+                                    'is-invalid': hasErrors('password'),
                                 }"
                             />
-                          <div
-                            class="d-flex icon-input-append h-100 px-3"
-                            @click="showPassword = !showPassword"
-                          >
-                            <i class="my-auto" :class="showPassword ? 'mdi mdi-eye-off': 'mdi mdi-eye'"></i>
-                          </div>
+                            <div
+                                class="d-flex icon-input-append h-100 px-3"
+                                @click="showPassword = !showPassword"
+                            >
+                                <i
+                                    class="my-auto"
+                                    :class="
+                                        showPassword
+                                            ? 'mdi mdi-eye-off'
+                                            : 'mdi mdi-eye'
+                                    "
+                                ></i>
+                            </div>
                         </div>
                         <div class="invalid-feedback">
                             {{ getErrors("password") }}
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="password" class="form-label">Password Confirmation</label>
+                        <label for="password" class="form-label"
+                            >Password Confirmation</label
+                        >
                         <div class="input-group">
                             <input
                                 id="password_confirmation"
                                 name="password_confirmation"
-                                :type="showPasswordConfirmation ? 'text' : 'password'"
+                                :type="
+                                    showPasswordConfirmation
+                                        ? 'text'
+                                        : 'password'
+                                "
                                 class="form-control icon-append"
                                 placeholder="Enter Password Confirmation"
                                 v-model="form.password_confirmation"
                                 :class="{
-                                  'is-invalid': hasErrors('password_confirmation'),
+                                    'is-invalid': hasErrors(
+                                        'password_confirmation'
+                                    ),
                                 }"
                             />
                             <div
-                              class="d-flex icon-input-append h-100 px-3"
-                              @click="showPasswordConfirmation = !showPasswordConfirmation"
+                                class="d-flex icon-input-append h-100 px-3"
+                                @click="
+                                    showPasswordConfirmation =
+                                        !showPasswordConfirmation
+                                "
                             >
-                              <i class="my-auto" :class="showPasswordConfirmation ? 'mdi mdi-eye-off': 'mdi mdi-eye'"></i>
+                                <i
+                                    class="my-auto"
+                                    :class="
+                                        showPasswordConfirmation
+                                            ? 'mdi mdi-eye-off'
+                                            : 'mdi mdi-eye'
+                                    "
+                                ></i>
                             </div>
                         </div>
                         <div class="invalid-feedback">
@@ -121,7 +146,7 @@
                             Save
                         </button>
                     </div>
-            </div>
+                </div>
             </div>
         </div>
     </div>
@@ -163,10 +188,7 @@ export default {
             this.errors = {};
         },
         resetForm() {
-          Object.keys(this.form).forEach((key) => {
-            this.form[key] = this.selectedData[key] ?? null;
-          });
-          this.errors = {};
+            this.form = { ...this.selectedData };
         },
         doSubmit() {
             this.submitForm();
