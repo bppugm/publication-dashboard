@@ -12,10 +12,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item, index) in data" :key="index">
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.email }}</td>
-                        <td>{{ item.assigned_data }}</td>
+                    <tr v-for="(user, index) in users" :key="index">
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.assigned_data }}</td>
                         <!-- Action -->
                         <td>
                             <button
@@ -23,7 +23,7 @@
                                 class="btn btn-outline-primary"
                                 data-bs-toggle="modal"
                                 data-bs-target="#user-edit-modal"
-                                @click="editItem(item)"
+                                @click="editItem(user, index)"
                             >
                                 Edit
                             </button>
@@ -32,7 +32,7 @@
                                 class="btn btn-outline-danger"
                                 data-bs-toggle="modal"
                                 data-bs-target="#user-delete-modal"
-                                @click="deleteItem(item)"
+                                @click="deleteItem(user)"
                             >
                                 Delete
                             </button>
@@ -47,7 +47,7 @@
                 <slot></slot>
             </div>
         </div>
-        <user-edit-modal :selectedData="selectedItem"></user-edit-modal>
+        <user-edit-modal :selectedData="selectedItem" @updated="handlerUpdate"></user-edit-modal>
         <user-delete-modal :selectedData="selectedItem"></user-delete-modal>
     </div>
 </template>
@@ -64,6 +64,7 @@ export default {
     },
     data() {
         return {
+            users: { ...this.data },
             search: "",
             selectedItem: {},
             isLoading: false,
@@ -71,11 +72,15 @@ export default {
         };
     },
     methods: {
-        editItem(item) {
+        editItem(item, index) {
             this.selectedItem = item;
+            this.selectedItem.index = index;
         },
         deleteItem(item) {
             this.selectedItem = item;
+        },
+        handlerUpdate(event) {
+            this.users[this.selectedItem.index] = event;
         },
         async doLogin() {
             this.isLoading = true;

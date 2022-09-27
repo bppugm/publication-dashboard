@@ -174,6 +174,13 @@ export default {
             isLoading: false,
         };
     },
+    mounted() {
+        this.resetForm();
+        var modal = new bootstrap.Modal(
+            document.getElementById("user-edit-modal")
+        );
+        this.modal = modal;
+    },
     watch: {
         selectedData: {
             immediate: true,
@@ -196,8 +203,16 @@ export default {
         async submitForm() {
             this.isLoading = true;
             try {
-                await axios.put(`/user/${this.selectedData.id}`, this.form);
-                return location.reload();
+                let response = await axios.put(
+                    `/user/${this.selectedData.id}`, this.form
+                    );
+                this.$emit("updated", response.data);
+
+                this.$toast.success("User updated", {
+                    position: "top",
+                    duration: 2000,
+                });
+                this.modal.toggle();
             } catch (error) {
                 this.errors = error.response.data.errors;
             } finally {
