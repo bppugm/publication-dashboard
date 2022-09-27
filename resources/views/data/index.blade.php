@@ -20,9 +20,16 @@
             </li>
             <li class="nav-item" role="presentation">
                 <a href="/category" class="text-decoration-none">
-                    <button class="nav-tabs nav-link disabled" id="category-tab" data-bs-toggle="tab"
-                        data-bs-target="#category" type="button" role="tab" aria-controls="category"
-                        aria-selected="true">
+                    <button
+                        class="nav-tabs nav-link disabled"
+                        id="category-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#category"
+                        type="button"
+                        role="tab"
+                        aria-controls="category"
+                        aria-selected="true"
+                    >
                         Category List
                     </button>
                 </a>
@@ -65,7 +72,7 @@
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#data-add-modal">
                             <i class="mdi mdi-plus d-none d-sm-inline" style="margin-right: 10px"></i>
-                            <span class="d-none d-sm-inline"> Add Category</span>
+                            <span class="d-none d-sm-inline"> Add Data</span>
                             <span class="d-inline d-sm-none"> Add</span>
                         </button>
                         <data-add-modal></data-add-modal>
