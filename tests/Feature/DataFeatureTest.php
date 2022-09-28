@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Category;
 use App\Models\Data;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -64,5 +65,26 @@ class DataFeatureTest extends TestCase
         ]));
 
         $response->assertOk()->assertJsonCount(2, 'data');
+    }
+
+    /** @test */
+    public function user_can_filter_data_by_category()
+    {
+        $this->login();
+        $category = Category::factory()->create();
+        $data = Data::factory(2)->create();
+        $data->each(function ($data) use ($category) {
+            $data->categories()->attach($category);
+        });
+
+        $response = $this->getJson(route('data.index', [
+            'category' => $category->name
+        ]));
+
+        $response->assertOk()->assertJsonCount(2, 'data');
+        $this->assertDatabaseHas('category_data', [
+            'category_id' => $category->id,
+            'data_id' => $data->pluck('id')->toArray()
+        ]);
     }
 }

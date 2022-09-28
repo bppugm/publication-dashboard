@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Models;
 
+use App\Models\Category;
 use App\Models\Dashboard;
 use App\Models\Data;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -29,5 +30,15 @@ class DataModelTest extends TestCase
         $data->dashboards()->attach($dashboard);
 
         $this->assertCount(5, $data->dashboards);
+    }
+
+    /** @test */
+    public function it_belongs_to_many_categories()
+    {
+        $data = Data::factory()->create();
+        $category = Category::factory(5)->create();
+        $data->categories()->attach($category);
+
+        $this->assertCount(5, $data->categories);
     }
 }

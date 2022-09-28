@@ -18,9 +18,20 @@ class Data extends Model
                     ->orWhere('description', 'like', '%' . $search . '%')
             )
         );
+
+        $query->when($filters['category'] ?? false, fn ($query, $category) =>
+            $query->whereHas('categories', fn ($query) =>
+                $query->where('name', 'like', '%' . $category . '%')
+            )
+        );
     }
     public function dashboards()
     {
         return $this->belongsToMany(\App\Models\Dashboard::class);
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(\App\Models\Category::class, 'category_data');
     }
 }
