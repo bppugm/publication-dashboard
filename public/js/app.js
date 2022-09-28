@@ -7032,18 +7032,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return true;
   }
 
-  var parser = new expr_eval__WEBPACK_IMPORTED_MODULE_0__.Parser();
-  var subs = {};
-  value.variables.forEach(function (item) {
-    subs[item.text] = item.data_id;
-  });
-  var vars = parser.parse(value.text).simplify(subs).variables();
+  try {
+    var parser = new expr_eval__WEBPACK_IMPORTED_MODULE_0__.Parser();
+    var subs = {};
+    value.variables.forEach(function (item) {
+      subs[item.text] = item.data_id;
+    });
+    var vars = parser.parse(value.text).simplify(subs).variables();
 
-  if (vars.length == 0) {
-    return true;
+    if (vars.length == 0) {
+      return true;
+    }
+
+    return "Unbound variables found: ".concat(vars.join(", "));
+  } catch (error) {
+    return "Invalid expression";
   }
-
-  return "Unbound variables found: ".concat(vars.join(', '));
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {

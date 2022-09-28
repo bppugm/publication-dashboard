@@ -243,23 +243,27 @@ import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
 import { Parser } from "expr-eval";
 
 extend("nounbounds", (value) => {
-    if (value.type != "expression") {
-        return true;
-    }
+  if (value.type != "expression") {
+    return true;
+  }
 
+  try {
     var parser = new Parser();
 
     let subs = {};
     value.variables.forEach((item) => {
-        subs[item.text] = item.data_id;
+      subs[item.text] = item.data_id;
     });
     var vars = parser.parse(value.text).simplify(subs).variables();
 
     if (vars.length == 0) {
-        return true;
+      return true;
     }
 
-    return `Unbound variables found: ${vars.join(', ')}`;
+    return `Unbound variables found: ${vars.join(", ")}`;
+  } catch (error) {
+    return "Invalid expression";
+  }
 });
 
 export default {
