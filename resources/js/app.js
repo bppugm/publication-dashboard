@@ -20,8 +20,13 @@ Vue.use(VueToast);
 // Vue Select
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
-
 Vue.component("v-select", vSelect);
+
+// Floating vue (required by vue mention)
+import "floating-vue/dist/style.css";
+import VTooltip from "floating-vue";
+Vue.use(VTooltip);
+
 
 /**
  * The following block of code may be used to automatically register your
