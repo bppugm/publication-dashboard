@@ -12,8 +12,11 @@ class Data extends Model
 
     public function scopeFilter($query, array $filters)
     {
-        $query->when($filters['search'] ?? false, fn ($query, $search) =>
-            $query->where(fn ($query) =>
+        $query->when(
+            $filters['search'] ?? false,
+            fn ($query, $search) =>
+            $query->where(
+                fn ($query) =>
                 $query->where('name', 'like', '%' . $search . '%')
                     ->orWhere('description', 'like', '%' . $search . '%')
             )
@@ -21,9 +24,22 @@ class Data extends Model
 
         $query->when($filters['category'] ?? false, fn ($query, $category) =>
             $query->whereHas('categories', fn ($query) =>
-                $query->where('name', 'like', '%' . $category . '%')
+                $query->whereIn('name', (array)$category)
             )
         );
+
+        // $query->when(
+        //     $filters['category'] ?? false,
+        //     fn ($query, $category) =>
+        //     $query->whereHas('categories', function ($query) use ($category) {
+        //         $query->where(function ($queryc) use ($category) {
+        //             dump($category);
+        //             foreach ($category as $key => $value) {
+        //                 $queryc->where('categories.name', $value);
+        //             }
+        //         });
+        //     })
+        // );
     }
     public function dashboards()
     {

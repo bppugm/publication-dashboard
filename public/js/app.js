@@ -3249,6 +3249,27 @@ function withinMaxClamp(min, value, max) {
 
 /***/ }),
 
+/***/ "./node_modules/ansi-regex/index.js":
+/*!******************************************!*\
+  !*** ./node_modules/ansi-regex/index.js ***!
+  \******************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = ({onlyFirst = false} = {}) => {
+	const pattern = [
+		'[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]+)*|[a-zA-Z\\d]+(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)',
+		'(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))'
+	].join('|');
+
+	return new RegExp(pattern, onlyFirst ? undefined : 'g');
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -7347,12 +7368,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/format/index.js");
+/* harmony import */ var cli_table3_src_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! cli-table3/src/utils */ "./node_modules/cli-table3/src/utils.js");
+/* harmony import */ var cli_table3_src_utils__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(cli_table3_src_utils__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/format/index.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -7381,7 +7405,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var date = new Date(dateTimeString);
 
       if (date instanceof Date && !isNaN(date)) {
-        return (0,date_fns__WEBPACK_IMPORTED_MODULE_0__["default"])(new Date(dateTimeString), "dd-MM-yyyy HH:mm");
+        return (0,date_fns__WEBPACK_IMPORTED_MODULE_1__["default"])(new Date(dateTimeString), "dd-MM-yyyy HH:mm");
       }
 
       return dateTimeString;
@@ -11153,7 +11177,14 @@ var render = function render() {
       }
     }, [_vm._v(" " + _vm._s(item.name))])]), _vm._v(" "), _c("td", {
       staticClass: "align-middle"
-    }, [_vm._v("-")]), _vm._v(" "), _c("td", {
+    }, _vm._l(item.categories, function (category, index) {
+      return _c("span", {
+        key: index
+      }, [_c("div", {
+        staticClass: "btn btn-outline-primary disabled me-2 rounded-4",
+        style: "color: ".concat(category.colour, "; border-color: ").concat(category.colour, "; opacity: 1;")
+      }, [_vm._v("\n                            " + _vm._s(category.name) + "\n                        ")])]);
+    }), 0), _vm._v(" "), _c("td", {
       staticClass: "align-middle"
     }, [_vm._v(_vm._s(item.value))]), _vm._v(" "), _c("td", {
       staticClass: "align-middle"
@@ -11189,7 +11220,7 @@ var render = function render() {
     attrs: {
       colspan: "6"
     }
-  }, [_vm._v("\n                        No data found\n                    ")])]) : _vm._e()], 2)]), _vm._v(" "), _c("div", {
+  }, [_vm._v("No data found")])]) : _vm._e()], 2)]), _vm._v(" "), _c("div", {
     staticClass: "d-flex justify-content-between"
   }, [_vm._t("default")], 2), _vm._v(" "), _c("data-edit-modal", {
     attrs: {
@@ -17513,6 +17544,352 @@ defineJQueryPlugin(Toast);
 
 /***/ }),
 
+/***/ "./node_modules/cli-table3/src/utils.js":
+/*!**********************************************!*\
+  !*** ./node_modules/cli-table3/src/utils.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+const stringWidth = __webpack_require__(/*! string-width */ "./node_modules/string-width/index.js");
+
+function codeRegex(capture) {
+  return capture ? /\u001b\[((?:\d*;){0,5}\d*)m/g : /\u001b\[(?:\d*;){0,5}\d*m/g;
+}
+
+function strlen(str) {
+  let code = codeRegex();
+  let stripped = ('' + str).replace(code, '');
+  let split = stripped.split('\n');
+  return split.reduce(function (memo, s) {
+    return stringWidth(s) > memo ? stringWidth(s) : memo;
+  }, 0);
+}
+
+function repeat(str, times) {
+  return Array(times + 1).join(str);
+}
+
+function pad(str, len, pad, dir) {
+  let length = strlen(str);
+  if (len + 1 >= length) {
+    let padlen = len - length;
+    switch (dir) {
+      case 'right': {
+        str = repeat(pad, padlen) + str;
+        break;
+      }
+      case 'center': {
+        let right = Math.ceil(padlen / 2);
+        let left = padlen - right;
+        str = repeat(pad, left) + str + repeat(pad, right);
+        break;
+      }
+      default: {
+        str = str + repeat(pad, padlen);
+        break;
+      }
+    }
+  }
+  return str;
+}
+
+let codeCache = {};
+
+function addToCodeCache(name, on, off) {
+  on = '\u001b[' + on + 'm';
+  off = '\u001b[' + off + 'm';
+  codeCache[on] = { set: name, to: true };
+  codeCache[off] = { set: name, to: false };
+  codeCache[name] = { on: on, off: off };
+}
+
+//https://github.com/Marak/colors.js/blob/master/lib/styles.js
+addToCodeCache('bold', 1, 22);
+addToCodeCache('italics', 3, 23);
+addToCodeCache('underline', 4, 24);
+addToCodeCache('inverse', 7, 27);
+addToCodeCache('strikethrough', 9, 29);
+
+function updateState(state, controlChars) {
+  let controlCode = controlChars[1] ? parseInt(controlChars[1].split(';')[0]) : 0;
+  if ((controlCode >= 30 && controlCode <= 39) || (controlCode >= 90 && controlCode <= 97)) {
+    state.lastForegroundAdded = controlChars[0];
+    return;
+  }
+  if ((controlCode >= 40 && controlCode <= 49) || (controlCode >= 100 && controlCode <= 107)) {
+    state.lastBackgroundAdded = controlChars[0];
+    return;
+  }
+  if (controlCode === 0) {
+    for (let i in state) {
+      /* istanbul ignore else */
+      if (Object.prototype.hasOwnProperty.call(state, i)) {
+        delete state[i];
+      }
+    }
+    return;
+  }
+  let info = codeCache[controlChars[0]];
+  if (info) {
+    state[info.set] = info.to;
+  }
+}
+
+function readState(line) {
+  let code = codeRegex(true);
+  let controlChars = code.exec(line);
+  let state = {};
+  while (controlChars !== null) {
+    updateState(state, controlChars);
+    controlChars = code.exec(line);
+  }
+  return state;
+}
+
+function unwindState(state, ret) {
+  let lastBackgroundAdded = state.lastBackgroundAdded;
+  let lastForegroundAdded = state.lastForegroundAdded;
+
+  delete state.lastBackgroundAdded;
+  delete state.lastForegroundAdded;
+
+  Object.keys(state).forEach(function (key) {
+    if (state[key]) {
+      ret += codeCache[key].off;
+    }
+  });
+
+  if (lastBackgroundAdded && lastBackgroundAdded != '\u001b[49m') {
+    ret += '\u001b[49m';
+  }
+  if (lastForegroundAdded && lastForegroundAdded != '\u001b[39m') {
+    ret += '\u001b[39m';
+  }
+
+  return ret;
+}
+
+function rewindState(state, ret) {
+  let lastBackgroundAdded = state.lastBackgroundAdded;
+  let lastForegroundAdded = state.lastForegroundAdded;
+
+  delete state.lastBackgroundAdded;
+  delete state.lastForegroundAdded;
+
+  Object.keys(state).forEach(function (key) {
+    if (state[key]) {
+      ret = codeCache[key].on + ret;
+    }
+  });
+
+  if (lastBackgroundAdded && lastBackgroundAdded != '\u001b[49m') {
+    ret = lastBackgroundAdded + ret;
+  }
+  if (lastForegroundAdded && lastForegroundAdded != '\u001b[39m') {
+    ret = lastForegroundAdded + ret;
+  }
+
+  return ret;
+}
+
+function truncateWidth(str, desiredLength) {
+  if (str.length === strlen(str)) {
+    return str.substr(0, desiredLength);
+  }
+
+  while (strlen(str) > desiredLength) {
+    str = str.slice(0, -1);
+  }
+
+  return str;
+}
+
+function truncateWidthWithAnsi(str, desiredLength) {
+  let code = codeRegex(true);
+  let split = str.split(codeRegex());
+  let splitIndex = 0;
+  let retLen = 0;
+  let ret = '';
+  let myArray;
+  let state = {};
+
+  while (retLen < desiredLength) {
+    myArray = code.exec(str);
+    let toAdd = split[splitIndex];
+    splitIndex++;
+    if (retLen + strlen(toAdd) > desiredLength) {
+      toAdd = truncateWidth(toAdd, desiredLength - retLen);
+    }
+    ret += toAdd;
+    retLen += strlen(toAdd);
+
+    if (retLen < desiredLength) {
+      if (!myArray) {
+        break;
+      } // full-width chars may cause a whitespace which cannot be filled
+      ret += myArray[0];
+      updateState(state, myArray);
+    }
+  }
+
+  return unwindState(state, ret);
+}
+
+function truncate(str, desiredLength, truncateChar) {
+  truncateChar = truncateChar || '…';
+  let lengthOfStr = strlen(str);
+  if (lengthOfStr <= desiredLength) {
+    return str;
+  }
+  desiredLength -= strlen(truncateChar);
+
+  let ret = truncateWidthWithAnsi(str, desiredLength);
+
+  return ret + truncateChar;
+}
+
+function defaultOptions() {
+  return {
+    chars: {
+      top: '─',
+      'top-mid': '┬',
+      'top-left': '┌',
+      'top-right': '┐',
+      bottom: '─',
+      'bottom-mid': '┴',
+      'bottom-left': '└',
+      'bottom-right': '┘',
+      left: '│',
+      'left-mid': '├',
+      mid: '─',
+      'mid-mid': '┼',
+      right: '│',
+      'right-mid': '┤',
+      middle: '│',
+    },
+    truncate: '…',
+    colWidths: [],
+    rowHeights: [],
+    colAligns: [],
+    rowAligns: [],
+    style: {
+      'padding-left': 1,
+      'padding-right': 1,
+      head: ['red'],
+      border: ['grey'],
+      compact: false,
+    },
+    head: [],
+  };
+}
+
+function mergeOptions(options, defaults) {
+  options = options || {};
+  defaults = defaults || defaultOptions();
+  let ret = Object.assign({}, defaults, options);
+  ret.chars = Object.assign({}, defaults.chars, options.chars);
+  ret.style = Object.assign({}, defaults.style, options.style);
+  return ret;
+}
+
+// Wrap on word boundary
+function wordWrap(maxLength, input) {
+  let lines = [];
+  let split = input.split(/(\s+)/g);
+  let line = [];
+  let lineLength = 0;
+  let whitespace;
+  for (let i = 0; i < split.length; i += 2) {
+    let word = split[i];
+    let newLength = lineLength + strlen(word);
+    if (lineLength > 0 && whitespace) {
+      newLength += whitespace.length;
+    }
+    if (newLength > maxLength) {
+      if (lineLength !== 0) {
+        lines.push(line.join(''));
+      }
+      line = [word];
+      lineLength = strlen(word);
+    } else {
+      line.push(whitespace || '', word);
+      lineLength = newLength;
+    }
+    whitespace = split[i + 1];
+  }
+  if (lineLength) {
+    lines.push(line.join(''));
+  }
+  return lines;
+}
+
+// Wrap text (ignoring word boundaries)
+function textWrap(maxLength, input) {
+  let lines = [];
+  let line = '';
+  function pushLine(str, ws) {
+    if (line.length && ws) line += ws;
+    line += str;
+    while (line.length > maxLength) {
+      lines.push(line.slice(0, maxLength));
+      line = line.slice(maxLength);
+    }
+  }
+  let split = input.split(/(\s+)/g);
+  for (let i = 0; i < split.length; i += 2) {
+    pushLine(split[i], i && split[i - 1]);
+  }
+  if (line.length) lines.push(line);
+  return lines;
+}
+
+function multiLineWordWrap(maxLength, input, wrapOnWordBoundary = true) {
+  let output = [];
+  input = input.split('\n');
+  const handler = wrapOnWordBoundary ? wordWrap : textWrap;
+  for (let i = 0; i < input.length; i++) {
+    output.push.apply(output, handler(maxLength, input[i]));
+  }
+  return output;
+}
+
+function colorizeLines(input) {
+  let state = {};
+  let output = [];
+  for (let i = 0; i < input.length; i++) {
+    let line = rewindState(state, input[i]);
+    state = readState(line);
+    let temp = Object.assign({}, state);
+    output.push(unwindState(temp, line));
+  }
+  return output;
+}
+
+/**
+ * Credit: Matheus Sampaio https://github.com/matheussampaio
+ */
+function hyperlink(url, text) {
+  const OSC = '\u001B]';
+  const BEL = '\u0007';
+  const SEP = ';';
+
+  return [OSC, '8', SEP, SEP, url || text, BEL, text, OSC, '8', SEP, SEP, BEL].join('');
+}
+
+module.exports = {
+  strlen: strlen,
+  repeat: repeat,
+  pad: pad,
+  truncate: truncate,
+  mergeOptions: mergeOptions,
+  wordWrap: multiLineWordWrap,
+  colorizeLines: colorizeLines,
+  hyperlink,
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12.use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/Login.vue?vue&type=style&index=0&id=4221c3ad&lang=scss&scoped=true&":
 /*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12.use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/Login.vue?vue&type=style&index=0&id=4221c3ad&lang=scss&scoped=true& ***!
@@ -20671,6 +21048,84 @@ function toDate(argument) {
     return new Date(NaN);
   }
 }
+
+/***/ }),
+
+/***/ "./node_modules/emoji-regex/index.js":
+/*!*******************************************!*\
+  !*** ./node_modules/emoji-regex/index.js ***!
+  \*******************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = function () {
+  // https://mths.be/emoji
+  return /\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62(?:\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67|\uDB40\uDC73\uDB40\uDC63\uDB40\uDC74|\uDB40\uDC77\uDB40\uDC6C\uDB40\uDC73)\uDB40\uDC7F|\uD83D\uDC68(?:\uD83C\uDFFC\u200D(?:\uD83E\uDD1D\u200D\uD83D\uDC68\uD83C\uDFFB|\uD83C[\uDF3E\uDF73\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFF\u200D(?:\uD83E\uDD1D\u200D\uD83D\uDC68(?:\uD83C[\uDFFB-\uDFFE])|\uD83C[\uDF3E\uDF73\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFE\u200D(?:\uD83E\uDD1D\u200D\uD83D\uDC68(?:\uD83C[\uDFFB-\uDFFD])|\uD83C[\uDF3E\uDF73\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFD\u200D(?:\uD83E\uDD1D\u200D\uD83D\uDC68(?:\uD83C[\uDFFB\uDFFC])|\uD83C[\uDF3E\uDF73\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\u200D(?:\u2764\uFE0F\u200D(?:\uD83D\uDC8B\u200D)?\uD83D\uDC68|(?:\uD83D[\uDC68\uDC69])\u200D(?:\uD83D\uDC66\u200D\uD83D\uDC66|\uD83D\uDC67\u200D(?:\uD83D[\uDC66\uDC67]))|\uD83D\uDC66\u200D\uD83D\uDC66|\uD83D\uDC67\u200D(?:\uD83D[\uDC66\uDC67])|(?:\uD83D[\uDC68\uDC69])\u200D(?:\uD83D[\uDC66\uDC67])|[\u2695\u2696\u2708]\uFE0F|\uD83D[\uDC66\uDC67]|\uD83C[\uDF3E\uDF73\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|(?:\uD83C\uDFFB\u200D[\u2695\u2696\u2708]|\uD83C\uDFFF\u200D[\u2695\u2696\u2708]|\uD83C\uDFFE\u200D[\u2695\u2696\u2708]|\uD83C\uDFFD\u200D[\u2695\u2696\u2708]|\uD83C\uDFFC\u200D[\u2695\u2696\u2708])\uFE0F|\uD83C\uDFFB\u200D(?:\uD83C[\uDF3E\uDF73\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C[\uDFFB-\uDFFF])|(?:\uD83E\uDDD1\uD83C\uDFFB\u200D\uD83E\uDD1D\u200D\uD83E\uDDD1|\uD83D\uDC69\uD83C\uDFFC\u200D\uD83E\uDD1D\u200D\uD83D\uDC69)\uD83C\uDFFB|\uD83E\uDDD1(?:\uD83C\uDFFF\u200D\uD83E\uDD1D\u200D\uD83E\uDDD1(?:\uD83C[\uDFFB-\uDFFF])|\u200D\uD83E\uDD1D\u200D\uD83E\uDDD1)|(?:\uD83E\uDDD1\uD83C\uDFFE\u200D\uD83E\uDD1D\u200D\uD83E\uDDD1|\uD83D\uDC69\uD83C\uDFFF\u200D\uD83E\uDD1D\u200D(?:\uD83D[\uDC68\uDC69]))(?:\uD83C[\uDFFB-\uDFFE])|(?:\uD83E\uDDD1\uD83C\uDFFC\u200D\uD83E\uDD1D\u200D\uD83E\uDDD1|\uD83D\uDC69\uD83C\uDFFD\u200D\uD83E\uDD1D\u200D\uD83D\uDC69)(?:\uD83C[\uDFFB\uDFFC])|\uD83D\uDC69(?:\uD83C\uDFFE\u200D(?:\uD83E\uDD1D\u200D\uD83D\uDC68(?:\uD83C[\uDFFB-\uDFFD\uDFFF])|\uD83C[\uDF3E\uDF73\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFC\u200D(?:\uD83E\uDD1D\u200D\uD83D\uDC68(?:\uD83C[\uDFFB\uDFFD-\uDFFF])|\uD83C[\uDF3E\uDF73\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFB\u200D(?:\uD83E\uDD1D\u200D\uD83D\uDC68(?:\uD83C[\uDFFC-\uDFFF])|\uD83C[\uDF3E\uDF73\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFD\u200D(?:\uD83E\uDD1D\u200D\uD83D\uDC68(?:\uD83C[\uDFFB\uDFFC\uDFFE\uDFFF])|\uD83C[\uDF3E\uDF73\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\u200D(?:\u2764\uFE0F\u200D(?:\uD83D\uDC8B\u200D(?:\uD83D[\uDC68\uDC69])|\uD83D[\uDC68\uDC69])|\uD83C[\uDF3E\uDF73\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFF\u200D(?:\uD83C[\uDF3E\uDF73\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD]))|\uD83D\uDC69\u200D\uD83D\uDC69\u200D(?:\uD83D\uDC66\u200D\uD83D\uDC66|\uD83D\uDC67\u200D(?:\uD83D[\uDC66\uDC67]))|(?:\uD83E\uDDD1\uD83C\uDFFD\u200D\uD83E\uDD1D\u200D\uD83E\uDDD1|\uD83D\uDC69\uD83C\uDFFE\u200D\uD83E\uDD1D\u200D\uD83D\uDC69)(?:\uD83C[\uDFFB-\uDFFD])|\uD83D\uDC69\u200D\uD83D\uDC66\u200D\uD83D\uDC66|\uD83D\uDC69\u200D\uD83D\uDC69\u200D(?:\uD83D[\uDC66\uDC67])|(?:\uD83D\uDC41\uFE0F\u200D\uD83D\uDDE8|\uD83D\uDC69(?:\uD83C\uDFFF\u200D[\u2695\u2696\u2708]|\uD83C\uDFFE\u200D[\u2695\u2696\u2708]|\uD83C\uDFFC\u200D[\u2695\u2696\u2708]|\uD83C\uDFFB\u200D[\u2695\u2696\u2708]|\uD83C\uDFFD\u200D[\u2695\u2696\u2708]|\u200D[\u2695\u2696\u2708])|(?:(?:\u26F9|\uD83C[\uDFCB\uDFCC]|\uD83D\uDD75)\uFE0F|\uD83D\uDC6F|\uD83E[\uDD3C\uDDDE\uDDDF])\u200D[\u2640\u2642]|(?:\u26F9|\uD83C[\uDFCB\uDFCC]|\uD83D\uDD75)(?:\uD83C[\uDFFB-\uDFFF])\u200D[\u2640\u2642]|(?:\uD83C[\uDFC3\uDFC4\uDFCA]|\uD83D[\uDC6E\uDC71\uDC73\uDC77\uDC81\uDC82\uDC86\uDC87\uDE45-\uDE47\uDE4B\uDE4D\uDE4E\uDEA3\uDEB4-\uDEB6]|\uD83E[\uDD26\uDD37-\uDD39\uDD3D\uDD3E\uDDB8\uDDB9\uDDCD-\uDDCF\uDDD6-\uDDDD])(?:(?:\uD83C[\uDFFB-\uDFFF])\u200D[\u2640\u2642]|\u200D[\u2640\u2642])|\uD83C\uDFF4\u200D\u2620)\uFE0F|\uD83D\uDC69\u200D\uD83D\uDC67\u200D(?:\uD83D[\uDC66\uDC67])|\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08|\uD83D\uDC15\u200D\uD83E\uDDBA|\uD83D\uDC69\u200D\uD83D\uDC66|\uD83D\uDC69\u200D\uD83D\uDC67|\uD83C\uDDFD\uD83C\uDDF0|\uD83C\uDDF4\uD83C\uDDF2|\uD83C\uDDF6\uD83C\uDDE6|[#\*0-9]\uFE0F\u20E3|\uD83C\uDDE7(?:\uD83C[\uDDE6\uDDE7\uDDE9-\uDDEF\uDDF1-\uDDF4\uDDF6-\uDDF9\uDDFB\uDDFC\uDDFE\uDDFF])|\uD83C\uDDF9(?:\uD83C[\uDDE6\uDDE8\uDDE9\uDDEB-\uDDED\uDDEF-\uDDF4\uDDF7\uDDF9\uDDFB\uDDFC\uDDFF])|\uD83C\uDDEA(?:\uD83C[\uDDE6\uDDE8\uDDEA\uDDEC\uDDED\uDDF7-\uDDFA])|\uD83E\uDDD1(?:\uD83C[\uDFFB-\uDFFF])|\uD83C\uDDF7(?:\uD83C[\uDDEA\uDDF4\uDDF8\uDDFA\uDDFC])|\uD83D\uDC69(?:\uD83C[\uDFFB-\uDFFF])|\uD83C\uDDF2(?:\uD83C[\uDDE6\uDDE8-\uDDED\uDDF0-\uDDFF])|\uD83C\uDDE6(?:\uD83C[\uDDE8-\uDDEC\uDDEE\uDDF1\uDDF2\uDDF4\uDDF6-\uDDFA\uDDFC\uDDFD\uDDFF])|\uD83C\uDDF0(?:\uD83C[\uDDEA\uDDEC-\uDDEE\uDDF2\uDDF3\uDDF5\uDDF7\uDDFC\uDDFE\uDDFF])|\uD83C\uDDED(?:\uD83C[\uDDF0\uDDF2\uDDF3\uDDF7\uDDF9\uDDFA])|\uD83C\uDDE9(?:\uD83C[\uDDEA\uDDEC\uDDEF\uDDF0\uDDF2\uDDF4\uDDFF])|\uD83C\uDDFE(?:\uD83C[\uDDEA\uDDF9])|\uD83C\uDDEC(?:\uD83C[\uDDE6\uDDE7\uDDE9-\uDDEE\uDDF1-\uDDF3\uDDF5-\uDDFA\uDDFC\uDDFE])|\uD83C\uDDF8(?:\uD83C[\uDDE6-\uDDEA\uDDEC-\uDDF4\uDDF7-\uDDF9\uDDFB\uDDFD-\uDDFF])|\uD83C\uDDEB(?:\uD83C[\uDDEE-\uDDF0\uDDF2\uDDF4\uDDF7])|\uD83C\uDDF5(?:\uD83C[\uDDE6\uDDEA-\uDDED\uDDF0-\uDDF3\uDDF7-\uDDF9\uDDFC\uDDFE])|\uD83C\uDDFB(?:\uD83C[\uDDE6\uDDE8\uDDEA\uDDEC\uDDEE\uDDF3\uDDFA])|\uD83C\uDDF3(?:\uD83C[\uDDE6\uDDE8\uDDEA-\uDDEC\uDDEE\uDDF1\uDDF4\uDDF5\uDDF7\uDDFA\uDDFF])|\uD83C\uDDE8(?:\uD83C[\uDDE6\uDDE8\uDDE9\uDDEB-\uDDEE\uDDF0-\uDDF5\uDDF7\uDDFA-\uDDFF])|\uD83C\uDDF1(?:\uD83C[\uDDE6-\uDDE8\uDDEE\uDDF0\uDDF7-\uDDFB\uDDFE])|\uD83C\uDDFF(?:\uD83C[\uDDE6\uDDF2\uDDFC])|\uD83C\uDDFC(?:\uD83C[\uDDEB\uDDF8])|\uD83C\uDDFA(?:\uD83C[\uDDE6\uDDEC\uDDF2\uDDF3\uDDF8\uDDFE\uDDFF])|\uD83C\uDDEE(?:\uD83C[\uDDE8-\uDDEA\uDDF1-\uDDF4\uDDF6-\uDDF9])|\uD83C\uDDEF(?:\uD83C[\uDDEA\uDDF2\uDDF4\uDDF5])|(?:\uD83C[\uDFC3\uDFC4\uDFCA]|\uD83D[\uDC6E\uDC71\uDC73\uDC77\uDC81\uDC82\uDC86\uDC87\uDE45-\uDE47\uDE4B\uDE4D\uDE4E\uDEA3\uDEB4-\uDEB6]|\uD83E[\uDD26\uDD37-\uDD39\uDD3D\uDD3E\uDDB8\uDDB9\uDDCD-\uDDCF\uDDD6-\uDDDD])(?:\uD83C[\uDFFB-\uDFFF])|(?:\u26F9|\uD83C[\uDFCB\uDFCC]|\uD83D\uDD75)(?:\uD83C[\uDFFB-\uDFFF])|(?:[\u261D\u270A-\u270D]|\uD83C[\uDF85\uDFC2\uDFC7]|\uD83D[\uDC42\uDC43\uDC46-\uDC50\uDC66\uDC67\uDC6B-\uDC6D\uDC70\uDC72\uDC74-\uDC76\uDC78\uDC7C\uDC83\uDC85\uDCAA\uDD74\uDD7A\uDD90\uDD95\uDD96\uDE4C\uDE4F\uDEC0\uDECC]|\uD83E[\uDD0F\uDD18-\uDD1C\uDD1E\uDD1F\uDD30-\uDD36\uDDB5\uDDB6\uDDBB\uDDD2-\uDDD5])(?:\uD83C[\uDFFB-\uDFFF])|(?:[\u231A\u231B\u23E9-\u23EC\u23F0\u23F3\u25FD\u25FE\u2614\u2615\u2648-\u2653\u267F\u2693\u26A1\u26AA\u26AB\u26BD\u26BE\u26C4\u26C5\u26CE\u26D4\u26EA\u26F2\u26F3\u26F5\u26FA\u26FD\u2705\u270A\u270B\u2728\u274C\u274E\u2753-\u2755\u2757\u2795-\u2797\u27B0\u27BF\u2B1B\u2B1C\u2B50\u2B55]|\uD83C[\uDC04\uDCCF\uDD8E\uDD91-\uDD9A\uDDE6-\uDDFF\uDE01\uDE1A\uDE2F\uDE32-\uDE36\uDE38-\uDE3A\uDE50\uDE51\uDF00-\uDF20\uDF2D-\uDF35\uDF37-\uDF7C\uDF7E-\uDF93\uDFA0-\uDFCA\uDFCF-\uDFD3\uDFE0-\uDFF0\uDFF4\uDFF8-\uDFFF]|\uD83D[\uDC00-\uDC3E\uDC40\uDC42-\uDCFC\uDCFF-\uDD3D\uDD4B-\uDD4E\uDD50-\uDD67\uDD7A\uDD95\uDD96\uDDA4\uDDFB-\uDE4F\uDE80-\uDEC5\uDECC\uDED0-\uDED2\uDED5\uDEEB\uDEEC\uDEF4-\uDEFA\uDFE0-\uDFEB]|\uD83E[\uDD0D-\uDD3A\uDD3C-\uDD45\uDD47-\uDD71\uDD73-\uDD76\uDD7A-\uDDA2\uDDA5-\uDDAA\uDDAE-\uDDCA\uDDCD-\uDDFF\uDE70-\uDE73\uDE78-\uDE7A\uDE80-\uDE82\uDE90-\uDE95])|(?:[#\*0-9\xA9\xAE\u203C\u2049\u2122\u2139\u2194-\u2199\u21A9\u21AA\u231A\u231B\u2328\u23CF\u23E9-\u23F3\u23F8-\u23FA\u24C2\u25AA\u25AB\u25B6\u25C0\u25FB-\u25FE\u2600-\u2604\u260E\u2611\u2614\u2615\u2618\u261D\u2620\u2622\u2623\u2626\u262A\u262E\u262F\u2638-\u263A\u2640\u2642\u2648-\u2653\u265F\u2660\u2663\u2665\u2666\u2668\u267B\u267E\u267F\u2692-\u2697\u2699\u269B\u269C\u26A0\u26A1\u26AA\u26AB\u26B0\u26B1\u26BD\u26BE\u26C4\u26C5\u26C8\u26CE\u26CF\u26D1\u26D3\u26D4\u26E9\u26EA\u26F0-\u26F5\u26F7-\u26FA\u26FD\u2702\u2705\u2708-\u270D\u270F\u2712\u2714\u2716\u271D\u2721\u2728\u2733\u2734\u2744\u2747\u274C\u274E\u2753-\u2755\u2757\u2763\u2764\u2795-\u2797\u27A1\u27B0\u27BF\u2934\u2935\u2B05-\u2B07\u2B1B\u2B1C\u2B50\u2B55\u3030\u303D\u3297\u3299]|\uD83C[\uDC04\uDCCF\uDD70\uDD71\uDD7E\uDD7F\uDD8E\uDD91-\uDD9A\uDDE6-\uDDFF\uDE01\uDE02\uDE1A\uDE2F\uDE32-\uDE3A\uDE50\uDE51\uDF00-\uDF21\uDF24-\uDF93\uDF96\uDF97\uDF99-\uDF9B\uDF9E-\uDFF0\uDFF3-\uDFF5\uDFF7-\uDFFF]|\uD83D[\uDC00-\uDCFD\uDCFF-\uDD3D\uDD49-\uDD4E\uDD50-\uDD67\uDD6F\uDD70\uDD73-\uDD7A\uDD87\uDD8A-\uDD8D\uDD90\uDD95\uDD96\uDDA4\uDDA5\uDDA8\uDDB1\uDDB2\uDDBC\uDDC2-\uDDC4\uDDD1-\uDDD3\uDDDC-\uDDDE\uDDE1\uDDE3\uDDE8\uDDEF\uDDF3\uDDFA-\uDE4F\uDE80-\uDEC5\uDECB-\uDED2\uDED5\uDEE0-\uDEE5\uDEE9\uDEEB\uDEEC\uDEF0\uDEF3-\uDEFA\uDFE0-\uDFEB]|\uD83E[\uDD0D-\uDD3A\uDD3C-\uDD45\uDD47-\uDD71\uDD73-\uDD76\uDD7A-\uDDA2\uDDA5-\uDDAA\uDDAE-\uDDCA\uDDCD-\uDDFF\uDE70-\uDE73\uDE78-\uDE7A\uDE80-\uDE82\uDE90-\uDE95])\uFE0F|(?:[\u261D\u26F9\u270A-\u270D]|\uD83C[\uDF85\uDFC2-\uDFC4\uDFC7\uDFCA-\uDFCC]|\uD83D[\uDC42\uDC43\uDC46-\uDC50\uDC66-\uDC78\uDC7C\uDC81-\uDC83\uDC85-\uDC87\uDC8F\uDC91\uDCAA\uDD74\uDD75\uDD7A\uDD90\uDD95\uDD96\uDE45-\uDE47\uDE4B-\uDE4F\uDEA3\uDEB4-\uDEB6\uDEC0\uDECC]|\uD83E[\uDD0F\uDD18-\uDD1F\uDD26\uDD30-\uDD39\uDD3C-\uDD3E\uDDB5\uDDB6\uDDB8\uDDB9\uDDBB\uDDCD-\uDDCF\uDDD1-\uDDDD])/g;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/is-fullwidth-code-point/index.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/is-fullwidth-code-point/index.js ***!
+  \*******************************************************/
+/***/ ((module) => {
+
+"use strict";
+/* eslint-disable yoda */
+
+
+const isFullwidthCodePoint = codePoint => {
+	if (Number.isNaN(codePoint)) {
+		return false;
+	}
+
+	// Code points are derived from:
+	// http://www.unix.org/Public/UNIDATA/EastAsianWidth.txt
+	if (
+		codePoint >= 0x1100 && (
+			codePoint <= 0x115F || // Hangul Jamo
+			codePoint === 0x2329 || // LEFT-POINTING ANGLE BRACKET
+			codePoint === 0x232A || // RIGHT-POINTING ANGLE BRACKET
+			// CJK Radicals Supplement .. Enclosed CJK Letters and Months
+			(0x2E80 <= codePoint && codePoint <= 0x3247 && codePoint !== 0x303F) ||
+			// Enclosed CJK Letters and Months .. CJK Unified Ideographs Extension A
+			(0x3250 <= codePoint && codePoint <= 0x4DBF) ||
+			// CJK Unified Ideographs .. Yi Radicals
+			(0x4E00 <= codePoint && codePoint <= 0xA4C6) ||
+			// Hangul Jamo Extended-A
+			(0xA960 <= codePoint && codePoint <= 0xA97C) ||
+			// Hangul Syllables
+			(0xAC00 <= codePoint && codePoint <= 0xD7A3) ||
+			// CJK Compatibility Ideographs
+			(0xF900 <= codePoint && codePoint <= 0xFAFF) ||
+			// Vertical Forms
+			(0xFE10 <= codePoint && codePoint <= 0xFE19) ||
+			// CJK Compatibility Forms .. Small Form Variants
+			(0xFE30 <= codePoint && codePoint <= 0xFE6B) ||
+			// Halfwidth and Fullwidth Forms
+			(0xFF01 <= codePoint && codePoint <= 0xFF60) ||
+			(0xFFE0 <= codePoint && codePoint <= 0xFFE6) ||
+			// Kana Supplement
+			(0x1B000 <= codePoint && codePoint <= 0x1B001) ||
+			// Enclosed Ideographic Supplement
+			(0x1F200 <= codePoint && codePoint <= 0x1F251) ||
+			// CJK Unified Ideographs Extension B .. Tertiary Ideographic Plane
+			(0x20000 <= codePoint && codePoint <= 0x3FFFD)
+		)
+	) {
+		return true;
+	}
+
+	return false;
+};
+
+module.exports = isFullwidthCodePoint;
+module.exports["default"] = isFullwidthCodePoint;
+
 
 /***/ }),
 
@@ -38089,6 +38544,79 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 process.umask = function() { return 0; };
+
+
+/***/ }),
+
+/***/ "./node_modules/string-width/index.js":
+/*!********************************************!*\
+  !*** ./node_modules/string-width/index.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+const stripAnsi = __webpack_require__(/*! strip-ansi */ "./node_modules/strip-ansi/index.js");
+const isFullwidthCodePoint = __webpack_require__(/*! is-fullwidth-code-point */ "./node_modules/is-fullwidth-code-point/index.js");
+const emojiRegex = __webpack_require__(/*! emoji-regex */ "./node_modules/emoji-regex/index.js");
+
+const stringWidth = string => {
+	if (typeof string !== 'string' || string.length === 0) {
+		return 0;
+	}
+
+	string = stripAnsi(string);
+
+	if (string.length === 0) {
+		return 0;
+	}
+
+	string = string.replace(emojiRegex(), '  ');
+
+	let width = 0;
+
+	for (let i = 0; i < string.length; i++) {
+		const code = string.codePointAt(i);
+
+		// Ignore control characters
+		if (code <= 0x1F || (code >= 0x7F && code <= 0x9F)) {
+			continue;
+		}
+
+		// Ignore combining characters
+		if (code >= 0x300 && code <= 0x36F) {
+			continue;
+		}
+
+		// Surrogates
+		if (code > 0xFFFF) {
+			i++;
+		}
+
+		width += isFullwidthCodePoint(code) ? 2 : 1;
+	}
+
+	return width;
+};
+
+module.exports = stringWidth;
+// TODO: remove this in the next major version
+module.exports["default"] = stringWidth;
+
+
+/***/ }),
+
+/***/ "./node_modules/strip-ansi/index.js":
+/*!******************************************!*\
+  !*** ./node_modules/strip-ansi/index.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+const ansiRegex = __webpack_require__(/*! ansi-regex */ "./node_modules/ansi-regex/index.js");
+
+module.exports = string => typeof string === 'string' ? string.replace(ansiRegex(), '') : string;
 
 
 /***/ }),

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Data;
 use Illuminate\Http\Request;
 
@@ -16,14 +17,19 @@ class DataController extends Controller
     {
         $this->authorize('viewAny', Data::class);
 
-        $data = Data::filter(request(['search']))
-        ->orderby('name')->paginate(10)->appends(request()->query());
+        // dd($request->category);
+
+        $data = Data::filter($request->all())
+        ->orderby('name')->with('categories:id,name,colour')->paginate(10)->withQueryString();
 
         if ($request->wantsJson()) {
             return $data;
         }
 
-        return view('data.index')->with('data', $data);
+        return view('data.index', [
+            'data' => $data,
+            'categories' => Category::all(),
+        ]);
     }
 
     /**

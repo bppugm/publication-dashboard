@@ -41,4 +41,30 @@ class DataModelTest extends TestCase
 
         $this->assertCount(5, $data->categories);
     }
+
+    /** @test */
+    public function it_can_be_filtered_by_categories()
+    {
+        $category = Category::factory()->create();
+        $data = Data::factory(5)->create();
+        $data->first()->categories()->attach($category);
+
+        $filtered = Data::filter(['category' => [$category->name]])->get();
+
+        $this->assertCount(1, $filtered);
+    }
+
+    /** @test */
+    // it can be filtered using many categories
+    public function it_can_be_filtered_by_many_categories()
+    {
+        $categories = Category::factory(5)->create();
+        $data = Data::factory(5)->create();
+        $data->first()->categories()->attach([$categories->first(), $categories->last()]);
+        $data->last()->categories()->attach($categories->last());
+
+        $filtered = Data::filter(['category' => [$categories->first()->name, $categories->last()->name]])->get();
+
+        $this->assertCount(1, $filtered);
+    }
 }

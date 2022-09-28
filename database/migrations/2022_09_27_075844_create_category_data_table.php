@@ -15,11 +15,9 @@ class CreateCategoryDataTable extends Migration
     {
         Schema::create('category_data', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('data_id')->unsigned();
-            $table->bigInteger('category_id')->unsigned();
+            $table->bigInteger('data_id')->unsigned()->index();
+            $table->bigInteger('category_id')->unsigned()->index();
             $table->timestamps();
-            $table->foreign('data_id')->references('id')->on('data')->onDelete('cascade');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

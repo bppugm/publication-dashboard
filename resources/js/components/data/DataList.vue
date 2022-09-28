@@ -13,10 +13,24 @@
             </thead>
             <tbody>
                 <tr v-for="(item, index) in allData" :key="index">
+                    <!-- data with link -->
                     <td class="align-middle">
                         <a :href="`/data/${item.id}`"> {{ item.name }}</a>
                     </td>
-                    <td class="align-middle">-</td>
+                    <!-- Each categories with their colour typ-->
+                    <td class="align-middle">
+                        <span
+                            v-for="(category, index) in item.categories"
+                            :key="index"
+                        >
+                            <div
+                                class="btn btn-outline-primary disabled me-2 rounded-4"
+                                :style="`color: ${category.colour}; border-color: ${category.colour}; opacity: 1;`"
+                            >
+                                {{ category.name }}
+                            </div>
+                        </span>
+                    </td>
                     <td class="align-middle">{{ item.value }}</td>
                     <td class="align-middle">-</td>
                     <td class="align-middle">
@@ -44,22 +58,24 @@
                     </td>
                 </tr>
                 <!-- make table row if data is not found -->
-                    <tr v-if="data.length == 0">
-                        <td colspan="6" class="text-center">
-                            No data found
-                        </td>
-                    </tr>
+                <tr v-if="data.length == 0">
+                    <td colspan="6" class="text-center">No data found</td>
+                </tr>
             </tbody>
         </table>
         <div class="d-flex justify-content-between">
             <slot></slot>
         </div>
-        <data-edit-modal :selectedData="selectedItem" @updated="handlerUpdate"></data-edit-modal>
+        <data-edit-modal
+            :selectedData="selectedItem"
+            @updated="handlerUpdate"
+        ></data-edit-modal>
         <data-delete-modal :selectedData="selectedItem"></data-delete-modal>
     </div>
 </template>
 
 <script>
+import { colorizeLines } from "cli-table3/src/utils";
 import { format } from "date-fns";
 export default {
     props: {
