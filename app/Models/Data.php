@@ -4,11 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Data extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
+
     protected $guarded = ['id'];
+    protected static $logAttributes = ['name', 'description', 'value', 'notes'];
+    protected static $logOnlyDirty = true;
 
     public function scopeFilter($query, array $filters)
     {

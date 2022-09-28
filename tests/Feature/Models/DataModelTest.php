@@ -30,4 +30,22 @@ class DataModelTest extends TestCase
 
         $this->assertCount(5, $data->dashboards);
     }
+
+    /** @test */
+    public function it_logs_activity()
+    {
+        $data = Data::factory()->create();
+
+        $this->assertInstanceOf(\Spatie\Activitylog\Models\Activity::class, $data->activities->first());
+    }
+
+    /** @test */
+    public function it_logs_updated_activity()
+    {
+        $data = Data::factory()->create();
+
+        $data->update(['name' => 'updated']);
+
+        $this->assertCount(1, $data->activities()->where('description', 'updated')->get());
+    }
 }
