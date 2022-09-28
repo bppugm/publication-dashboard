@@ -26,10 +26,11 @@
             <table class="table table-bordered">
                 <thead class="table-light">
                     <tr>
-                        <th scope="col">Timestamp</th>
-                        <th scope="col">Causer</th>
-                        <th scope="col">Before</th>
-                        <th scope="col">After</th>
+                        <td scope="col">Timestamp</td>
+                        <td scope="col">Causer</td>
+                        <td scope="col">Activity</td>
+                        <td scope="col">Before</td>
+                        <td scope="col">After</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,12 +40,16 @@
                             <date-formatter iso-date="{{ $activity->created_at->toIsoString() }}"></date-formatter>
                         </td>
                         <td>{{ $activity->causer->name }}</td>
+                        <td>{{ $activity->description }}</td>
                         <td>
+                            @isset($activity->properties['old'])
                             @foreach ($activity->properties['old'] as $key => $value)
                             <div>
                                 {{ $key }}: {{ $value }}
                             </div>
                             @endforeach
+                            @endisset
+
                         </td>
                         <td>
                             @foreach ($activity->properties['attributes'] as $key => $value)
@@ -67,7 +72,8 @@
         {{-- END TABLE --}}
         <div>
             <div class="align-self-center">
-                Showing {{ $activities->firstItem() }} to {{ $activities->lastItem() }} of {{ $activities->total() }} results
+                Showing {{ $activities->firstItem() }} to {{ $activities->lastItem() }} of {{ $activities->total() }}
+                results
             </div>
             {{ $activities->OnEachSide(1)->links() }}
         </div>
