@@ -30,6 +30,7 @@
         "floating-vue": "^1.0.0-beta.18",
         "highcharts": "^10.2.1",
         "highcharts-vue": "^1.4.0",
+        "vee-validate": "^3.4.14",
         "vue-chartjs": "^4.1.1",
         "vue-dataset": "^1.1.16",
         "vue-grid-layout": "^2.4.0",
