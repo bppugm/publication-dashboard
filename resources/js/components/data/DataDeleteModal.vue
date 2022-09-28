@@ -16,10 +16,8 @@
             aria-label="Close"
           />
           <div class="pt-2 w-100">
-            <h5 class="modal-title text-primary fw-bold">
-              Delete Data
-            </h5>
-            <hr>
+            <h5 class="modal-title text-primary fw-bold">Delete Data</h5>
+            <hr />
           </div>
         </div>
         <div class="modal-body py-0">
@@ -64,6 +62,7 @@ export default {
       },
       errors: {},
       isLoading: false,
+      modal: null,
     };
   },
 
@@ -75,6 +74,11 @@ export default {
       },
     },
   },
+
+  mounted() {
+    this.modal = new bootstrap.Modal(document.getElementById("data-delete-modal"));
+  },
+
   methods: {
     initModal() {
       this.data = { ...this.selectedData };
@@ -84,24 +88,12 @@ export default {
       this.isLoading = true;
       try {
         await axios.delete(`/data/${this.selectedData.id}`, this.data);
-        return location.reload();
+        this.modal.hide();
+        this.$emit("deleted");
       } catch (error) {
         this.errors = error.response.data.errors;
-      } finally {
-        this.isLoading = false;
       }
-    },
-    hasErrors(key) {
-      if (this.errors[key]) {
-        return true;
-      }
-      return false;
-    },
-    getErrors(key) {
-      if (this.hasErrors(key)) {
-        return this.errors[key].join(', ');
-      }
-      return '';
+      this.isLoading = false;
     },
   },
 };
