@@ -7,6 +7,7 @@
     @search="handleSearch"
     @input="handleSelected"
     multiple
+    :close-on-select="false"
   >
     <template #option="option">
       {{ option.name }}
