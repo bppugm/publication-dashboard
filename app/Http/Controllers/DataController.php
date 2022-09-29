@@ -17,8 +17,6 @@ class DataController extends Controller
     {
         $this->authorize('viewAny', Data::class);
 
-        // dd($request->category);
-
         $data = Data::filter($request->all())
         ->orderby('name')->with('categories:id,name,colour')->paginate(10)->withQueryString();
 

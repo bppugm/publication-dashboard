@@ -71,20 +71,15 @@ class DataFeatureTest extends TestCase
     public function user_can_filter_data_by_category()
     {
         $this->login();
-        $category = Category::factory()->create();
-        $data = Data::factory(2)->create();
-        $data->each(function ($data) use ($category) {
-            $data->categories()->attach($category);
-        });
+        $categories = Category::factory(2)->create();
+        $data = Data::factory(5)->create();
+        $data->first()->categories()->attach([$categories->first()->id, $categories->last()->id]);
+        $data->last()->categories()->attach([$categories->first()->id]);
 
         $response = $this->getJson(route('data.index', [
-            'category' => $category->name
+            'category' => [$categories->first()->name, $categories->last()->name]
         ]));
 
-        $response->assertOk()->assertJsonCount(2, 'data');
-        $this->assertDatabaseHas('category_data', [
-            'category_id' => $category->id,
-            'data_id' => $data->pluck('id')->toArray()
-        ]);
+        $response->assertOk()->assertJsonCount(1, 'data');
     }
 }

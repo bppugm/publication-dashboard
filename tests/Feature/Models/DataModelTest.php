@@ -58,10 +58,10 @@ class DataModelTest extends TestCase
     // it can be filtered using many categories
     public function it_can_be_filtered_by_many_categories()
     {
-        $categories = Category::factory(5)->create();
+        $categories = Category::factory(2)->create();
         $data = Data::factory(5)->create();
-        $data->first()->categories()->attach([$categories->first(), $categories->last()]);
-        $data->last()->categories()->attach($categories->last());
+        $data->first()->categories()->attach([$categories->first()->id, $categories->last()->id]);
+        $data->last()->categories()->attach([$categories->last()->id]);
 
         $filtered = Data::filter(['category' => [$categories->first()->name, $categories->last()->name]])->get();
 
