@@ -51,6 +51,7 @@ class DataController extends Controller
             'description' => 'nullable|string|max:500',
             'value' => 'nullable',
             'notes' => 'nullable|string|max:250',
+            'user_id' => 'nullable|integer'
         ]);
 
         $data = Data::create($data);
@@ -104,6 +105,7 @@ class DataController extends Controller
             'description' => 'nullable|string|max:250',
             'value' => 'nullable',
             'notes' => 'nullable|string|max:500',
+            'user_id' => 'nullable|integer'
         ]);
 
         $data->update($update);

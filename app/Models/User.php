@@ -47,4 +47,9 @@ class User extends Authenticatable
             )
         );
     }
+
+    public function data()
+    {
+        return $this->hasMany(\App\Models\Data::class);
+    }
 }

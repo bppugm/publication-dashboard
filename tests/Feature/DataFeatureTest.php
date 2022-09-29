@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Data;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -64,5 +65,33 @@ class DataFeatureTest extends TestCase
         ]));
 
         $response->assertOk()->assertJsonCount(2, 'data');
+    }
+
+    /** @test */
+    public function user_can_create_data_with_user_id()
+    {
+        $this->login();
+        $data = Data::factory()->make()->toArray();
+
+        $response = $this->postJson(route('data.store'), $data);
+
+        $response->assertCreated();
+        $this->assertDatabaseHas('data', $data);
+    }
+
+    /** @test */
+    public function user_can_update_user_id()
+    {
+        $this->login();
+        $data = Data::factory()->create(['user_id' => null]);
+        $update = ['user_id' => User::factory()->create()->id];
+
+        $response = $this->putJson(route('data.update', $data), $update);
+
+        $response->assertOk();
+        $this->assertDatabaseHas('data', [
+            'id' => $data->id,
+            'user_id' => $update['user_id'],
+        ]);
     }
 }

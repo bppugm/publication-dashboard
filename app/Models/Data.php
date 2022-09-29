@@ -23,8 +23,14 @@ class Data extends Model
             )
         );
     }
+
     public function dashboards()
     {
         return $this->belongsToMany(\App\Models\Dashboard::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
     }
 }

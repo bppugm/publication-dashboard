@@ -48,4 +48,12 @@ class DataModelTest extends TestCase
 
         $this->assertCount(1, $data->activities()->where('description', 'updated')->get());
     }
+
+    /** @test */
+    public function it_belongs_to_a_user()
+    {
+        $data = Data::factory()->create();
+
+        $this->assertInstanceOf(\App\Models\User::class, $data->user);
+    }
 }
