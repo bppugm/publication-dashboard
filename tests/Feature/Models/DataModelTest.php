@@ -33,6 +33,7 @@ class DataModelTest extends TestCase
     }
 
     /** @test */
+<<<<<<< HEAD
     public function it_belongs_to_many_categories()
     {
         $data = Data::factory()->create();
@@ -66,5 +67,22 @@ class DataModelTest extends TestCase
         $filtered = Data::filter(['categories' => [$categories->first()->name, $categories->last()->name]])->get();
 
         $this->assertCount(1, $filtered);
+=======
+    public function it_logs_activity()
+    {
+        $data = Data::factory()->create();
+
+        $this->assertInstanceOf(\Spatie\Activitylog\Models\Activity::class, $data->activities->first());
+    }
+
+    /** @test */
+    public function it_logs_updated_activity()
+    {
+        $data = Data::factory()->create();
+
+        $data->update(['name' => 'updated']);
+
+        $this->assertCount(1, $data->activities()->where('description', 'updated')->get());
+>>>>>>> 5c866a350c6c25f92c8b607b3911a6bb11915067
     }
 }

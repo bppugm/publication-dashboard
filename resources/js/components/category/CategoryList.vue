@@ -25,7 +25,7 @@
                         <td class="align-middle">{{ category.name }}</td>
                         <td class="align-middle">{{ category.description }}</td>
                         <td class="align-middle">
-                            {{ formatDateTime(category.created_at) }}
+                            <date-formatter :iso-date="category.created_at"></date-formatter>
                         </td>
                         <td class="align-middle">
                             <button
@@ -68,7 +68,6 @@
 </template>
 
 <script>
-import { format } from "date-fns";
 export default {
     props: {
         data: {
@@ -88,13 +87,6 @@ export default {
         };
     },
     methods: {
-        formatDateTime(dateTimeString) {
-            const date = new Date(dateTimeString);
-            if (date instanceof Date && !isNaN(date)) {
-                return format(new Date(dateTimeString), "dd-MM-yyyy HH:mm");
-            }
-            return dateTimeString;
-        },
         editItem(item, index) {
             this.selectedItem = item;
             this.selectedItem.index = index;
