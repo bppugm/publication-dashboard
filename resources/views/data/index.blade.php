@@ -36,33 +36,13 @@
             <div id="data" class="tab-pane fade show active" role="tabpanel" aria-labelledby="data-tab">
                 <div class="d-flex my-3 justify-content-between">
                     {{-- Search --}}
-                    <form class="d-flex justify-content-between w-100" method="GET"
-                        action="{{ route('data.index') }}">
+                    <form class="d-flex justify-content-between w-100" method="GET" action="{{ route('data.index') }}">
                         {{-- Filters --}}
                         <div class="flex-shrink-0 dropdown">
-                            <button class="btn btn-outline-primary dropdown-toggle"
-                            type="button" id="dropdownMenuButton1"
-                            data-bs-toggle="dropdown">
+                            <button class="btn btn-outline-primary dropdown-toggle" type="button"
+                                id="dropdownMenuButton1" data-bs-toggle="dropdown">
                                 <i class="mdi mdi-filter-variant"></i> Filter
                             </button>
-                            {{-- form dropdownmenu filter category --}}
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    {{-- Category Filter --}}
-                                    <p> Category Filter </p>
-                                    {{-- selectpicker category --}}
-                                    <select class="selectpicker" multiple data-live-search="true" name="category[]">
-                                        @foreach ($categories as $category)
-                                        <option value="{{ $category->name }}">{{ $category->name }}</option>
-                                        @endforeach
-                                    </select>
-
-                                    {{-- Assigned User Filter --}}
-                                    <p> Assigned User Filter </p>
-                                    {{-- selectpicker assigned user --}}
-
-                                    {{-- button filter --}}
-                                    <button type="submit" class="btn btn-primary mt-3">Filter</button>
-                            </div>
                         </div>
                         <div class="input-group mx-3 w-100">
                             <input type="text" name="search" placeholder="Search Data" class="form-control search-input"
@@ -93,7 +73,7 @@
                             <span class="d-none d-sm-inline"> Add Data</span>
                             <span class="d-inline d-sm-none"> Add</span>
                         </button>
-                        <data-add-modal></data-add-modal>
+                        <data-add-modal> </data-add-modal>
                     </div>
                 </div>
                 <data-list :data='{{ json_encode($data->items()) }}'>

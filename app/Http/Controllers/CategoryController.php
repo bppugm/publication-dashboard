@@ -19,6 +19,10 @@ class CategoryController extends Controller
         $categories = Category::filter(request(['search']))
         ->orderby('name')->paginate(10)->appends(request()->query());
 
+        if (request()->wantsJson()) {
+            return $categories;
+        }
+
         return view('category.index')->with('categories', $categories);
     }
 

@@ -23,6 +23,7 @@
                     </div>
                 </div>
                 <div class="modal-body py-0">
+                    <!-- Name -->
                     <div class="mb-3 required-field">
                         <label for="name" class="form-label fw-bold"
                             >Name</label
@@ -40,6 +41,17 @@
                             {{ getErrors("name") }}
                         </div>
                     </div>
+                    <!-- Category -->
+                    <div class="mb-3 required-field">
+                        <label for="name" class="form-label fw-bold"
+                            >Category</label>
+                        <data-category-selector
+                            v-model="form.categories"
+                            :initSelected="selectedData.categories"
+                            :class="{ 'is-invalid': hasErrors('categories') }"
+                        ></data-category-selector>
+                    </div>
+                    <!-- Description -->
                     <div class="mb-3">
                         <label for="description" class="form-label fw-bold"
                             >Description</label
@@ -57,6 +69,7 @@
                             {{ getErrors("description") }}
                         </div>
                     </div>
+                    <!-- Notes -->
                     <div class="mb-3">
                         <label for="notes" class="form-label fw-bold"
                             >Notes</label
@@ -74,6 +87,7 @@
                             {{ getErrors("notes") }}
                         </div>
                     </div>
+                    <!-- Value -->
                     <div class="mb-3">
                         <label for="value" class="form-label fw-bold"
                             >Value</label
@@ -92,6 +106,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- Button -->
                 <div class="modal-footer border-0">
                     <div class="d-flex w-100">
                         <button
@@ -131,6 +146,7 @@ export default {
                 description: null,
                 notes: null,
                 value: null,
+                categories: [],
             },
             errors: {},
             isLoading: false,
@@ -155,6 +171,9 @@ export default {
     methods: {
         initModal() {
             this.form = { ...this.selectedData };
+            if (this.form.categories){
+                this.form.categories = this.form.categories.map(item => item.id);
+            }
             this.errors = {};
         },
         resetForm() {

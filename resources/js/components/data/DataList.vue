@@ -17,10 +17,9 @@
                     <td class="align-middle">
                         <a :href="`/data/${item.id}`"> {{ item.name }}</a>
                     </td>
-                    <!-- Each categories with their colour typ-->
                     <td class="align-middle">
                         <span
-                            v-for="(category, index) in orderedItems(item.categories)"
+                            v-for="(category, index) in item.categories"
                             :key="index"
                         >
                             <div
@@ -99,9 +98,6 @@ export default {
         };
     },
     methods: {
-        orderedItems(items) {
-            return items.sort((a, b) => a.name.localeCompare(b.name));
-        },
         formatDateTime(dateTimeString) {
             const date = new Date(dateTimeString);
             if (date instanceof Date && !isNaN(date)) {

@@ -77,9 +77,57 @@ class DataFeatureTest extends TestCase
         $data->last()->categories()->attach([$categories->first()->id]);
 
         $response = $this->getJson(route('data.index', [
-            'category' => [$categories->first()->name, $categories->last()->name]
+            'categories' => [$categories->first()->name, $categories->last()->name]
         ]));
 
         $response->assertOk()->assertJsonCount(1, 'data');
     }
+
+    /** @test */
+    public function user_can_create_data_with_categories()
+    {
+        $this->login();
+        $categories = Category::factory(2)->create();
+        $data = Data::factory()->make()->only('name', 'description', 'notes');
+
+        $response = $this->postJson(route('data.store'), array_merge($data, [
+            'categories' => [$categories->first()->id, $categories->last()->id]
+        ]));
+
+        $response->assertCreated();
+        $this->assertDatabaseHas('data', $data);
+        $this->assertDatabaseHas('category_data', [
+            'data_id' => $response->json('id'),
+            'category_id' => $categories->first()->id
+        ]);
+        $this->assertDatabaseHas('category_data', [
+            'data_id' => $response->json('id'),
+            'category_id' => $categories->last()->id
+        ]);
+    }
+
+    /** @test */
+    // user can change category from data
+    public function user_can_update_data_with_categories()
+    {
+        $this->login();
+        $categories = Category::factory(2)->create();
+        $data = Data::factory()->create();
+        $data->categories()->attach([$categories->last()->id, $categories->first()->id]);
+
+        $response = $this->putJson(route('data.update', $data), [
+            'categories' => [$categories->last()->id]
+        ]);
+
+        $response->assertOk();
+        $this->assertDatabaseHas('category_data', [
+            'data_id' => $data->id,
+            'category_id' => $categories->last()->id
+        ]);
+        $this->assertDatabaseMissing('category_data', [
+            'data_id' => $data->id,
+            'category_id' => $categories->first()->id
+        ]);
+    }
+
 }

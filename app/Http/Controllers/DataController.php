@@ -18,7 +18,9 @@ class DataController extends Controller
         $this->authorize('viewAny', Data::class);
 
         $data = Data::filter($request->all())
-        ->orderby('name')->with('categories:id,name,colour')->paginate(10)->withQueryString();
+        ->orderby('name')->with(['categories' => function ($query) {
+            $query->select('categories.id', 'categories.name', 'colour')->orderBy('name');
+        }])->paginate(10)->withQueryString();
 
         if ($request->wantsJson()) {
             return $data;
@@ -55,9 +57,13 @@ class DataController extends Controller
             'description' => 'nullable|string|max:500',
             'value' => 'nullable',
             'notes' => 'nullable|string|max:250',
+            'categories' => 'nullable|array',
         ]);
 
-        $data = Data::create($data);
+        $data = Data::create($request->only('name', 'description', 'value', 'notes'));
+        if ($request->has('categories')) {
+            $data->categories()->sync($request->categories);
+        };
 
         return $data;
     }
@@ -106,11 +112,15 @@ class DataController extends Controller
             'description' => 'nullable|string|max:250',
             'value' => 'nullable',
             'notes' => 'nullable|string|max:500',
+            'categories' => 'nullable|array',
         ]);
 
-        $data->update($update);
+        $data->update(request()->only('name', 'description', 'value', 'notes'));
+        if ($request->has('categories')) {
+            $data->categories()->sync($request->categories);
+        };
 
-        return $data;
+        return $data->fresh()->load('categories');
     }
 
     /**

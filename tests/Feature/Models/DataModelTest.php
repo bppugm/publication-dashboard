@@ -49,7 +49,7 @@ class DataModelTest extends TestCase
         $data = Data::factory(5)->create();
         $data->first()->categories()->attach($category);
 
-        $filtered = Data::filter(['category' => [$category->name]])->get();
+        $filtered = Data::filter(['categories' => [$category->name]])->get();
 
         $this->assertCount(1, $filtered);
     }
@@ -63,7 +63,7 @@ class DataModelTest extends TestCase
         $data->first()->categories()->attach([$categories->first()->id, $categories->last()->id]);
         $data->last()->categories()->attach([$categories->last()->id]);
 
-        $filtered = Data::filter(['category' => [$categories->first()->name, $categories->last()->name]])->get();
+        $filtered = Data::filter(['categories' => [$categories->first()->name, $categories->last()->name]])->get();
 
         $this->assertCount(1, $filtered);
     }
