@@ -22,11 +22,14 @@ class Data extends Model
             )
         );
 
-        $query->when($filters['category'] ?? false, fn ($query, $category) =>
-            $query->whereHas('categories', fn ($query) =>
-                $query->whereIn('name', (array)$category)
-            )
-        );
+        $query->when($filters['category'] ?? false, function ($query) use ($filters) {
+            $categories = $filters['category'];
+            foreach ($categories as $category) {
+                $query->whereHas('categories', function ($query) use ($category) {
+                    $query->where('categories.name', $category);
+                });
+            }
+        });
 
         // $query->when(
         //     $filters['category'] ?? false,
