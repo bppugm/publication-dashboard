@@ -72,7 +72,9 @@ class DataController extends Controller
             return $data;
         }
 
-        return $data;
+        $activities = $data->activities()->latest()->with('causer')->paginate();
+
+        return view('data.show', compact('data', 'activities'));
     }
 
     /**
