@@ -14,7 +14,7 @@ class UserController extends Controller
 
         $users = User::filter(request()->all())
             ->with(['data' => function ($query) {
-                $query->select('data.id', 'data.name')->orderBy('name');
+            $query->select('data.id', 'data.name', 'user_id')->orderBy('name');
             }])->paginate(10)->withQueryString();
 
         return view('user.index')->with([
