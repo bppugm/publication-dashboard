@@ -3,12 +3,12 @@
     <table class="table table-bordered">
       <thead class="table-light">
         <tr>
-          <th scope="col" style="width: 185px">Name</th>
-          <th scope="col" style="width: 364px">Category</th>
-          <th scope="col" style="width: 78px">Value</th>
-          <th scope="col" style="width: 126px">Assigned User</th>
-          <th scope="col" style="width: 219px">Last Update</th>
-          <th scope="col">Action</th>
+          <th scope="col" style="width: 10%">Name</th>
+          <th scope="col" >Category</th>
+          <th scope="col" >Value</th>
+          <th scope="col" >Assigned User</th>
+          <th scope="col" >Last Update</th>
+          <th scope="col" style="width: 15%">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -16,7 +16,9 @@
           <td class="align-middle">
             <a :href="`/data/${item.id}`"> {{ item.name }}</a>
           </td>
-          <td class="align-middle">-</td>
+          <td class="align-middle">
+            <data-category-button v-for="category in item.categories" :category="category" :key="category.id"></data-category-button>
+          </td>
           <td class="align-middle">{{ item.value }}</td>
           <td class="align-middle">-</td>
           <td class="align-middle">
@@ -64,9 +66,10 @@
 </template>
 
 <script>
-import DateFormatter from '../DateFormatter.vue';
+import DateFormatter from "../DateFormatter.vue";
+import DataCategoryButton from './DataCategoryButton.vue';
 export default {
-  components: { DateFormatter },
+  components: { DateFormatter, DataCategoryButton },
   props: {
     data: {
       type: Array,
@@ -77,7 +80,7 @@ export default {
   },
   data() {
     return {
-      allData: [...this.data],
+      allData: [ ...this.data ],
       search: "",
       filter: {
         keyword: null,
@@ -96,13 +99,21 @@ export default {
       this.selectedItem.index = index;
     },
     handlerUpdate(event) {
-      this.allData[this.selectedItem.index] = event;
+    //   this.allData[this.selectedItem.index] = event;
+        this.selectedItem.name = event.name;
+        this.selectedItem.description = event.description;
+        this.selectedItem.notes = event.notes;
+        this.selectedItem.value = event.value;
+        this.selectedItem.categories = [ ...event.categories ];
     },
     handleDeleted(event) {
       this.allData.splice(this.selectedItem.index, 1);
-      this.$toast.success(`Data ${this.selectedItem.name} successfully deleted`, {
-        position: "top",
-      });
+      this.$toast.success(
+        `Data ${this.selectedItem.name} successfully deleted`,
+        {
+          position: "top",
+        }
+      );
     },
     hasErrors(key) {
       if (this.errors[key]) {

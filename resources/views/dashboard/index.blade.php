@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container h-100">
+    <div class="container container-fluid">
         <div>
             {{-- Header title --}}
             <div class="d-flex justify-content-between my-30">

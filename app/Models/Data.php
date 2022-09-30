@@ -16,12 +16,24 @@ class Data extends Model
 
     public function scopeFilter($query, array $filters)
     {
-        $query->when($filters['search'] ?? false, fn ($query, $search) =>
-            $query->where(fn ($query) =>
+        $query->when(
+            $filters['search'] ?? false,
+            fn ($query, $search) =>
+            $query->where(
+                fn ($query) =>
                 $query->where('name', 'like', '%' . $search . '%')
                     ->orWhere('description', 'like', '%' . $search . '%')
             )
         );
+
+        $query->when($filters['categories'] ?? false, function ($query) use ($filters) {
+            $categories = $filters['categories'];
+            foreach ($categories as $category) {
+                $query->whereHas('categories', function ($query) use ($category) {
+                    $query->where('categories.name', $category);
+                });
+            }
+        });
     }
 
     public function dashboards()
@@ -32,5 +44,10 @@ class Data extends Model
     public function user()
     {
         return $this->belongsTo(\App\Models\User::class);
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(\App\Models\Category::class, 'category_data');
     }
 }
