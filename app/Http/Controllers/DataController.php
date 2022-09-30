@@ -65,6 +65,11 @@ class DataController extends Controller
         if ($request->has('categories')) {
             $data->categories()->sync($request->categories);
         };
+        // if request has user_id, attach to user
+        if ($request->has('user_id')) {
+            $data->user()->associate($request->user_id);
+            $data->save();
+        }
 
         return $data;
     }
@@ -123,6 +128,11 @@ class DataController extends Controller
         if ($request->has('categories')) {
             $data->categories()->sync($request->categories);
         };
+        // if request has user_id, attach to user
+        if ($request->has('user_id')) {
+            $data->user()->associate($request->user_id);
+            $data->save();
+        }
 
         return $data->fresh()->load('categories');
     }

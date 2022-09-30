@@ -92,4 +92,18 @@ class DataModelTest extends TestCase
 
         $this->assertInstanceOf(\App\Models\User::class, $data->user);
     }
+
+    /** @test */
+    // it acn be filtered by user
+    public function it_can_be_filtered_by_user()
+    {
+        $user = \App\Models\User::factory()->create();
+        $data = Data::factory(5)->create();
+        $data->first()->update(['user_id' => $user->id]);
+
+        $filtered = Data::filter(['user' => $user->id])->get();
+
+        $this->assertCount(1, $filtered);
+    }
+
 }

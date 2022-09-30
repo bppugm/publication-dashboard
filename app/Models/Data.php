@@ -34,6 +34,11 @@ class Data extends Model
                 });
             }
         });
+
+        // filter by user
+        $query->when($filters['user'] ?? false, function ($query) use ($filters) {
+            $query->where('user_id', $filters['user']);
+        });
     }
 
     public function dashboards()
