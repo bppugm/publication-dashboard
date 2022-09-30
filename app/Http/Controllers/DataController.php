@@ -76,7 +76,7 @@ class DataController extends Controller
      */
     public function show(Request $request, Data $data)
     {
-        $this->authorize('view', $data);
+        $this->authorize('view', $data->load('categories'));
 
         if ($request->wantsJson()) {
             return $data;
