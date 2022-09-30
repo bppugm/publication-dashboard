@@ -19,4 +19,9 @@ class Category extends Model
             )
         );
     }
+
+    public function datas()
+    {
+        return $this->belongsToMany(\App\Models\Data::class, 'category_data');
+    }
 }

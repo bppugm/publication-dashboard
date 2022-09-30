@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Data;
 use Illuminate\Http\Request;
 
@@ -16,14 +17,19 @@ class DataController extends Controller
     {
         $this->authorize('viewAny', Data::class);
 
-        $data = Data::filter(request(['search']))
-        ->orderby('name')->paginate(10)->appends(request()->query());
+        $data = Data::filter($request->all())
+        ->orderby('name')->with(['categories' => function ($query) {
+            $query->select('categories.id', 'categories.name', 'colour')->orderBy('name');
+        }])->paginate(10)->withQueryString();
 
         if ($request->wantsJson()) {
             return $data;
         }
 
-        return view('data.index')->with('data', $data);
+        return view('data.index', [
+            'data' => $data,
+            'categories' => Category::all(),
+        ]);
     }
 
     /**
@@ -51,9 +57,13 @@ class DataController extends Controller
             'description' => 'nullable|string|max:500',
             'value' => 'nullable',
             'notes' => 'nullable|string|max:250',
+            'categories' => 'nullable|array',
         ]);
 
-        $data = Data::create($data);
+        $data = Data::create($request->only('name', 'description', 'value', 'notes'));
+        if ($request->has('categories')) {
+            $data->categories()->sync($request->categories);
+        };
 
         return $data;
     }
@@ -66,7 +76,7 @@ class DataController extends Controller
      */
     public function show(Request $request, Data $data)
     {
-        $this->authorize('view', $data);
+        $this->authorize('view', $data->load('categories'));
 
         if ($request->wantsJson()) {
             return $data;
@@ -104,11 +114,15 @@ class DataController extends Controller
             'description' => 'nullable|string|max:250',
             'value' => 'nullable',
             'notes' => 'nullable|string|max:500',
+            'categories' => 'nullable|array',
         ]);
 
-        $data->update($update);
+        $data->update(request()->only('name', 'description', 'value', 'notes'));
+        if ($request->has('categories')) {
+            $data->categories()->sync($request->categories);
+        };
 
-        return $data;
+        return $data->fresh()->load('categories');
     }
 
     /**
