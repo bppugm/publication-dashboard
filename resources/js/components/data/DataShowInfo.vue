@@ -15,7 +15,7 @@
     </div>
     <div class="row gy-2">
       <div class="col-6 col-lg-2">Category</div>
-      <div class="col-6 col-lg-9">:</div>
+      <div class="col-6 col-lg-9">: <data-category-button v-for="category in data.categories" :key="category.id" :category="category"></data-category-button></div>
     </div>
     <div class="row gy-2">
       <div class="col-6 col-lg-2">Description</div>
@@ -55,7 +55,9 @@
 </template>
 
 <script>
+import DataCategoryButton from './DataCategoryButton.vue';
 export default {
+  components: { DataCategoryButton },
   props: {
     initialData: {
       type: Object,
