@@ -12961,7 +12961,15 @@ var render = function render() {
   }, [_vm._m(0), _vm._v(" "), _c("tbody", [_vm._l(_vm.users, function (user, index) {
     return _c("tr", {
       key: index
-    }, [_c("td", [_vm._v(_vm._s(user.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(user.email))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(user.assigned_data))]), _vm._v(" "), _c("td", [_c("button", {
+    }, [_c("td", [_vm._v(_vm._s(user.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(user.email))]), _vm._v(" "), _c("td", [_c("div", _vm._l(user.data, function (data) {
+      return _c("span", {
+        key: data.id
+      }, [_c("a", {
+        attrs: {
+          href: "/data/".concat(data.id)
+        }
+      }, [_vm._v(_vm._s(data.name))]), _vm._v(" "), user.data.indexOf(data) < user.data.length - 1 ? _c("span", [_vm._v(",\n                ")]) : _vm._e()]);
+    }), 0)]), _vm._v(" "), _c("td", [_c("button", {
       staticClass: "btn btn-outline-primary",
       attrs: {
         type: "button",
@@ -12973,7 +12981,7 @@ var render = function render() {
           return _vm.editItem(user, index);
         }
       }
-    }, [_vm._v("\n                            Edit\n                        ")]), _vm._v(" "), _c("button", {
+    }, [_vm._v("\n              Edit\n            ")]), _vm._v(" "), _c("button", {
       staticClass: "btn btn-outline-danger",
       attrs: {
         type: "button",
@@ -12985,7 +12993,7 @@ var render = function render() {
           return _vm.deleteItem(user);
         }
       }
-    }, [_vm._v("\n                            Delete\n                        ")])])]);
+    }, [_vm._v("\n              Delete\n            ")])])]);
   }), _vm._v(" "), _vm.data.length == 0 ? _c("tr", [_c("td", {
     staticClass: "text-center",
     attrs: {
