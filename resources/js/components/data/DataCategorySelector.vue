@@ -19,6 +19,7 @@
       <input class="vs__search" v-bind="attributes" v-on="events" name="" />
     </template>
     <template #footer>
+      <!-- ADD SLOT FOR HIDDEN INPUT -->
       <slot :selected="selected"></slot>
     </template>
   </v-select>
