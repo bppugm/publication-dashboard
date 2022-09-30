@@ -38,11 +38,31 @@
                     {{-- Search --}}
                     <form class="d-flex justify-content-between w-100" method="GET" action="{{ route('data.index') }}">
                         {{-- Filters --}}
-                        <div class="flex-shrink-0 dropdown">
+                        <div class="dropdown">
                             <button class="btn btn-outline-primary dropdown-toggle" type="button"
-                                id="dropdownMenuButton1" data-bs-toggle="dropdown">
+                                data-bs-auto-close="false" aria-expanded="false" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown">
                                 <i class="mdi mdi-filter-variant"></i> Filter
                             </button>
+                            <div class="dropdown-menu p-4" style="width: 300px">
+                                <div class="mb-3">
+                                    <label for="exampleDropdownFormEmail2" class="form-label">Filter category</label>
+                                    <data-category-selector
+                                    :value='@json(request()->categories)' :init-selected='@json($categories)'>
+                                        <template v-slot="prop">
+                                            <input
+                                            v-for="item in prop.selected"
+                                            type="hidden"
+                                            name="categories[]"
+                                            :value="item.name">
+                                        </template>
+                                    </data-category-selector>
+                                </div>
+                                <div class="d-flex w-100 gap-2">
+                                    <a href="{{ route('data.index') }}" class="btn btn-outline-danger w-50">Reset</a>
+                                    <button type="submit" class="btn btn-primary w-50">Apply</button>
+                                </div>
+                            </div>
                         </div>
                         <div class="input-group mx-3 w-100">
                             <input type="text" name="search" placeholder="Search Data" class="form-control search-input"
