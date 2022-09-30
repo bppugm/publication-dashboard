@@ -3,12 +3,12 @@
     <table class="table table-bordered">
       <thead class="table-light">
         <tr>
-          <th scope="col" style="width: 185px">Name</th>
-          <th scope="col" style="width: 364px">Category</th>
-          <th scope="col" style="width: 78px">Value</th>
-          <th scope="col" style="width: 126px">Assigned User</th>
-          <th scope="col" style="width: 219px">Last Update</th>
-          <th scope="col">Action</th>
+          <th scope="col" style="width: 10%">Name</th>
+          <th scope="col" >Category</th>
+          <th scope="col" >Value</th>
+          <th scope="col" >Assigned User</th>
+          <th scope="col" >Last Update</th>
+          <th scope="col" style="width: 15%">Action</th>
         </tr>
       </thead>
       <tbody>

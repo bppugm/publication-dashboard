@@ -39,7 +39,7 @@
                         <td>
                             <date-formatter iso-date="{{ $activity->created_at->toIsoString() }}"></date-formatter>
                         </td>
-                        <td>{{ $activity->causer->name }}</td>
+                        <td>{{ optional($activity->causer)->name }}</td>
                         <td>{{ $activity->description }}</td>
                         <td>
                             @isset($activity->properties['old'])
