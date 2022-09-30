@@ -47,8 +47,11 @@ export default {
     },
     watch: {
         initSelected: {
+            immediate: true,
             handler(){
-                this.initCategorySelector();
+                if (this.initSelected) {
+                    this.initCategorySelector();
+                }
             },
         },
     },

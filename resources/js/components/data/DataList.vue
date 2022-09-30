@@ -17,14 +17,7 @@
             <a :href="`/data/${item.id}`"> {{ item.name }}</a>
           </td>
           <td class="align-middle">
-            <span v-for="(category, index) in item.categories" :key="index">
-              <div
-                class="btn btn-outline-primary disabled me-2 rounded-4"
-                :style="`color: ${category.colour}; border-color: ${category.colour}; opacity: 1;`"
-              >
-                {{ category.name }}
-              </div>
-            </span>
+            <data-category-button v-for="category in item.categories" :category="category" :key="category.id"></data-category-button>
           </td>
           <td class="align-middle">{{ item.value }}</td>
           <td class="align-middle">-</td>
@@ -74,8 +67,9 @@
 
 <script>
 import DateFormatter from "../DateFormatter.vue";
+import DataCategoryButton from './DataCategoryButton.vue';
 export default {
-  components: { DateFormatter },
+  components: { DateFormatter, DataCategoryButton },
   props: {
     data: {
       type: Array,
