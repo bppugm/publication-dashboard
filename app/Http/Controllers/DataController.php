@@ -17,6 +17,11 @@ class DataController extends Controller
     {
         $this->authorize('viewAny', Data::class);
 
+        $request->validate([
+            'categories' => 'nullable|array',
+            'categories.*' => 'string',
+        ]);
+
         $data = Data::filter($request->all())
         ->orderby('name')->with(['categories' => function ($query) {
             $query->select('categories.id', 'categories.name', 'colour')->orderBy('name');
@@ -26,10 +31,12 @@ class DataController extends Controller
             return $data;
         }
 
-        return view('data.index', [
-            'data' => $data,
-            'categories' => Category::all(),
-        ]);
+        $categories = [];
+        if ($request->filled('categories')) {
+            $categories = collect($request->categories)->map(fn ($item) => ['name' => $item])->toArray();
+        }
+
+        return view('data.index', compact('data', 'categories'));
     }
 
     /**
