@@ -11,7 +11,7 @@ class Data extends Model
     use HasFactory, LogsActivity;
 
     protected $guarded = ['id'];
-    protected static $logAttributes = ['name', 'description', 'value', 'notes'];
+    protected static $logAttributes = ['name', 'description', 'value', 'notes', 'user.name', 'user.id'];
     protected static $logOnlyDirty = true;
 
     public function scopeFilter($query, array $filters)

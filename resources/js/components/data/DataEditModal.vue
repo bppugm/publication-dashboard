@@ -51,6 +51,34 @@
                             :class="{ 'is-invalid': hasErrors('categories') }"
                         ></data-category-selector>
                     </div>
+                    <!-- Value -->
+                    <div class="mb-3">
+                        <label for="value" class="form-label fw-bold"
+                            >Value</label
+                        >
+                        <input
+                            id="value"
+                            name="value"
+                            type="text"
+                            class="form-control"
+                            placeholder="Enter value"
+                            v-model="form.value"
+                            :class="{ 'is-invalid': hasErrors('value') }"
+                        />
+                        <div class="invalid-feedback">
+                            {{ getErrors("value") }}
+                        </div>
+                    </div>
+                    <!-- Assign to User -->
+                    <div class="mb-3 required-field">
+                        <label for="user" class="form-label fw-bold"
+                            >Assign to User</label>
+                        <data-user-selector
+                            v-model="form.user_id"
+                            :initSelected="selectedData.user"
+                            :class="{ 'is-invalid': hasErrors('user') }"
+                        ></data-user-selector>
+                    </div>
                     <!-- Description -->
                     <div class="mb-3">
                         <label for="description" class="form-label fw-bold"
@@ -69,40 +97,33 @@
                             {{ getErrors("description") }}
                         </div>
                     </div>
-                    <!-- Notes -->
+                    <!-- Note -->
                     <div class="mb-3">
-                        <label for="notes" class="form-label fw-bold"
-                            >Notes</label
+                        <label for="Notes" class="form-label fw-bold"
+                            >Note</label
                         >
-                        <input
+                        <textarea
                             id="notes"
-                            name="notes"
-                            type="text"
-                            class="form-control"
-                            placeholder="Enter notes"
                             v-model="form.notes"
-                            :class="{ 'is-invalid': hasErrors('notes') }"
-                        />
-                        <div class="invalid-feedback">
-                            {{ getErrors("notes") }}
-                        </div>
-                    </div>
-                    <!-- Value -->
-                    <div class="mb-3">
-                        <label for="value" class="form-label fw-bold"
-                            >Value</label
-                        >
-                        <input
-                            id="value"
-                            name="value"
-                            type="text"
+                            v-on:keyup="counting"
+                            name="notes"
+                            rows="5"
                             class="form-control"
-                            placeholder="Enter value"
-                            v-model="form.value"
-                            :class="{ 'is-invalid': hasErrors('value') }"
-                        />
+                            placeholder="Enter Note"
+                            :class="{ 'is-invalid': hasErrors('notes') }"
+                        ></textarea>
                         <div class="invalid-feedback">
-                            {{ getErrors("value") }}
+                            {{ getErrors("note") }}
+                        </div>
+                        <div>
+                            <small class="text-muted">
+                                max 500 characters.
+                            </small>
+                            <small
+                                class="float-end"
+                                :class="{'text-danger': countError, 'text-muted': !countError}">
+                                {{ count }} to 500
+                            </small>
                         </div>
                     </div>
                 </div>
@@ -147,9 +168,12 @@ export default {
                 notes: null,
                 value: null,
                 categories: [],
+                user_id: null,
             },
             errors: {},
             isLoading: false,
+            count: 0,
+            countError: false,
             modal: null,
         };
     },
@@ -169,6 +193,10 @@ export default {
         },
     },
     methods: {
+        counting() {
+            this.count = this.form.notes.length;
+            this.countError = this.count > 500 ? true : false;
+        },
         initModal() {
             this.form = { ...this.selectedData };
             if (this.form.categories){

@@ -17,6 +17,9 @@ class UserController extends Controller
             $query->select('data.id', 'data.name', 'user_id')->orderBy('name');
             }])->paginate(10)->withQueryString();
 
+        if (request()->wantsJson()) {
+            return $users;
+        }
         return view('user.index')->with([
             'users' => $users,
         ]);
