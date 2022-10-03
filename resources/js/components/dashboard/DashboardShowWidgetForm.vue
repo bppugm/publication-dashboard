@@ -2,7 +2,7 @@
   <div>
     <div class="dropdown d-inline">
       <button
-        class="btn btn-secondary dropdown-toggle"
+        class="btn btn-soft-primary dropdown-toggle"
         href="#"
         role="button"
         id="dropdownMenuLink"
@@ -207,9 +207,9 @@
                       <button
                         type="button"
                         @click="removeValue(index)"
-                        class="btn btn-sm btn-outline-danger"
+                        class="btn btn-soft-danger"
                       >
-                        <i class="mdi mdi-delete-outline"></i>
+                        <i class="mdi mdi-trash-can-outline"></i>
                       </button>
                     </div>
                   </div>
@@ -229,14 +229,14 @@
                   <div class="col-md-6 d-grid">
                     <button
                       type="button"
-                      class="btn btn-danger"
+                      class="btn btn-soft-danger"
                       @click="resetForm()"
                     >
-                      Reset
+                      Reset changes
                     </button>
                   </div>
                   <div class="col-md-6 d-grid">
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-soft-primary">Save</button>
                   </div>
                 </div>
               </form>

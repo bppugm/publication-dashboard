@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="card card-body p-4">
+    <div class="card card-body p-4 shadow border-0">
       <div class="d-flex justify-content-between">
         <h2 class="text-primary">{{ dashboard.name }}</h2>
         <div class="form-check form-switch">
@@ -18,27 +18,27 @@
       </div>
       <hr />
       <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-8">
           <b>{{ dashboard.description }}</b>
         </div>
-        <div class="col-md-3" v-show="editMode">
-          <dashboard-delete-modal
-            :selected-data="dashboard"
-          ></dashboard-delete-modal>
+        <div class="col-md-4 d-flex" v-show="editMode">
           <button
-            class="btn btn-outline-danger"
+            type="button"
+            class="btn btn-outline-primary ms-auto me-1"
+            data-bs-toggle="modal"
+            data-bs-target="#dashboard-edit-modal"
+          >
+            Edit info
+          </button>
+          <button
+            class="btn btn-outline-danger mx-1"
             data-bs-toggle="modal"
             data-bs-target="#dashboard-delete-modal"
           >
             Delete
           </button>
-          <dashboard-show-edit-info-modal
-            class="d-inline"
-            @updated="handleUpdatedInfo"
-            :dashboard="dashboard"
-          ></dashboard-show-edit-info-modal>
           <dashboard-show-widget-form
-            class="d-inline"
+            class="d-inline mx-1"
             :widgets="dashboard.widgets"
             :edited-widget="editedWidget"
             :edited-widget-index="editedWidgetIndex"
@@ -47,6 +47,12 @@
         </div>
       </div>
     </div>
+
+    <dashboard-edit-modal
+      @updated="handleUpdatedInfo"
+      :selected-data="dashboard"
+    ></dashboard-edit-modal>
+    <dashboard-delete-modal :selected-data="dashboard"></dashboard-delete-modal>
 
     <grid-layout
       :responsive="true"
@@ -66,7 +72,7 @@
       }"
     >
       <grid-item
-        class="card card-body px-3 py-2"
+        class="card card-body px-3 py-3 shadow border-0"
         v-for="(item, index) in dashboard.widgets"
         :x="item.x"
         :y="item.y"
@@ -84,7 +90,9 @@
               opacity: item.ribbonText ? 1 : 0,
             }"
           >
-            <span style="font-weight: 700">{{ item.ribbonText ? item.ribbonText : "empty" }}</span>
+            <span style="font-weight: 700">{{
+              item.ribbonText ? item.ribbonText : "empty"
+            }}</span>
           </div>
         </div>
         <h4 style="font-weight: 400">{{ item.title }}</h4>
