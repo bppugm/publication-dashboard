@@ -49,6 +49,7 @@
     </div>
 
     <grid-layout
+      :responsive="true"
       v-if="dashboard.widgets != null"
       :layout.sync="dashboard.widgets"
       :col-num="12"
@@ -65,7 +66,7 @@
       }"
     >
       <grid-item
-        class="card card-body p-4"
+        class="card card-body px-3 py-2"
         v-for="(item, index) in dashboard.widgets"
         :x="item.x"
         :y="item.y"
@@ -80,10 +81,10 @@
             :style="{
               background: getRibbonColour(item.ribbonColour),
               'border-radius': `0px 0px 0px 15px`,
-              opacity: item.ribbonText ? 1 : 0
+              opacity: item.ribbonText ? 1 : 0,
             }"
           >
-            {{ item.ribbonText ? item.ribbonText : 'empty' }}
+            {{ item.ribbonText ? item.ribbonText : "empty" }}
           </div>
         </div>
         <h4 style="font-weight: 400">{{ item.title }}</h4>
@@ -100,7 +101,7 @@
           <span class="text-primary">{{ item.unit }}</span>
         </div>
         <div>
-          {{ item.description ? item.description : '&nbsp;' }}
+          {{ item.description ? item.description : "&nbsp;" }}
         </div>
         <div
           v-if="editMode"
@@ -300,5 +301,4 @@ export default {
 </script>
 
 <style>
-
 </style>

@@ -10307,6 +10307,7 @@ var render = function render() {
       "margin-right": "-1.2rem"
     },
     attrs: {
+      responsive: true,
       layout: _vm.dashboard.widgets,
       "col-num": 12,
       "row-height": 30,
@@ -10325,7 +10326,7 @@ var render = function render() {
   }, _vm._l(_vm.dashboard.widgets, function (item, index) {
     return _c("grid-item", {
       key: item.i,
-      staticClass: "card card-body p-4",
+      staticClass: "card card-body px-3 py-2",
       attrs: {
         x: item.x,
         y: item.y,
@@ -10841,7 +10842,8 @@ var render = function render() {
       id: "addWidget",
       tabindex: "-1",
       "aria-labelledby": "addWidgetLabel",
-      "aria-hidden": "true"
+      "aria-hidden": "true",
+      "data-bs-backdrop": "static"
     }
   }, [_c("div", {
     staticClass: "modal-dialog"
@@ -11016,26 +11018,14 @@ var render = function render() {
               _vm.$set(_vm.form, "description", $event.target.value);
             }
           }
-        })]), _vm._v(" "), _c("hr"), _vm._v(" "), _c("div", {
-          staticClass: "form-group mt-3 mb-3"
-        }, [_c("div", {
-          staticClass: "d-flex justify-content-between align-items-center"
-        }, [_c("label", {
-          staticClass: "form-label"
-        }, [_c("b", [_vm._v("Values")])]), _vm._v(" "), _c("button", {
-          staticClass: "btn btn-sm btn-outline-primary",
-          attrs: {
-            type: "button"
-          },
-          on: {
-            click: function click($event) {
-              return _vm.addValue();
-            }
-          }
-        }, [_vm._v("\n                    +\n                  ")])])]), _vm._v(" "), _vm._l(_vm.form.values, function (value, index) {
+        })]), _vm._v(" "), _c("div", {
+          staticClass: "form-group mt-3 mb-3 bg-light p-1 text-center"
+        }, [_c("b", {
+          staticClass: "text-primary"
+        }, [_vm._v("Widget Values")])]), _vm._v(" "), _vm._l(_vm.form.values, function (value, index) {
           return _c("div", {
             key: index,
-            staticClass: "mt-2"
+            staticClass: "mt-2 mb-1"
           }, [_c("label", {
             staticClass: "form-label"
           }, [_c("b", [_vm._v("Value " + _vm._s(index + 1))])]), _vm._v(" "), _c("div", {
@@ -11075,7 +11065,16 @@ var render = function render() {
             }, [_vm._v("\n                        " + _vm._s(type) + "\n                      ")]);
           })], 2)]), _vm._v(" "), _c("div", {
             staticClass: "col-md-7"
-          }, [_vm.form.values[index].type == "data" ? _c("dashboard-show-widget-data-selector", {
+          }, [_vm.form.values[index].type == null ? _c("input", {
+            staticClass: "form-control disabled",
+            attrs: {
+              type: "text",
+              disabled: "",
+              placeholder: "Select value type first",
+              maxlength: "12",
+              required: ""
+            }
+          }) : _vm._e(), _vm._v(" "), _vm.form.values[index].type == "data" ? _c("dashboard-show-widget-data-selector", {
             on: {
               selected: _vm.onSelectedData
             },
@@ -11126,15 +11125,6 @@ var render = function render() {
                 _vm.$set(_vm.form.values[index], "text", $event.target.value);
               }
             }
-          }) : _vm._e(), _vm._v(" "), _vm.form.values[index].type == null ? _c("input", {
-            staticClass: "form-control disabled",
-            attrs: {
-              type: "text",
-              disabled: "",
-              placeholder: "Enter value",
-              maxlength: "12",
-              required: ""
-            }
           }) : _vm._e(), _vm._v(" "), _c("validation-provider", {
             attrs: {
               rules: "nounbounds"
@@ -11184,6 +11174,18 @@ var render = function render() {
             staticClass: "mdi mdi-delete-outline"
           })])])])]);
         }), _vm._v(" "), _c("div", {
+          staticClass: "d-grid mt-3"
+        }, [_c("button", {
+          staticClass: "btn btn-outline-primary",
+          attrs: {
+            type: "button"
+          },
+          on: {
+            click: function click($event) {
+              return _vm.addValue();
+            }
+          }
+        }, [_vm._v("\n                  Add more value\n                ")])]), _vm._v(" "), _c("div", {
           staticClass: "row mt-3"
         }, [_c("div", {
           staticClass: "col-md-6 d-grid"
