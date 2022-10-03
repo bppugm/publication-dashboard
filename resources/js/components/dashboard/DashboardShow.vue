@@ -84,7 +84,7 @@
               opacity: item.ribbonText ? 1 : 0,
             }"
           >
-            {{ item.ribbonText ? item.ribbonText : "empty" }}
+            <span style="font-weight: 700">{{ item.ribbonText ? item.ribbonText : "empty" }}</span>
           </div>
         </div>
         <h4 style="font-weight: 400">{{ item.title }}</h4>

@@ -10343,7 +10343,11 @@ var render = function render() {
         "border-radius": "0px 0px 0px 15px",
         opacity: item.ribbonText ? 1 : 0
       }
-    }, [_vm._v("\n          " + _vm._s(item.ribbonText ? item.ribbonText : "empty") + "\n        ")])]), _vm._v(" "), _c("h4", {
+    }, [_c("span", {
+      staticStyle: {
+        "font-weight": "700"
+      }
+    }, [_vm._v(_vm._s(item.ribbonText ? item.ribbonText : "empty"))])])]), _vm._v(" "), _c("h4", {
       staticStyle: {
         "font-weight": "400"
       }
