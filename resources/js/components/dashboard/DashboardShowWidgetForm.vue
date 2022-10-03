@@ -136,7 +136,7 @@
                 <hr />
 
                 <!-- Values -->
-                <div class="form-group mt-3 mb-4">
+                <div class="form-group mt-3 mb-3">
                   <div
                     class="d-flex justify-content-between align-items-center"
                   >
@@ -156,12 +156,14 @@
                   v-for="(value, index) in form.values"
                   :key="index"
                 >
+                <label class="form-label"><b>Value {{ index+1 }}</b></label>
                   <div class="row row-cols-md-3 g-2">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                       <select
                         class="form-control form-select"
                         v-model="form.values[index].type"
                       >
+                        <option :value="null">Select type</option>
                         <option
                           v-for="type in valueTypes"
                           :value="type"
@@ -171,7 +173,7 @@
                         </option>
                       </select>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                       <dashboard-show-widget-data-selector
                         v-if="form.values[index].type == 'data'"
                         v-model="form.values[index].text"
@@ -191,6 +193,15 @@
                         maxlength="12"
                         required
                         v-model="form.values[index].text"
+                      />
+                      <input
+                        v-if="form.values[index].type == null"
+                        type="text"
+                        class="form-control disabled"
+                        disabled
+                        placeholder="Enter value"
+                        maxlength="12"
+                        required
                       />
                       <validation-provider
                         rules="nounbounds"
@@ -307,7 +318,7 @@ export default {
     },
     defaultValue() {
       return {
-        type: this.valueTypes[0],
+        type: null,
         text: null,
         variables: [],
       };

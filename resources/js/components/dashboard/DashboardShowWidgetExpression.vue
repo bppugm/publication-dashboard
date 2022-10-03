@@ -9,7 +9,7 @@
     filtering-disabled
     @search="fetchData($event)"
   >
-    <textarea class="form-control" v-model="text" />
+    <input class="form-control" v-model="text" placeholder="Enter expression"/>
 
     <div>
       <dashboard-show-variable-badge
