@@ -2,7 +2,7 @@
   <div>
     <div class="dropdown d-inline">
       <button
-        class="btn btn-secondary dropdown-toggle"
+        class="btn btn-soft-primary dropdown-toggle"
         href="#"
         role="button"
         id="dropdownMenuLink"
@@ -34,6 +34,7 @@
       tabindex="-1"
       aria-labelledby="addWidgetLabel"
       aria-hidden="true"
+      data-bs-backdrop="static"
     >
       <div class="modal-dialog">
         <div class="modal-content">
@@ -133,35 +134,26 @@
                 </div>
                 <!-- END DESCRIPTION -->
 
-                <hr />
-
                 <!-- Values -->
-                <div class="form-group mt-3 mb-4">
-                  <div
-                    class="d-flex justify-content-between align-items-center"
-                  >
-                    <label class="form-label"><b>Values</b></label>
-                    <button
-                      type="button"
-                      class="btn btn-sm btn-outline-primary"
-                      @click="addValue()"
-                    >
-                      +
-                    </button>
-                  </div>
+                <div class="form-group mt-3 mb-3 bg-light p-1 text-center">
+                  <b class="text-primary">Widget Values</b>
                 </div>
 
                 <div
-                  class="mt-2"
+                  class="mt-2 mb-1"
                   v-for="(value, index) in form.values"
                   :key="index"
                 >
+                  <label class="form-label"
+                    ><b>Value {{ index + 1 }}</b></label
+                  >
                   <div class="row row-cols-md-3 g-2">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                       <select
                         class="form-control form-select"
                         v-model="form.values[index].type"
                       >
+                        <option :value="null">Select type</option>
                         <option
                           v-for="type in valueTypes"
                           :value="type"
@@ -171,7 +163,16 @@
                         </option>
                       </select>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-7">
+                      <input
+                        v-if="form.values[index].type == null"
+                        type="text"
+                        class="form-control disabled"
+                        disabled
+                        placeholder="Select value type first"
+                        maxlength="12"
+                        required
+                      />
                       <dashboard-show-widget-data-selector
                         v-if="form.values[index].type == 'data'"
                         v-model="form.values[index].text"
@@ -206,26 +207,36 @@
                       <button
                         type="button"
                         @click="removeValue(index)"
-                        class="btn btn-sm btn-outline-danger"
+                        class="btn btn-soft-danger"
                       >
-                        <i class="mdi mdi-delete-outline"></i>
+                        <i class="mdi mdi-trash-can-outline"></i>
                       </button>
                     </div>
                   </div>
+                </div>
+
+                <div class="d-grid mt-3">
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary"
+                    @click="addValue()"
+                  >
+                    Add more value
+                  </button>
                 </div>
 
                 <div class="row mt-3">
                   <div class="col-md-6 d-grid">
                     <button
                       type="button"
-                      class="btn btn-danger"
+                      class="btn btn-soft-danger"
                       @click="resetForm()"
                     >
-                      Reset
+                      Reset changes
                     </button>
                   </div>
                   <div class="col-md-6 d-grid">
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-soft-primary">Save</button>
                   </div>
                 </div>
               </form>
@@ -307,7 +318,7 @@ export default {
     },
     defaultValue() {
       return {
-        type: this.valueTypes[0],
+        type: null,
         text: null,
         variables: [],
       };

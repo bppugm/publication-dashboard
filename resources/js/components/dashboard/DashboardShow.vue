@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="card card-body p-4">
+    <div class="card card-body p-4 shadow border-0">
       <div class="d-flex justify-content-between">
         <h2 class="text-primary">{{ dashboard.name }}</h2>
         <div class="form-check form-switch">
@@ -18,27 +18,27 @@
       </div>
       <hr />
       <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-8">
           <b>{{ dashboard.description }}</b>
         </div>
-        <div class="col-md-3" v-show="editMode">
-          <dashboard-delete-modal
-            :selected-data="dashboard"
-          ></dashboard-delete-modal>
+        <div class="col-md-4 d-flex" v-show="editMode">
           <button
-            class="btn btn-outline-danger"
+            type="button"
+            class="btn btn-outline-primary ms-auto me-1"
+            data-bs-toggle="modal"
+            data-bs-target="#dashboard-edit-modal"
+          >
+            Edit info
+          </button>
+          <button
+            class="btn btn-outline-danger mx-1"
             data-bs-toggle="modal"
             data-bs-target="#dashboard-delete-modal"
           >
             Delete
           </button>
-          <dashboard-show-edit-info-modal
-            class="d-inline"
-            @updated="handleUpdatedInfo"
-            :dashboard="dashboard"
-          ></dashboard-show-edit-info-modal>
           <dashboard-show-widget-form
-            class="d-inline"
+            class="d-inline mx-1"
             :widgets="dashboard.widgets"
             :edited-widget="editedWidget"
             :edited-widget-index="editedWidgetIndex"
@@ -48,7 +48,14 @@
       </div>
     </div>
 
+    <dashboard-edit-modal
+      @updated="handleUpdatedInfo"
+      :selected-data="dashboard"
+    ></dashboard-edit-modal>
+    <dashboard-delete-modal :selected-data="dashboard"></dashboard-delete-modal>
+
     <grid-layout
+      :responsive="true"
       v-if="dashboard.widgets != null"
       :layout.sync="dashboard.widgets"
       :col-num="12"
@@ -57,11 +64,15 @@
       :is-resizable="editMode"
       :is-mirrored="false"
       :vertical-compact="true"
-      :margin="[10, 10]"
+      :margin="[20, 20]"
       :use-css-transforms="true"
+      :style="{
+        'margin-left': '-1.2rem',
+        'margin-right': '-1.2rem',
+      }"
     >
       <grid-item
-        class="card card-body pt-1"
+        class="card card-body px-3 py-3 shadow border-0"
         v-for="(item, index) in dashboard.widgets"
         :x="item.x"
         :y="item.y"
@@ -70,18 +81,21 @@
         :i="item.i"
         :key="item.i"
       >
-        <div class="mb-3">
+        <div class="mb-2 d-flex justify-content-end">
           <div
-            class="ribbon text-white"
-            v-show="item.ribbonText"
+            class="text-end text-white py-1 pe-2 ps-3"
             :style="{
               background: getRibbonColour(item.ribbonColour),
+              'border-radius': `0px 0px 0px 15px`,
+              opacity: item.ribbonText ? 1 : 0,
             }"
           >
-            {{ item.ribbonText }}
+            <span style="font-weight: 700">{{
+              item.ribbonText ? item.ribbonText : "empty"
+            }}</span>
           </div>
         </div>
-        <h5>{{ item.title }}</h5>
+        <h4 style="font-weight: 400">{{ item.title }}</h4>
         <div class="my-auto" v-if="item.type == 'chart'">
           <bar
             :chart-data="item.chartOptions.data"
@@ -89,13 +103,13 @@
           ></bar>
         </div>
         <div class="my-auto" v-if="item.type == 'numeric'">
-          <span class="h1" style="font-weight: 800">{{
+          <span class="h1 text-primary" style="font-weight: 800">{{
             interpretValue(item.values)
           }}</span>
-          <span>{{ item.unit }}</span>
+          <span class="text-primary">{{ item.unit }}</span>
         </div>
         <div>
-          {{ item.description }}
+          {{ item.description ? item.description : "&nbsp;" }}
         </div>
         <div
           v-if="editMode"
@@ -295,23 +309,4 @@ export default {
 </script>
 
 <style>
-.ribbon {
-  --f: 5px; /* control the folded part*/
-  --r: 15px; /* control the ribbon shape */
-  --t: 10px; /* the top offset */
-
-  position: absolute;
-  inset: var(--t) calc(-1 * var(--f)) auto auto;
-  padding: 0 10px var(--f) calc(10px + var(--r));
-  clip-path: polygon(
-    0 0,
-    100% 0,
-    100% calc(100% - var(--f)),
-    calc(100% - var(--f)) 100%,
-    calc(100% - var(--f)) calc(100% - var(--f)),
-    0 calc(100% - var(--f)),
-    var(--r) calc(50% - var(--f) / 2)
-  );
-  box-shadow: 0 calc(-1 * var(--f)) 0 inset #0005;
-}
 </style>
