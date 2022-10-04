@@ -80,14 +80,14 @@
                     <div class="d-flex w-100">
                         <button
                             type="button"
-                            class="btn btn-danger w-50 me-2"
+                            class="btn btn-soft-danger w-50 me-2"
                             @click="resetForm"
                         >
-                            Reset
+                            Reset changes
                         </button>
                         <button
                             type="button"
-                            class="btn btn-primary w-50 ms-2"
+                            class="btn btn-soft-primary w-50 ms-2"
                             v-show="isLoading == false"
                             @click="submitForm"
                         >

@@ -2026,7 +2026,7 @@ progress {
   font-weight: 400;
   line-height: 1.6;
   color: #212529;
-  background-color: #f8fafc;
+  background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #ced4da;
   -webkit-appearance: none;
@@ -2048,7 +2048,7 @@ progress {
 }
 .form-control:focus {
   color: #212529;
-  background-color: #f8fafc;
+  background-color: #fff;
   border-color: #839eb2;
   outline: 0;
   box-shadow: 0 0 0 0.25rem rgba(7, 60, 100, 0.25);
@@ -2213,7 +2213,7 @@ textarea.form-control-lg {
   font-weight: 400;
   line-height: 1.6;
   color: #212529;
-  background-color: #f8fafc;
+  background-color: #fff;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
   background-repeat: no-repeat;
   background-position: right 0.75rem center;
@@ -2290,7 +2290,7 @@ textarea.form-control-lg {
   height: 1em;
   margin-top: 0.3em;
   vertical-align: top;
-  background-color: #f8fafc;
+  background-color: #fff;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -11004,10 +11004,6 @@ li.nav-custom > a {
   cursor: pointer;
 }
 
-input[type=text], input[type=password], input[type=email], input[type=search] {
-  background-color: transparent !important;
-}
-
 input.search-input {
   padding-left: 40px;
   background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='gray' width='16' height='16' class='ri-search-line' viewBox='0 0 28 28'%3E%3Cpath d='M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15z'%3E%3C/path%3E%3C/svg%3E") no-repeat 13px 10px;
@@ -11034,4 +11030,38 @@ input.is-invalid.icon-append {
   padding-bottom: 1.875rem !important;
   padding-left: 1.875rem !important;
   padding-right: 1.875rem !important;
+}
+
+.btn-soft-primary {
+  --bs-btn-color: #073C64;
+  --bs-btn-bg: #CDD8E0;
+  --bs-btn-border-color: #CDD8E0;
+  --bs-btn-hover-color: #000;
+  --bs-btn-hover-bg: #d5dee5;
+  --bs-btn-hover-border-color: #d2dce3;
+  --bs-btn-focus-shadow-rgb: 175, 193, 205;
+  --bs-btn-active-color: #000;
+  --bs-btn-active-bg: #d7e0e6;
+  --bs-btn-active-border-color: #d2dce3;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #000;
+  --bs-btn-disabled-bg: #CDD8E0;
+  --bs-btn-disabled-border-color: #CDD8E0;
+}
+
+.btn-soft-danger {
+  --bs-btn-color: #dc3545;
+  --bs-btn-bg: #FCD9DC;
+  --bs-btn-border-color: #FCD9DC;
+  --bs-btn-hover-color: #000;
+  --bs-btn-hover-bg: #fcdfe1;
+  --bs-btn-hover-border-color: #fcdde0;
+  --bs-btn-focus-shadow-rgb: 247, 192, 197;
+  --bs-btn-active-color: #000;
+  --bs-btn-active-bg: #fde1e3;
+  --bs-btn-active-border-color: #fcdde0;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #000;
+  --bs-btn-disabled-bg: #FCD9DC;
+  --bs-btn-disabled-border-color: #FCD9DC;
 }

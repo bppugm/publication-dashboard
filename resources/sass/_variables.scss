@@ -9,6 +9,8 @@ $line-height-base: 1.6;
 // color
 $blue:    #073C64 !default;
 $light:    #E2E6E9 !default;
+$soft-primary: #CDD8E0;
+$soft-danger: #FCD9DC;
 
 // breadcrumb
 $breadcrumb-margin-bottom:          0;
@@ -18,3 +20,5 @@ $breadcrumb-margin-bottom:          0;
     font-weight: 800;
     color: $blue;
 }
+
+$input-bg: #fff;

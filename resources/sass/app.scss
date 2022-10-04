@@ -106,10 +106,6 @@ li.nav-custom > a {
     cursor: pointer;
 }
 
-input[type=text], input[type=password], input[type=email], input[type=search] {
-    background-color: transparent !important;
-}
-
 input.search-input {
     padding-left: 40px;
     background: transparent
@@ -138,4 +134,12 @@ input.is-invalid.icon-append {
     padding-bottom: 1.875rem !important;
     padding-left: 1.875rem !important;
     padding-right: 1.875rem !important;
+}
+
+.btn-soft-primary {
+    @include button-variant($soft-primary, $soft-primary, $primary);
+}
+
+.btn-soft-danger {
+    @include button-variant($soft-danger, $soft-danger, $danger);
 }
