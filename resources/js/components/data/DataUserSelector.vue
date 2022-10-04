@@ -19,7 +19,7 @@
 export default {
   props: {
     value: {
-      type: Number,
+      type: Number|String,
     },
     initSelected: {
       type: Object,
