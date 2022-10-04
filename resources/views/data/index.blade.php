@@ -48,7 +48,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label fw-bold">Filter Category</label>
                                     <data-category-selector
-                                    :value='@json(request()->categories)' :init-selected='@json($categories)'>
+                                    value="{{request()->categories}}" :init-selected='@json($categories)'>
                                         <template v-slot="prop">
                                             <input
                                             v-for="item in prop.selected"
@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="" class="form-label fw-bold">Filter Assigned User</label>
-                                    <data-user-selector :value='@json(request()->user)' :init-selected='@json($user)'>
+                                    <data-user-selector value="{{request()->user}}" :init-selected='@json($user)'>
                                         <template v-slot="{selected}">
                                             <input v-if="selected"
                                             type="hidden"

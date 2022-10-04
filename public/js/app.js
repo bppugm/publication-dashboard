@@ -7823,10 +7823,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       form: {
         search: null
       },
-      selected: {
-        id: null,
-        name: "--Search User--"
-      }
+      selected: null
     };
   },
   watch: {

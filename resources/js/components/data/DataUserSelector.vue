@@ -31,10 +31,7 @@ export default {
       form: {
         search: null,
       },
-      selected: {
-        id: null,
-        name: "--Search User--",
-      },
+      selected: null,
     };
   },
   watch: {
