@@ -96,10 +96,11 @@
           </div>
         </div>
         <h4 style="font-weight: 400">{{ item.title }}</h4>
-        <div class="my-auto" v-if="item.type == 'chart'">
+        <div class="my-auto chart-container" v-if="item.type == 'chart'">
           <bar
             :chart-data="item.chartOptions.data"
             :chart-options="item.chartOptions.options"
+            :style="chartStyle"
           ></bar>
         </div>
         <div class="my-auto" v-if="item.type == 'numeric'">
@@ -177,6 +178,13 @@ export default {
     GridLayout: VueGridLayout.GridLayout,
     GridItem: VueGridLayout.GridItem,
     Bar,
+  },
+  computed: {
+    chartStyle() {
+      return {
+        position: 'relative',
+      }; 
+    }
   },
   data() {
     return {

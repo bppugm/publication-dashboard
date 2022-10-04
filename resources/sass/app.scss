@@ -143,3 +143,14 @@ input.is-invalid.icon-append {
 .btn-soft-danger {
     @include button-variant($soft-danger, $soft-danger, $danger);
 }
+
+// responsive chart
+.chart-container {
+  flex-grow: 1;
+  min-height: 0;
+
+  > div {
+    position: relative;
+    height: 100%;
+  }
+}

@@ -11065,3 +11065,12 @@ input.is-invalid.icon-append {
   --bs-btn-disabled-bg: #FCD9DC;
   --bs-btn-disabled-border-color: #FCD9DC;
 }
+
+.chart-container {
+  flex-grow: 1;
+  min-height: 0;
+}
+.chart-container > div {
+  position: relative;
+  height: 100%;
+}
