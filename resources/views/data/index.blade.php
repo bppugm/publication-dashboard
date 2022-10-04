@@ -46,7 +46,7 @@
                             </button>
                             <div class="dropdown-menu p-4" style="width: 300px">
                                 <div class="mb-3">
-                                    <label for="exampleDropdownFormEmail2" class="form-label">Filter category</label>
+                                    <label for="" class="form-label fw-bold">Filter Category</label>
                                     <data-category-selector
                                     :value='@json(request()->categories)' :init-selected='@json($categories)'>
                                         <template v-slot="prop">
@@ -57,6 +57,18 @@
                                             :value="item.name">
                                         </template>
                                     </data-category-selector>
+                                    <span class="text-muted text-small">You can select multiple category</span>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="" class="form-label fw-bold">Filter Assigned User</label>
+                                    <data-user-selector value="{{request()->user}}" :init-selected='@json($user)'>
+                                        <template v-slot="{selected}">
+                                            <input v-if="selected"
+                                            type="hidden"
+                                            name="user"
+                                            :value="selected.id">
+                                        </template>
+                                    </data-user-selector>
                                 </div>
                                 <div class="d-flex w-100 gap-2">
                                     <a href="{{ route('data.index') }}" class="btn btn-outline-danger w-50">Reset</a>

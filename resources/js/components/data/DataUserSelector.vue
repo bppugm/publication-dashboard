@@ -1,13 +1,12 @@
 <template>
   <v-select
-    placeholder="--Select Category--"
-    :options="categories"
+    class="style-chooser"
+    placeholder="--Select User--"
+    :options="users"
     label="name"
     v-model="selected"
     @search="handleSearch"
     @input="handleSelected"
-    multiple
-    :close-on-select="false"
   >
     <template #footer>
       <!-- ADD SLOT FOR HIDDEN INPUT -->
@@ -20,19 +19,19 @@
 export default {
   props: {
     value: {
-      type: Array,
+      type: Number|String,
     },
     initSelected: {
-      type: Array,
+      type: Object,
     },
   },
   data() {
     return {
-      categories: [],
+      users: [],
       form: {
         search: null,
       },
-      selected: [],
+      selected: null,
     };
   },
   watch: {
@@ -40,7 +39,7 @@ export default {
       immediate: true,
       handler() {
         if (this.initSelected) {
-          this.initCategorySelector();
+          this.initUserSelector();
         }
       },
     },
@@ -49,36 +48,32 @@ export default {
     this.fetch();
   },
   methods: {
-    initCategorySelector() {
-      this.selected = [...this.initSelected];
+    initUserSelector() {
+      this.selected = { ...this.initSelected };
     },
     async fetch() {
       try {
-        let response = await axios.get(`/category`, {
+        let response = await axios.get(`/user`, {
           params: this.form,
         });
-
-        this.categories = response.data.data;
+        this.users = response.data.data;
       } catch (error) {
         console.log(error);
       }
     },
-    debounceFetch: _.debounce(function () {
-      this.fetch();
-    }, 350),
     handleSearch(search) {
       this.form.search = search;
-      this.debounceFetch();
+      this.fetch();
     },
-    handleSelected() {
-      this.$emit(
-        "input",
-        this.selected.map((item) => item.id)
-      );
+    handleSelected(selected) {
+      this.$emit("input", selected ? selected.id : null);
     },
   },
 };
 </script>
 
-<style lang='sccs' scoped>
+<style scoped>
+.style-chooser .vs__search::placeholder{
+    color: #000;
+}
 </style>

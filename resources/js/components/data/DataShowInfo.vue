@@ -11,7 +11,7 @@
     </div>
     <div class="row gy-2">
       <div class="col-6 col-lg-2">Assigned user</div>
-      <div class="col-6 col-lg-9">:</div>
+      <div class="col-6 col-lg-9">: {{ data.user ? data.user.name : '' }}</div>
     </div>
     <div class="row gy-2">
       <div class="col-6 col-lg-2">Category</div>
