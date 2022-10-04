@@ -78,7 +78,7 @@ class CategoryFeatureTest extends TestCase
     }
 
     /** @test */
-    public function user_can_not_update_category_with_the_same_name()
+    public function user_can_not_update_category_with_existing_name()
     {
         $this->login();
         $category = Category::factory()->create();
@@ -89,6 +89,19 @@ class CategoryFeatureTest extends TestCase
 
         $response->assertStatus(422);
         $this->assertDatabaseMissing('categories', $update);
+    }
+
+    /** @test */
+    public function user_can_update_category_with_the_same_name()
+    {
+        $this->login();
+        $category = Category::factory()->create();
+        $update = ['colour' => 'updated', 'name' => $category->name, 'description' => 'updated'];
+
+        $response = $this->putJson(route('category.update', $category), $update);
+
+        $response->assertOk();
+        $this->assertDatabaseHas('categories', $update);
     }
 
 }
