@@ -1,5 +1,6 @@
 <template>
   <v-select
+    class="style-chooser"
     placeholder="--Select User--"
     :options="users"
     label="name"
@@ -30,7 +31,10 @@ export default {
       form: {
         search: null,
       },
-      selected: [],
+      selected: {
+        id: null,
+        name: "--Search User--",
+      },
     };
   },
   watch: {
@@ -48,7 +52,7 @@ export default {
   },
   methods: {
     initUserSelector() {
-      this.selected = {...this.initSelected};
+      this.selected = { ...this.initSelected };
     },
     async fetch() {
       try {
@@ -65,8 +69,14 @@ export default {
       this.fetch();
     },
     handleSelected(selected) {
-      this.$emit("input", selected.id);
+      this.$emit("input", selected ? selected.id : null);
     },
   },
 };
 </script>
+
+<style scoped>
+.style-chooser .vs__search::placeholder{
+    color: #000;
+}
+</style>
