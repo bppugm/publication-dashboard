@@ -49,7 +49,7 @@ class CategoryController extends Controller
         $category = $request->validate(
             [
                 'colour' => 'nullable|string|max:100',
-                'name' => 'string|max:100',
+                'name' => 'required|string|unique:categories|max:100',
                 'description' => 'nullable|string|max:500',
             ]
         );
