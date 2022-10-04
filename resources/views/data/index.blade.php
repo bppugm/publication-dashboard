@@ -48,7 +48,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label fw-bold">Filter Category</label>
                                     <data-category-selector
-                                    value="{{request()->categories}}" :init-selected='@json($categories)'>
+                                    value='@json(request()->categories)' :init-selected='@json($categories)'>
                                         <template v-slot="prop">
                                             <input
                                             v-for="item in prop.selected"
