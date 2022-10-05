@@ -148,10 +148,13 @@ class DataController extends Controller
         if ($request->has('categories')) {
             $data->categories()->sync($request->categories);
         };
-        // if request has user_id, attach to user
-        if ($request->has('user_id')) {
-            $data->user()->associate($request->user_id);
-            $data->save();
+
+        // if superadmin, attach data to user if request has user_id
+        if ($request->user()->is_superadmin) {
+            if ($request->has('user_id')) {
+                $data->user()->associate($request->user_id);
+                $data->save();
+            }
         }
 
         return $data->fresh()->load('categories', 'user');

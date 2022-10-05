@@ -16,29 +16,43 @@ class Data extends Model
 
     public function scopeFilter($query, array $filters)
     {
-        $query->when(
-            $filters['search'] ?? false,
-            fn ($query, $search) =>
-            $query->where(
-                fn ($query) =>
-                $query->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('description', 'like', '%' . $search . '%')
-            )
-        );
+        if (auth()->user()) {
+            $query->when(
+                $filters['search'] ?? false,
+                fn ($query, $search) =>
+                $query->where(
+                    fn ($query) =>
+                    $query->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('description', 'like', '%' . $search . '%')
+                )
+            );
 
-        $query->when($filters['categories'] ?? false, function ($query) use ($filters) {
-            $categories = $filters['categories'];
-            foreach ($categories as $category) {
-                $query->whereHas('categories', function ($query) use ($category) {
-                    $query->where('categories.name', $category);
+            $query->when($filters['categories'] ?? false, function ($query) use ($filters) {
+                $categories = $filters['categories'];
+                foreach ($categories as $category) {
+                    $query->whereHas('categories', function ($query) use ($category) {
+                        $query->where('categories.name', $category);
+                    });
+                }
+            });
+
+            // filter by me only accessible for authenticated users
+            $query->when($filters['me'] ?? false, function ($query) {
+                $query->whereHas('user', function ($query) {
+                    $query->where('user_id', auth()->user()->id);
+                });
+            });
+
+            // filter by user only accessible by superadmin
+            if (auth()->user()->is_superadmin) {
+                $query->when($filters['user'] ?? false, function ($query) use ($filters) {
+                    $query->whereHas('user', function ($query) use ($filters) {
+                        $query->where('user_id', $filters['user']);
+                    });
                 });
             }
-        });
 
-        // filter by user
-        $query->when($filters['user'] ?? false, function ($query) use ($filters) {
-            $query->where('user_id', $filters['user']);
-        });
+        }
     }
 
     public function dashboards()

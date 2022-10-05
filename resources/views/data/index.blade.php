@@ -72,6 +72,21 @@
                                     </data-user-selector>
                                 </div>
                                 @endcan
+                                {{-- filter assigned to me for authenticated user only --}}
+                                @cannot('viewAny', \App\Models\User::class)
+                                <div class="mb-3">
+                                    @if (request()->me)
+                                    <input type="checkbox" name="me" value="{{auth()->id()}}" id="filter-assigned-to-me"
+                                        class="form-check-input" checked>
+                                    @else
+                                    <input type="checkbox" name="me" value="{{auth()->id()}}" id="filter-assigned-to-me"
+                                        class="form-check-input">
+                                    @endif
+                                    <label for="filter-assigned-to-me" class="form-check-label">Filter Assigned to
+                                        Me</label>
+                                </div>
+                                @endcannot
+                                {{-- end filter assigned to me for authenticated user only --}}
                                 <div class="d-flex w-100 gap-2">
                                     <a href="{{ route('data.index') }}" class="btn btn-outline-danger w-50">Reset</a>
                                     <button type="submit" class="btn btn-primary w-50">Apply</button>
