@@ -19,6 +19,10 @@ class DashboardController extends Controller
             ->paginate(10)
             ->appends(request()->query());
 
+        if (request()->wantsJson()) {
+            return $dashboards;
+        }
+
         return view('dashboard.index', compact('dashboards'));
     }
 

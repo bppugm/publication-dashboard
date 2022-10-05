@@ -134,6 +134,13 @@
                 </div>
                 <!-- END DESCRIPTION -->
 
+                <!-- Connect To selector from component DashbboardShowConnectSelector-->
+                <dashboard-show-connect-selector
+                  v-model="form.connectTo"
+                  :connect-to="form.connectTo"
+                  :initSelected="form.connectTo"
+                ></dashboard-show-connect-selector>
+
                 <!-- Values -->
                 <div class="form-group mt-3 mb-3 bg-light p-1 text-center">
                   <b class="text-primary">Widget Values</b>

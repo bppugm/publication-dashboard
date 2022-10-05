@@ -95,7 +95,10 @@
             }}</span>
           </div>
         </div>
-        <h4 style="font-weight: 400">{{ item.title }}</h4>
+        <a
+          class="text-decoration-none text-primary"
+          :href="`/dashboard/${item.connectTo}`">
+        <h4 style="font-weight: 400">{{ item.title }}</h4></a>
         <div class="my-auto" v-if="item.type == 'chart'">
           <bar
             :chart-data="item.chartOptions.data"
