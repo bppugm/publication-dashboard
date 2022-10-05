@@ -7826,7 +7826,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: Number | String
     },
     initSelected: {
-      type: Object
+      type: Object,
+      "default": null
     }
   },
   data: function data() {
@@ -7842,9 +7843,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     initSelected: {
       immediate: true,
       handler: function handler() {
-        if (this.initSelected) {
-          this.initUserSelector();
-        }
+        this.initUserSelector();
       }
     }
   },
@@ -7853,7 +7852,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: {
     initUserSelector: function initUserSelector() {
-      this.selected = _objectSpread({}, this.initSelected);
+      this.selected = this.initSelected == null ? null : _objectSpread({}, this.initSelected);
     },
     fetch: function fetch() {
       var _this = this;
@@ -18526,7 +18525,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.style-chooser .vs__search[data-v-e9631084]::-moz-placeholder{\n    color: #000;\n}\n.style-chooser .vs__search[data-v-e9631084]::placeholder{\n    color: #000;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.style-chooser .vs__search[data-v-e9631084]::-moz-placeholder {\n  color: #000;\n}\n.style-chooser .vs__search[data-v-e9631084]::placeholder {\n  color: #000;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
