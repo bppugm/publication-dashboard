@@ -59,7 +59,7 @@ class DataFeatureTest extends TestCase
     public function admin_can_search_data()
     {
         $this->login();
-        $data = Data::factory(5)->create()->unique();
+        $data = Data::factory(5)->create();
         $search = $data->first()->name;
 
         $response = $this->getJson(route('data.index', ['search' => $search]));
@@ -316,15 +316,15 @@ class DataFeatureTest extends TestCase
         $user = User::factory()->create();
         $user2 = User::factory()->create();
         Data::factory(2)->create(['user_id' => $user2->id]);
-        Data::factory(2)->create(); //create additional 2 data without user_id
+        Data::factory(2)->create(['user_id' => null ]); //create additional 2 data without user_id
         $this->login($user);
 
         $response = $this->getJson(route('data.index', [
             'user' => $user2->id,
         ]));
+        $response->assertOk()->assertJsonCount(0, 'data');
+        // will return zero data
 
-        $response->assertOk()->assertJsonCount(4, 'data');
-        // will return all data because user can't filter data by user endpoint
     }
 
     /** @test */

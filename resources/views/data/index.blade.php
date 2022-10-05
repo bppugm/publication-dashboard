@@ -43,7 +43,7 @@
                                 data-bs-auto-close="false" aria-expanded="false" id="dropdownMenuButton1"
                                 data-bs-toggle="dropdown">
                                 <i class="mdi mdi-filter-variant"></i> Filter
-                                @if(request()->only(['categories', 'user']))
+                                @if(request()->only(['categories', 'user', 'me']))
                                 <span
                                     class="position-absolute top-0 start-100 translate-middle p-2 bg-warning rounded-circle">
                                     <span class="visually-hidden">New alerts</span>
@@ -75,13 +75,8 @@
                                 {{-- filter assigned to me for authenticated user only --}}
                                 @cannot('viewAny', \App\Models\User::class)
                                 <div class="mb-3">
-                                    @if (request()->me)
-                                    <input type="checkbox" name="me" value="{{auth()->id()}}" id="filter-assigned-to-me"
-                                        class="form-check-input" checked>
-                                    @else
-                                    <input type="checkbox" name="me" value="{{auth()->id()}}" id="filter-assigned-to-me"
-                                        class="form-check-input">
-                                    @endif
+                                    <input type="checkbox" name="me" value="1" id="filter-assigned-to-me"
+                                        class="form-check-input" {{request()->me ? 'checked' : ''}}>
                                     <label for="filter-assigned-to-me" class="form-check-label">Filter Assigned to
                                         Me</label>
                                 </div>

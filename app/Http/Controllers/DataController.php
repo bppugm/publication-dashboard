@@ -23,12 +23,16 @@ class DataController extends Controller
         ]);
 
         $data = new Data;
+        $query = request()->query();
 
-        if ($request->user()->cannot('viewAny', Data::class)) {
-            $data = $data->filter(['user' => $request->user()->id]);
+        if ($request->filled('user')) {
+            $query['user'] = $request->user()->cannot('viewAny', Data::class) ? $request->user()->id : $request->user;
+        }
+        if ($request->filled('me')) {
+            $query['user'] = $request->user()->id;
         }
 
-        $data = $data->filter($request->all())
+        $data = $data->filter($query)
         ->orderBy('name')->with(['categories' => function ($query) {
             $query->select('categories.id', 'categories.name', 'colour')->orderBy('name');
         }, 'user' => function ($query) {

@@ -46,8 +46,6 @@ class DataModelTest extends TestCase
     /** @test */
     public function it_can_be_filtered_by_categories()
     {
-        $user = User::factory()->create();
-        $this->login($user);
         $category = Category::factory()->create();
         $data = Data::factory(5)->create();
         $data->first()->categories()->attach($category);
@@ -60,8 +58,6 @@ class DataModelTest extends TestCase
     /** @test */
     public function it_can_be_filtered_by_many_categories()
     {
-        $user = User::factory()->create();
-        $this->login($user);
         $categories = Category::factory(2)->create();
         $data = Data::factory(5)->create();
         $data->first()->categories()->attach([$categories->first()->id, $categories->last()->id]);
