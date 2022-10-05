@@ -7089,12 +7089,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           responsive: true,
           responsiveAnimationDuration: 500,
           maintainAspectRatio: false,
-          legend: {
-            display: false
-          },
           scales: {
             y: {
               beginAtZero: true
+            }
+          },
+          plugins: {
+            legend: {
+              display: false
             }
           }
         }
@@ -7118,6 +7120,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   mounted: function mounted() {
     this.initializeForm(); // Initialize bootstrap modal for manual action
+    // this.modal = new bootstrap.Modal(this.$refs.formModal);
 
     this.modal = new bootstrap.Modal(document.getElementById("addWidget"));
   },
@@ -7136,6 +7139,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         type: type
       });
       this.selectedData = [];
+      this.chartForm = [];
     },
     addValue: function addValue() {
       this.form.values.push(_objectSpread({}, this.defaultValue));
@@ -10596,7 +10600,7 @@ var render = function render() {
     staticClass: "dropdown-item",
     attrs: {
       "data-bs-toggle": "modal",
-      "data-bs-target": "#addChartWidget"
+      "data-bs-target": "#addWidget"
     },
     on: {
       click: function click($event) {
@@ -10604,6 +10608,7 @@ var render = function render() {
       }
     }
   }, [_vm._v("\n          Chart Widget\n        ")])])])]), _vm._v(" "), _c("div", {
+    ref: "formModal",
     staticClass: "modal fade",
     attrs: {
       id: "addWidget",
@@ -10615,7 +10620,21 @@ var render = function render() {
     staticClass: "modal-dialog"
   }, [_c("div", {
     staticClass: "modal-content"
-  }, [_vm._m(0), _vm._v(" "), _c("div", {
+  }, [_c("div", {
+    staticClass: "modal-header"
+  }, [_c("h5", {
+    staticClass: "modal-title",
+    attrs: {
+      id: "addWidgetLabel"
+    }
+  }, [_vm._v("Add " + _vm._s(_vm.form.type) + " widget")]), _vm._v(" "), _c("button", {
+    staticClass: "btn-close",
+    attrs: {
+      type: "button",
+      "data-bs-dismiss": "modal",
+      "aria-label": "Close"
+    }
+  })]), _vm._v(" "), _c("div", {
     staticClass: "modal-body"
   }, [_vm.form.type ? _c("form", {
     on: {
@@ -10626,7 +10645,7 @@ var render = function render() {
     }
   }, [_c("div", {
     staticClass: "form-group"
-  }, [_vm._m(1), _vm._v(" "), _c("div", {
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
     staticClass: "row row-cols-md-2 g-2"
   }, [_c("div", {
     staticClass: "col-md-2"
@@ -10684,7 +10703,7 @@ var render = function render() {
     staticClass: "form-text"
   }, [_vm._v(_vm._s(_vm.form.ribbonText ? _vm.form.ribbonText.length : 0) + " of\n                      12")])])])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._m(2), _vm._v(" "), _c("input", {
+  }, [_vm._m(1), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -10714,9 +10733,9 @@ var render = function render() {
     staticClass: "form-text"
   }, [_vm._v("Maximum 100 characters")]), _vm._v(" "), _c("small", {
     staticClass: "form-text"
-  }, [_vm._v(_vm._s(_vm.form.title.length) + " of 100")])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v(_vm._s(_vm.form.title.length) + " of 100")])])]), _vm._v(" "), _vm.form.type == "numeric" ? _c("div", {
     staticClass: "form-group mt-3"
-  }, [_vm._m(3), _vm._v(" "), _c("input", {
+  }, [_vm._m(2), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -10745,9 +10764,9 @@ var render = function render() {
     staticClass: "form-text"
   }, [_vm._v("Maximum 12 characters")]), _vm._v(" "), _c("small", {
     staticClass: "form-text"
-  }, [_vm._v(_vm._s(_vm.form.unit ? _vm.form.unit.length : 0) + " of 12")])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v(_vm._s(_vm.form.unit ? _vm.form.unit.length : 0) + " of 12")])])]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "form-group mt-3"
-  }, [_vm._m(4), _vm._v(" "), _c("textarea", {
+  }, [_vm._m(3), _vm._v(" "), _c("textarea", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -10769,11 +10788,11 @@ var render = function render() {
         _vm.$set(_vm.form, "description", $event.target.value);
       }
     }
-  })]), _vm._v(" "), _c("hr"), _vm._v(" "), _c("div", {
+  })]), _vm._v(" "), _c("hr"), _vm._v(" "), _vm.form.type == "numeric" ? _c("div", [_c("div", {
     staticClass: "form-group mt-3 mb-4"
   }, [_c("div", {
     staticClass: "d-flex justify-content-between align-items-center"
-  }, [_vm._m(5), _vm._v(" "), _c("button", {
+  }, [_vm._m(4), _vm._v(" "), _c("button", {
     staticClass: "btn btn-sm btn-outline-primary",
     attrs: {
       type: "button"
@@ -10783,7 +10802,7 @@ var render = function render() {
         return _vm.addValue();
       }
     }
-  }, [_vm._v("\n                  +\n                ")])])]), _vm._v(" "), _vm._l(_vm.form.values, function (value, index) {
+  }, [_vm._v("\n                    +\n                  ")])])]), _vm._v(" "), _vm._l(_vm.form.values, function (value, index) {
     return _c("div", {
       key: index,
       staticClass: "mt-2"
@@ -10817,7 +10836,7 @@ var render = function render() {
         domProps: {
           value: type
         }
-      }, [_vm._v("\n                      " + _vm._s(type) + "\n                    ")]);
+      }, [_vm._v("\n                        " + _vm._s(type) + "\n                      ")]);
     }), 0)]), _vm._v(" "), _c("div", {
       staticClass: "col-md-8"
     }, [_vm.form.values[index].type == "data" ? _c("dashboard-show-widget-data-selector", {
@@ -10870,191 +10889,11 @@ var render = function render() {
     }, [_c("i", {
       staticClass: "mdi mdi-delete-outline"
     })])])])]);
-  }), _vm._v(" "), _c("div", {
-    staticClass: "row mt-3"
-  }, [_c("div", {
-    staticClass: "col-md-6 d-grid"
-  }, [_c("button", {
-    staticClass: "btn btn-soft-danger",
-    attrs: {
-      type: "button"
-    },
-    on: {
-      click: function click($event) {
-        return _vm.resetForm();
-      }
-    }
-  }, [_vm._v("\n                  Reset\n                ")])]), _vm._v(" "), _vm._m(6)])], 2) : _vm._e()])])])]), _vm._v(" "), _c("div", {
-    staticClass: "modal fade",
-    attrs: {
-      id: "addChartWidget",
-      tabindex: "-1",
-      "aria-labelledby": "addWidgetLabel",
-      "aria-hidden": "true"
-    }
-  }, [_c("div", {
-    staticClass: "modal-dialog"
-  }, [_c("div", {
-    staticClass: "modal-content"
-  }, [_vm._m(7), _vm._v(" "), _c("div", {
-    staticClass: "modal-body"
-  }, [_vm.form.type ? _c("form", {
-    on: {
-      submit: function submit($event) {
-        $event.preventDefault();
-        return _vm.submit();
-      }
-    }
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_vm._m(8), _vm._v(" "), _c("div", {
-    staticClass: "row row-cols-md-2 g-2"
-  }, [_c("div", {
-    staticClass: "col-md-2"
-  }, [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.form.ribbonColour,
-      expression: "form.ribbonColour"
-    }],
-    staticClass: "form-control form-control-color",
-    attrs: {
-      type: "color"
-    },
-    domProps: {
-      value: _vm.form.ribbonColour
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-
-        _vm.$set(_vm.form, "ribbonColour", $event.target.value);
-      }
-    }
-  })]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-10"
-  }, [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.form.ribbonText,
-      expression: "form.ribbonText"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      placeholder: "Enter ribbon title",
-      maxlength: "12"
-    },
-    domProps: {
-      value: _vm.form.ribbonText
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-
-        _vm.$set(_vm.form, "ribbonText", $event.target.value);
-      }
-    }
-  }), _vm._v(" "), _c("div", {
-    staticClass: "d-flex justify-content-between"
-  }, [_c("small", {
-    staticClass: "form-text"
-  }, [_vm._v("Maximum 12 characters")]), _vm._v(" "), _c("small", {
-    staticClass: "form-text"
-  }, [_vm._v(_vm._s(_vm.form.ribbonText ? _vm.form.ribbonText.length : 0) + " of\n                      12")])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "form-group"
-  }, [_vm._m(9), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.form.title,
-      expression: "form.title"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      maxlength: "100",
-      required: "",
-      placeholder: "Enter widget title"
-    },
-    domProps: {
-      value: _vm.form.title
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-
-        _vm.$set(_vm.form, "title", $event.target.value);
-      }
-    }
-  }), _vm._v(" "), _c("div", {
-    staticClass: "d-flex justify-content-between"
-  }, [_c("small", {
-    staticClass: "form-text"
-  }, [_vm._v("Maximum 100 characters")]), _vm._v(" "), _c("small", {
-    staticClass: "form-text"
-  }, [_vm._v(_vm._s(_vm.form.title.length) + " of 100")])])]), _vm._v(" "), _c("div", {
-    staticClass: "form-group mt-3"
-  }, [_vm._m(10), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.form.unit,
-      expression: "form.unit"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      maxlength: "12",
-      placeholder: "Enter widget unit"
-    },
-    domProps: {
-      value: _vm.form.unit
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-
-        _vm.$set(_vm.form, "unit", $event.target.value);
-      }
-    }
-  }), _vm._v(" "), _c("div", {
-    staticClass: "d-flex justify-content-between"
-  }, [_c("small", {
-    staticClass: "form-text"
-  }, [_vm._v("Maximum 12 characters")]), _vm._v(" "), _c("small", {
-    staticClass: "form-text"
-  }, [_vm._v(_vm._s(_vm.form.unit ? _vm.form.unit.length : 0) + " of 12")])])]), _vm._v(" "), _c("div", {
-    staticClass: "form-group mt-3"
-  }, [_vm._m(11), _vm._v(" "), _c("textarea", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.form.description,
-      expression: "form.description"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      cols: "20",
-      rows: "5"
-    },
-    domProps: {
-      value: _vm.form.description
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-
-        _vm.$set(_vm.form, "description", $event.target.value);
-      }
-    }
-  })]), _vm._v(" "), _c("hr"), _vm._v(" "), _c("div", {
+  })], 2) : _vm._e(), _vm._v(" "), _vm.form.type == "chart" ? _c("div", [_c("div", {
     staticClass: "form-group mt-3 mb-4"
   }, [_c("div", {
     staticClass: "d-flex justify-content-between align-items-center"
-  }, [_vm._m(12), _vm._v(" "), _c("button", {
+  }, [_vm._m(5), _vm._v(" "), _c("button", {
     staticClass: "btn btn-sm btn-outline-primary",
     attrs: {
       type: "button"
@@ -11064,7 +10903,7 @@ var render = function render() {
         return _vm.addChartData();
       }
     }
-  }, [_vm._v("\n                  +\n                ")])])]), _vm._v(" "), _vm._l(_vm.chartForm, function (value, index) {
+  }, [_vm._v("\n                    +\n                  ")])])]), _vm._v(" "), _vm._l(_vm.chartForm, function (value, index) {
     return _c("div", {
       key: index,
       staticClass: "mt-2"
@@ -11157,12 +10996,12 @@ var render = function render() {
     }, [_c("i", {
       staticClass: "mdi mdi-delete-outline"
     })])])])]);
-  }), _vm._v(" "), _c("div", {
+  })], 2) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "row mt-3"
   }, [_c("div", {
     staticClass: "col-md-6 d-grid"
   }, [_c("button", {
-    staticClass: "btn btn-danger",
+    staticClass: "btn btn-soft-danger",
     attrs: {
       type: "button"
     },
@@ -11171,29 +11010,10 @@ var render = function render() {
         return _vm.resetForm();
       }
     }
-  }, [_vm._v("\n                  Reset\n                ")])]), _vm._v(" "), _vm._m(13)])], 2) : _vm._e()])])])])]);
+  }, [_vm._v("\n                  Reset\n                ")])]), _vm._v(" "), _vm._m(6)])]) : _vm._e()])])])])]);
 };
 
 var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("div", {
-    staticClass: "modal-header"
-  }, [_c("h5", {
-    staticClass: "modal-title",
-    attrs: {
-      id: "addWidgetLabel"
-    }
-  }, [_vm._v("Add numeric widget")]), _vm._v(" "), _c("button", {
-    staticClass: "btn-close",
-    attrs: {
-      type: "button",
-      "data-bs-dismiss": "modal",
-      "aria-label": "Close"
-    }
-  })]);
-}, function () {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -11223,6 +11043,13 @@ var staticRenderFns = [function () {
   return _c("label", {
     staticClass: "form-label"
   }, [_c("b", [_vm._v("Description")])]);
+}, function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("label", {
+    staticClass: "form-label"
+  }, [_c("b", [_vm._v("Values")])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -11238,74 +11065,6 @@ var staticRenderFns = [function () {
     staticClass: "col-md-6 d-grid"
   }, [_c("button", {
     staticClass: "btn btn-soft-primary",
-    attrs: {
-      type: "submit"
-    }
-  }, [_vm._v("Save")])]);
-}, function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("div", {
-    staticClass: "modal-header"
-  }, [_c("h5", {
-    staticClass: "modal-title",
-    attrs: {
-      id: "addWidgetLabel"
-    }
-  }, [_vm._v("Add Chart Widget")]), _vm._v(" "), _c("button", {
-    staticClass: "btn-close",
-    attrs: {
-      type: "button",
-      "data-bs-dismiss": "modal",
-      "aria-label": "Close"
-    }
-  })]);
-}, function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("label", {
-    staticClass: "form-label"
-  }, [_c("b", [_vm._v("Ribbon")])]);
-}, function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("label", {
-    staticClass: "form-label"
-  }, [_c("b", [_vm._v("Title")]), _c("sup", {
-    staticClass: "text-danger"
-  }, [_vm._v("*")])]);
-}, function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("label", {
-    staticClass: "form-label"
-  }, [_c("b", [_vm._v("Unit")])]);
-}, function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("label", {
-    staticClass: "form-label"
-  }, [_c("b", [_vm._v("Description")])]);
-}, function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("label", {
-    staticClass: "form-label"
-  }, [_c("b", [_vm._v("Values")])]);
-}, function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("div", {
-    staticClass: "col-md-6 d-grid"
-  }, [_c("button", {
-    staticClass: "btn btn-primary",
     attrs: {
       type: "submit"
     }

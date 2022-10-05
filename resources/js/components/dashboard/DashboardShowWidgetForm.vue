@@ -27,7 +27,7 @@
           <button
             class="dropdown-item"
             data-bs-toggle="modal"
-            data-bs-target="#addChartWidget"
+            data-bs-target="#addWidget"
             @click="addWidget('chart')"
           >
             Chart Widget
@@ -40,6 +40,7 @@
     <div
       class="modal fade"
       id="addWidget"
+      ref="formModal"
       tabindex="-1"
       aria-labelledby="addWidgetLabel"
       aria-hidden="true"
@@ -47,7 +48,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="addWidgetLabel">Add numeric widget</h5>
+            <h5 class="modal-title" id="addWidgetLabel">Add {{ form.type }} widget</h5>
             <button
               type="button"
               class="btn-close"
@@ -111,7 +112,10 @@
               <!-- END TITLE -->
 
               <!-- UNIT -->
-              <div class="form-group mt-3">
+              <div 
+                v-if="form.type == 'numeric'"
+                class="form-group mt-3"
+              >
                 <label class="form-label"><b>Unit</b></label>
                 <input
                   type="text"
@@ -144,63 +148,137 @@
               <hr />
 
               <!-- Values -->
-              <div class="form-group mt-3 mb-4">
-                <div class="d-flex justify-content-between align-items-center">
-                  <label class="form-label"><b>Values</b></label>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-primary"
-                    @click="addValue()"
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-
-              <div
-                class="mt-2"
-                v-for="(value, index) in form.values"
-                :key="index"
-              >
-                <div class="row row-cols-md-3 g-2">
-                  <div class="col-md-3">
-                    <select
-                      class="form-control form-select"
-                      v-model="form.values[index].type"
-                    >
-                      <option
-                        v-for="type in valueTypes"
-                        :value="type"
-                        :key="`${index}.${type}`"
-                      >
-                        {{ type }}
-                      </option>
-                    </select>
-                  </div>
-                  <div class="col-md-8">
-                    <dashboard-show-widget-data-selector
-                      v-if="form.values[index].type == 'data'"
-                      v-model="form.values[index].text"
-                      @selected="onSelectedData"
-                    ></dashboard-show-widget-data-selector>
-                    <input
-                      v-else
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter value"
-                      maxlength="12"
-                      required
-                      v-model="form.values[index].text"
-                    />
-                  </div>
-                  <div class="col-md-1">
+              <div v-if="form.type == 'numeric'">
+                <div class="form-group mt-3 mb-4">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <label class="form-label"><b>Values</b></label>
                     <button
                       type="button"
-                      @click="removeValue(index)"
-                      class="btn btn-sm btn-outline-danger"
+                      class="btn btn-sm btn-outline-primary"
+                      @click="addValue()"
                     >
-                      <i class="mdi mdi-delete-outline"></i>
+                      +
                     </button>
+                  </div>
+                </div>
+                <div
+                  class="mt-2"
+                  v-for="(value, index) in form.values"
+                  :key="index"
+                >
+                  <div class="row row-cols-md-3 g-2">
+                    <div class="col-md-3">
+                      <select
+                        class="form-control form-select"
+                        v-model="form.values[index].type"
+                      >
+                        <option
+                          v-for="type in valueTypes"
+                          :value="type"
+                          :key="`${index}.${type}`"
+                        >
+                          {{ type }}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="col-md-8">
+                      <dashboard-show-widget-data-selector
+                        v-if="form.values[index].type == 'data'"
+                        v-model="form.values[index].text"
+                        @selected="onSelectedData"
+                      ></dashboard-show-widget-data-selector>
+                      <input
+                        v-else
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter value"
+                        maxlength="12"
+                        required
+                        v-model="form.values[index].text"
+                      />
+                    </div>
+                    <div class="col-md-1">
+                      <button
+                        type="button"
+                        @click="removeValue(index)"
+                        class="btn btn-sm btn-outline-danger"
+                      >
+                        <i class="mdi mdi-delete-outline"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Chart -->
+              <div v-if="form.type == 'chart'">
+                <div class="form-group mt-3 mb-4">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <label class="form-label"><b>Values</b></label>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-primary"
+                      @click="addChartData()"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+                <div
+                  class="mt-2"
+                  v-for="(value, index) in chartForm"
+                  :key="index"
+                >
+                  <div class="row row-cols-md-3 g-2">
+                    <div class="col-md-4">
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="chartForm[index].label"
+                        maxlength="12"
+                        placeholder="Enter label"
+                      />
+                    </div>
+                    <div class="col-md-4">
+                      <input
+                        type="number"
+                        class="form-control"
+                        v-model="chartForm[index].dataset"
+                        placeholder="Enter data"
+                      />
+                    </div>
+                    <div class="col-md-2">
+                      <input
+                        type="color"
+                        class="form-control form-control-color"
+                        v-model="chartForm[index].color"
+                      />
+                    </div>
+                    <!-- <div class="col-md-8">
+                      <dashboard-show-widget-data-selector
+                        v-if="form.values[index].type == 'data'"
+                        v-model="form.values[index].text"
+                        @selected="onSelectedData"
+                      ></dashboard-show-widget-data-selector>
+                      <input
+                        v-else
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter value"
+                        maxlength="12"
+                        required
+                        v-model="form.values[index].text"
+                      />
+                    </div> -->
+                    <div class="col-md-1">
+                      <button
+                        type="button"
+                        @click="removeChartData(index)"
+                        class="btn btn-sm btn-outline-danger"
+                      >
+                        <i class="mdi mdi-delete-outline"></i>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -217,204 +295,6 @@
                 </div>
                 <div class="col-md-6 d-grid">
                   <button type="submit" class="btn btn-soft-primary">Save</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- MODAL CHART WIDGET -->
-    <div
-      class="modal fade"
-      id="addChartWidget"
-      tabindex="-1"
-      aria-labelledby="addWidgetLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="addWidgetLabel">Add Chart Widget</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <form @submit.prevent="submit()" v-if="form.type">
-              <!-- RIBBON -->
-              <div class="form-group">
-                <label class="form-label"><b>Ribbon</b></label>
-                <div class="row row-cols-md-2 g-2">
-                  <div class="col-md-2">
-                    <input
-                      type="color"
-                      class="form-control form-control-color"
-                      v-model="form.ribbonColour"
-                    />
-                  </div>
-                  <div class="col-md-10">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter ribbon title"
-                      maxlength="12"
-                      v-model="form.ribbonText"
-                    />
-                    <div class="d-flex justify-content-between">
-                      <small class="form-text">Maximum 12 characters</small>
-                      <small class="form-text"
-                        >{{ form.ribbonText ? form.ribbonText.length : 0 }} of
-                        12</small
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- END RIBBON -->
-
-              <!-- TITLE -->
-              <div class="form-group">
-                <label class="form-label"
-                  ><b>Title</b><sup class="text-danger">*</sup></label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="form.title"
-                  maxlength="100"
-                  required
-                  placeholder="Enter widget title"
-                />
-                <div class="d-flex justify-content-between">
-                  <small class="form-text">Maximum 100 characters</small>
-                  <small class="form-text"
-                    >{{ form.title.length }} of 100</small
-                  >
-                </div>
-              </div>
-              <!-- END TITLE -->
-
-              <!-- UNIT -->
-              <div class="form-group mt-3">
-                <label class="form-label"><b>Unit</b></label>
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="form.unit"
-                  maxlength="12"
-                  placeholder="Enter widget unit"
-                />
-                <div class="d-flex justify-content-between">
-                  <small class="form-text">Maximum 12 characters</small>
-                  <small class="form-text"
-                    >{{ form.unit ? form.unit.length : 0 }} of 12</small
-                  >
-                </div>
-              </div>
-              <!-- END UNIT -->
-
-              <!-- DESCRIPTION -->
-              <div class="form-group mt-3">
-                <label class="form-label"><b>Description</b></label>
-                <textarea
-                  v-model="form.description"
-                  class="form-control"
-                  cols="20"
-                  rows="5"
-                ></textarea>
-              </div>
-              <!-- END DESCRIPTION -->
-
-              <hr />
-
-              <!-- Values -->
-              <div class="form-group mt-3 mb-4">
-                <div class="d-flex justify-content-between align-items-center">
-                  <label class="form-label"><b>Values</b></label>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-primary"
-                    @click="addChartData()"
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-
-              <div
-                class="mt-2"
-                v-for="(value, index) in chartForm"
-                :key="index"
-              >
-                <div class="row row-cols-md-3 g-2">
-                  <div class="col-md-4">
-                    <input
-                      type="text"
-                      class="form-control"
-                      v-model="chartForm[index].label"
-                      maxlength="12"
-                      placeholder="Enter label"
-                    />
-                  </div>
-                  <div class="col-md-4">
-                    <input
-                      type="number"
-                      class="form-control"
-                      v-model="chartForm[index].dataset"
-                      placeholder="Enter data"
-                    />
-                  </div>
-                  <div class="col-md-2">
-                    <input
-                      type="color"
-                      class="form-control form-control-color"
-                      v-model="chartForm[index].color"
-                    />
-                  </div>
-                  <!-- <div class="col-md-8">
-                    <dashboard-show-widget-data-selector
-                      v-if="form.values[index].type == 'data'"
-                      v-model="form.values[index].text"
-                      @selected="onSelectedData"
-                    ></dashboard-show-widget-data-selector>
-                    <input
-                      v-else
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter value"
-                      maxlength="12"
-                      required
-                      v-model="form.values[index].text"
-                    />
-                  </div> -->
-                  <div class="col-md-1">
-                    <button
-                      type="button"
-                      @click="removeChartData(index)"
-                      class="btn btn-sm btn-outline-danger"
-                    >
-                      <i class="mdi mdi-delete-outline"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row mt-3">
-                <div class="col-md-6 d-grid">
-                  <button
-                    type="button"
-                    class="btn btn-danger"
-                    @click="resetForm()"
-                  >
-                    Reset
-                  </button>
-                </div>
-                <div class="col-md-6 d-grid">
-                  <button type="submit" class="btn btn-primary">Save</button>
                 </div>
               </div>
             </form>
@@ -498,12 +378,14 @@ export default {
           responsive: true,
           responsiveAnimationDuration: 500,
           maintainAspectRatio: false,
-          legend: {
-            display: false,
-          },
           scales: {
             y: {
               beginAtZero: true
+            }
+          },
+          plugins: {
+            legend: {
+              display: false,
             }
           }
         }
@@ -528,7 +410,8 @@ export default {
   mounted() {
     this.initializeForm();
     // Initialize bootstrap modal for manual action
-    this.modal = new bootstrap.Modal(document.getElementById("addWidget"));
+    // this.modal = new bootstrap.Modal(this.$refs.formModal);
+    this.modal = new bootstrap.Modal(document.getElementById("addWidget"))
   },
   methods: {
     populateFrom() {
@@ -543,6 +426,7 @@ export default {
     initializeForm(type) {
       this.form = { ...this.initialWidget, type: type };
       this.selectedData = [];
+      this.chartForm = [];
     },
     addValue() {
       this.form.values.push({ ...this.defaultValue });
