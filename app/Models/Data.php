@@ -11,11 +11,12 @@ class Data extends Model
     use HasFactory, LogsActivity;
 
     protected $guarded = ['id'];
-    protected static $logAttributes = ['name', 'description', 'value', 'notes'];
+    protected static $logAttributes = ['name', 'description', 'value', 'notes', 'user.name', 'user.id'];
     protected static $logOnlyDirty = true;
 
     public function scopeFilter($query, array $filters)
     {
+
         $query->when(
             $filters['search'] ?? false,
             fn ($query, $search) =>
@@ -34,10 +35,22 @@ class Data extends Model
                 });
             }
         });
+
+        $query->when($filters['user'] ?? false, function ($query) use ($filters) {
+            $query->whereHas('user', function ($query) use ($filters) {
+                $query->where('user_id', $filters['user']);
+            });
+        });
     }
+
     public function dashboards()
     {
         return $this->belongsToMany(\App\Models\Dashboard::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
     }
 
     public function categories()

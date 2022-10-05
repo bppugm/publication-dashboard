@@ -49,7 +49,7 @@ class CategoryController extends Controller
         $category = $request->validate(
             [
                 'colour' => 'nullable|string|max:100',
-                'name' => 'string|max:100',
+                'name' => 'required|string|unique:categories|max:100',
                 'description' => 'nullable|string|max:500',
             ]
         );
@@ -94,13 +94,15 @@ class CategoryController extends Controller
     {
         $this->authorize('update', $category);
 
-        $category->update($request->validate(
-            [
-                'colour' => 'nullable|string|max:7',
-                'name' => 'string|max:100',
-                'description' => 'nullable|string|max:500',
-            ]
-        ));
+        $category->update(
+            $request->validate(
+                [
+                    'colour' => 'nullable|string|max:100',
+                    'name' => 'nullable|string|max:100|unique:categories,name,' . $category->id,
+                    'description' => 'nullable|string|max:500',
+                ]
+            )
+        );
 
         return $category;
     }

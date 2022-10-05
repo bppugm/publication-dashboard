@@ -12,9 +12,17 @@ class UserController extends Controller
     {
         $this->authorize('viewAny', User::class);
 
-        $users = User::latest()->filter(request(['search']))->paginate(10)->appends(request()->query());
+        $users = User::filter(request()->all())
+            ->with(['data' => function ($query) {
+            $query->select('data.id', 'data.name', 'user_id')->orderBy('name');
+            }])->paginate(10)->withQueryString();
 
-        return view('user.index')->with('users', $users);
+        if (request()->wantsJson()) {
+            return $users;
+        }
+        return view('user.index')->with([
+            'users' => $users,
+        ]);
     }
 
     public function create(){

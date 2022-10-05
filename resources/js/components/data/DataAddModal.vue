@@ -42,49 +42,13 @@
                         </div>
                     </div>
                     <!-- Category -->
-                    <div class="mb-3 required-field">
+                    <div class="mb-3">
                         <label for="name" class="form-label fw-bold"
                             >Category</label>
                         <data-category-selector
                             v-model="form.categories"
                             :class="{ 'is-invalid': hasErrors('categories') }"
                         ></data-category-selector>
-                    </div>
-                    <!-- Description -->
-                    <div class="mb-3">
-                        <label for="description" class="form-label fw-bold"
-                            >Description</label
-                        >
-                        <input
-                            id="description"
-                            name="description"
-                            type="text"
-                            class="form-control"
-                            placeholder="Enter description"
-                            v-model="form.description"
-                            :class="{ 'is-invalid': hasErrors('description') }"
-                        />
-                        <div class="invalid-feedback">
-                            {{ getErrors("description") }}
-                        </div>
-                    </div>
-                    <!-- Notes -->
-                    <div class="mb-3">
-                        <label for="notes" class="form-label fw-bold"
-                            >Notes</label
-                        >
-                        <input
-                            id="notes"
-                            name="notes"
-                            type="text"
-                            class="form-control"
-                            placeholder="Enter notes"
-                            v-model="form.notes"
-                            :class="{ 'is-invalid': hasErrors('notes') }"
-                        />
-                        <div class="invalid-feedback">
-                            {{ getErrors("notes") }}
-                        </div>
                     </div>
                     <!-- Value -->
                     <div class="mb-3">
@@ -104,20 +68,76 @@
                             {{ getErrors("value") }}
                         </div>
                     </div>
+                    <!-- Assign to User -->
+                    <div class="mb-3">
+                        <label for="user" class="form-label fw-bold"
+                            >Assign to User</label>
+                        <data-user-selector
+                            v-model="form.user_id"
+                            :class="{ 'is-invalid': hasErrors('user') }"
+                        ></data-user-selector>
+                    </div>
+                    <!-- Description -->
+                    <div class="mb-3">
+                        <label for="description" class="form-label fw-bold"
+                            >Description</label
+                        >
+                        <input
+                            id="description"
+                            name="description"
+                            type="text"
+                            class="form-control"
+                            placeholder="Enter description"
+                            v-model="form.description"
+                            :class="{ 'is-invalid': hasErrors('description') }"
+                        />
+                        <div class="invalid-feedback">
+                            {{ getErrors("description") }}
+                        </div>
+                    </div>
+                    <!-- Note -->
+                    <div class="mb-3">
+                        <label for="Notes" class="form-label fw-bold"
+                            >Note</label
+                        >
+                        <textarea
+                            id="notes"
+                            v-model="form.notes"
+                            v-on:keyup="counting"
+                            name="notes"
+                            rows="5"
+                            class="form-control"
+                            placeholder="Enter Note"
+                            :class="{ 'is-invalid': hasErrors('notes') }"
+                        ></textarea>
+                        <div class="invalid-feedback">
+                            {{ getErrors("note") }}
+                        </div>
+                        <div>
+                            <small class="text-muted">
+                                max 500 characters.
+                            </small>
+                            <small
+                                class="float-end"
+                                :class="{'text-danger': countError, 'text-muted': !countError}">
+                                {{ count }} to 500
+                            </small>
+                        </div>
+                    </div>
                 </div>
                 <!-- Button -->
                 <div class="modal-footer border-0">
                     <div class="d-flex w-100">
                         <button
                             type="button"
-                            class="btn btn-danger w-50 me-2"
+                            class="btn btn-soft-danger w-50 me-2"
                             @click="resetForm"
                         >
                             Reset
                         </button>
                         <button
                             type="button"
-                            class="btn btn-primary w-50 ms-2"
+                            class="btn btn-soft-primary w-50 ms-2"
                             :disabled="isLoading"
                             @click="submitForm"
                         >
@@ -140,12 +160,19 @@ export default {
                 notes: null,
                 value: null,
                 categories: [],
+                user_id: null,
             },
             errors: {},
             isLoading: false,
+            count: 0,
+            countError: false,
         };
     },
     methods: {
+        counting() {
+            this.count = this.form.notes.length;
+            this.countError = this.count > 500 ? true : false;
+        },
         resetForm() {
             Object.keys(this.form).forEach((key) => {
                 this.form[key] = null;

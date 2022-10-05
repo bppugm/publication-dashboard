@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Data;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DataController extends Controller
@@ -15,16 +16,27 @@ class DataController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('viewAny', Data::class);
-
         $request->validate([
             'categories' => 'nullable|array',
             'categories.*' => 'string',
+            'user' => 'nullable|integer',
         ]);
 
-        $data = Data::filter($request->all())
-        ->orderby('name')->with(['categories' => function ($query) {
+        $data = new Data;
+        $query = request()->query();
+
+        if ($request->filled('user')) {
+            $query['user'] = $request->user()->cannot('viewAny', Data::class) ? $request->user()->id : $request->user;
+        }
+        if ($request->filled('me')) {
+            $query['user'] = $request->user()->id;
+        }
+
+        $data = $data->filter($query)
+        ->orderBy('name')->with(['categories' => function ($query) {
             $query->select('categories.id', 'categories.name', 'colour')->orderBy('name');
+        }, 'user' => function ($query) {
+            $query->select('id', 'name')->orderBy('name');
         }])->paginate(10)->withQueryString();
 
         if ($request->wantsJson()) {
@@ -36,7 +48,12 @@ class DataController extends Controller
             $categories = collect($request->categories)->map(fn ($item) => ['name' => $item])->toArray();
         }
 
-        return view('data.index', compact('data', 'categories'));
+        $user = null;
+        if ($request->filled('user')){
+            $user = User::where('id', $request->user)->first();
+        }
+
+        return view('data.index', compact('data', 'categories', 'user'));
     }
 
     /**
@@ -61,9 +78,10 @@ class DataController extends Controller
 
         $data = $request->validate([
             'name' => 'required|string|max:100',
-            'description' => 'nullable|string|max:500',
+            'description' => 'nullable|string|max:250',
             'value' => 'nullable',
-            'notes' => 'nullable|string|max:250',
+            'notes' => 'nullable|string|max:500',
+            'user_id' => 'nullable|integer',
             'categories' => 'nullable|array',
         ]);
 
@@ -71,6 +89,11 @@ class DataController extends Controller
         if ($request->has('categories')) {
             $data->categories()->sync($request->categories);
         };
+        // if request has user_id, attach to user
+        if ($request->has('user_id')) {
+            $data->user()->associate($request->user_id);
+            $data->save();
+        }
 
         return $data;
     }
@@ -83,7 +106,7 @@ class DataController extends Controller
      */
     public function show(Request $request, Data $data)
     {
-        $this->authorize('view', $data->load('categories'));
+        $this->authorize('view', $data->load('categories','user'));
 
         if ($request->wantsJson()) {
             return $data;
@@ -122,6 +145,7 @@ class DataController extends Controller
             'value' => 'nullable',
             'notes' => 'nullable|string|max:500',
             'categories' => 'nullable|array',
+            'user_id' => 'nullable|integer'
         ]);
 
         $data->update(request()->only('name', 'description', 'value', 'notes'));
@@ -129,7 +153,13 @@ class DataController extends Controller
             $data->categories()->sync($request->categories);
         };
 
-        return $data->fresh()->load('categories');
+        // if superadmin, attach data to user if request has user_id
+        if ($request->user()->can('create', Data::class) && $request->has('user_id')) {
+                $data->user()->associate($request->user_id);
+                $data->save();
+        }
+
+        return $data->fresh()->load('categories', 'user');
     }
 
     /**
