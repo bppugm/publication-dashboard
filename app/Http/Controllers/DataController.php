@@ -16,15 +16,19 @@ class DataController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('viewAny', Data::class);
-
         $request->validate([
             'categories' => 'nullable|array',
             'categories.*' => 'string',
             'user' => 'nullable|integer',
         ]);
 
-        $data = Data::filter($request->all())
+        $data = new Data;
+
+        if ($request->user()->cannot('viewAny', Data::class)) {
+            $data = $data->filter(['user' => $request->user()->id]);
+        }
+
+        $data = $data->filter($request->all())
         ->orderBy('name')->with(['categories' => function ($query) {
             $query->select('categories.id', 'categories.name', 'colour')->orderBy('name');
         }, 'user' => function ($query) {
