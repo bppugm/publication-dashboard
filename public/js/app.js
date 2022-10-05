@@ -9812,7 +9812,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex w-100"
   }, [_c("button", {
-    staticClass: "btn btn-danger w-50 me-2",
+    staticClass: "btn btn-soft-danger w-50 me-2",
     attrs: {
       type: "button"
     },
@@ -9820,7 +9820,7 @@ var render = function render() {
       click: _vm.resetForm
     }
   }, [_vm._v("\n                        Reset\n                    ")]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-primary w-50 ms-2",
+    staticClass: "btn btn-soft-primary w-50 ms-2",
     attrs: {
       type: "button",
       disabled: _vm.isLoading
@@ -10075,7 +10075,7 @@ var render = function render() {
       value: _vm.isLoading,
       expression: "isLoading"
     }],
-    staticClass: "btn btn-primary disabled w-50 ms-2",
+    staticClass: "btn btn-soft-primary disabled w-50 ms-2",
     attrs: {
       type: "button"
     }
@@ -11176,7 +11176,7 @@ var render = function render() {
   }), _vm._v(" "), _c("div", {
     staticClass: "invalid-feedback"
   }, [_vm._v("\n                        " + _vm._s(_vm.getErrors("name")) + "\n                    ")])]), _vm._v(" "), _c("div", {
-    staticClass: "mb-3 required-field"
+    staticClass: "mb-3"
   }, [_c("label", {
     staticClass: "form-label fw-bold",
     attrs: {
@@ -11230,7 +11230,7 @@ var render = function render() {
   }), _vm._v(" "), _c("div", {
     staticClass: "invalid-feedback"
   }, [_vm._v("\n                        " + _vm._s(_vm.getErrors("value")) + "\n                    ")])]), _vm._v(" "), _c("div", {
-    staticClass: "mb-3 required-field"
+    staticClass: "mb-3"
   }, [_c("label", {
     staticClass: "form-label fw-bold",
     attrs: {
@@ -11333,7 +11333,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex w-100"
   }, [_c("button", {
-    staticClass: "btn btn-danger w-50 me-2",
+    staticClass: "btn btn-soft-danger w-50 me-2",
     attrs: {
       type: "button"
     },
@@ -11341,7 +11341,7 @@ var render = function render() {
       click: _vm.resetForm
     }
   }, [_vm._v("\n                        Reset\n                    ")]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-primary w-50 ms-2",
+    staticClass: "btn btn-soft-primary w-50 ms-2",
     attrs: {
       type: "button",
       disabled: _vm.isLoading

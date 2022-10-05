@@ -42,7 +42,7 @@
                         </div>
                     </div>
                     <!-- Category -->
-                    <div class="mb-3 required-field">
+                    <div class="mb-3">
                         <label for="name" class="form-label fw-bold"
                             >Category</label>
                         <data-category-selector
@@ -69,7 +69,7 @@
                         </div>
                     </div>
                     <!-- Assign to User -->
-                    <div class="mb-3 required-field">
+                    <div class="mb-3">
                         <label for="user" class="form-label fw-bold"
                             >Assign to User</label>
                         <data-user-selector
@@ -130,14 +130,14 @@
                     <div class="d-flex w-100">
                         <button
                             type="button"
-                            class="btn btn-danger w-50 me-2"
+                            class="btn btn-soft-danger w-50 me-2"
                             @click="resetForm"
                         >
                             Reset
                         </button>
                         <button
                             type="button"
-                            class="btn btn-primary w-50 ms-2"
+                            class="btn btn-soft-primary w-50 ms-2"
                             :disabled="isLoading"
                             @click="submitForm"
                         >

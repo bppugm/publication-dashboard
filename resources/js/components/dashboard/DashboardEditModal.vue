@@ -90,7 +90,7 @@
             <button
               type="button"
               v-show="isLoading"
-              class="btn btn-primary disabled w-50 ms-2"
+              class="btn btn-soft-primary disabled w-50 ms-2"
             >
               Saving...
             </button>
