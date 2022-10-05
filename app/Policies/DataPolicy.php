@@ -25,7 +25,7 @@ class DataPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class DataPolicy
      */
     public function view(User $user, Data $data)
     {
-        //
+        return true;
     }
 
     /**
@@ -60,7 +60,7 @@ class DataPolicy
      */
     public function update(User $user, Data $data)
     {
-        //
+        return true;
     }
 
     /**

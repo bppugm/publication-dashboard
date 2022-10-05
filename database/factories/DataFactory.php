@@ -18,7 +18,7 @@ class DataFactory extends Factory
             'description' => $this->faker->sentence(),
             'value' => $this->faker->numberBetween(),
             'notes' => $this->faker->sentence,
-            'user_id' => \App\Models\User::factory()
+            'user_id' => null
         ];
     }
 }
