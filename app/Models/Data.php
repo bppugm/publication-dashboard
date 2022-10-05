@@ -16,6 +16,7 @@ class Data extends Model
 
     public function scopeFilter($query, array $filters)
     {
+
         $query->when(
             $filters['search'] ?? false,
             fn ($query, $search) =>
@@ -35,9 +36,10 @@ class Data extends Model
             }
         });
 
-        // filter by user
         $query->when($filters['user'] ?? false, function ($query) use ($filters) {
-            $query->where('user_id', $filters['user']);
+            $query->whereHas('user', function ($query) use ($filters) {
+                $query->where('user_id', $filters['user']);
+            });
         });
     }
 

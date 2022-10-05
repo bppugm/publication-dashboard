@@ -43,7 +43,7 @@
                                 data-bs-auto-close="false" aria-expanded="false" id="dropdownMenuButton1"
                                 data-bs-toggle="dropdown">
                                 <i class="mdi mdi-filter-variant"></i> Filter
-                                @if(request()->only(['categories', 'user']))
+                                @if(request()->only(['categories', 'user', 'me']))
                                 <span
                                     class="position-absolute top-0 start-100 translate-middle p-2 bg-warning rounded-circle">
                                     <span class="visually-hidden">New alerts</span>
@@ -72,6 +72,16 @@
                                     </data-user-selector>
                                 </div>
                                 @endcan
+                                {{-- filter assigned to me for authenticated user only --}}
+                                @cannot('viewAny', \App\Models\User::class)
+                                <div class="mb-3">
+                                    <input type="checkbox" name="me" value="1" id="filter-assigned-to-me"
+                                        class="form-check-input" {{request()->me ? 'checked' : ''}}>
+                                    <label for="filter-assigned-to-me" class="form-check-label">Filter Assigned to
+                                        Me</label>
+                                </div>
+                                @endcannot
+                                {{-- end filter assigned to me for authenticated user only --}}
                                 <div class="d-flex w-100 gap-2">
                                     <a href="{{ route('data.index') }}" class="btn btn-outline-danger w-50">Reset</a>
                                     <button type="submit" class="btn btn-primary w-50">Apply</button>

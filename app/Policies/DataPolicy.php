@@ -25,7 +25,9 @@ class DataPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        if ($user->is_superadmin) {
+            return true;
+        }
     }
 
     /**

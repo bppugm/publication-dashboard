@@ -97,7 +97,7 @@ class DataModelTest extends TestCase
     }
 
     /** @test */
-    // it acn be filtered by user
+    // it can be filtered by user
     public function it_can_be_filtered_by_user()
     {
         $user = \App\Models\User::factory()->create();
