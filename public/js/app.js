@@ -9219,21 +9219,21 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex w-100"
   }, [_c("button", {
-    staticClass: "btn btn-danger w-50 me-2",
+    staticClass: "btn btn-soft-danger w-50 me-2",
     attrs: {
       type: "button"
     },
     on: {
       click: _vm.resetForm
     }
-  }, [_vm._v("\n                        Reset\n                    ")]), _vm._v(" "), _c("button", {
+  }, [_vm._v("\n                        Reset changes\n                    ")]), _vm._v(" "), _c("button", {
     directives: [{
       name: "show",
       rawName: "v-show",
       value: _vm.isLoading == false,
       expression: "isLoading == false"
     }],
-    staticClass: "btn btn-primary w-50 ms-2",
+    staticClass: "btn btn-soft-primary w-50 ms-2",
     attrs: {
       type: "button"
     },
@@ -9247,7 +9247,7 @@ var render = function render() {
       value: _vm.isLoading,
       expression: "isLoading"
     }],
-    staticClass: "btn btn-primary disabled w-50 ms-2",
+    staticClass: "btn btn-soft-primary disabled w-50 ms-2",
     attrs: {
       type: "button"
     }
@@ -9313,7 +9313,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex w-100"
   }, [_c("button", {
-    staticClass: "btn btn-danger w-50 me-2",
+    staticClass: "btn btn-soft-danger w-50 me-2",
     attrs: {
       type: "button",
       disabled: _vm.isLoading
@@ -9322,7 +9322,7 @@ var render = function render() {
       click: _vm.deleteForm
     }
   }, [_vm._v("\n                        Yes\n                    ")]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-primary w-50 ms-2",
+    staticClass: "btn btn-soft-primary w-50 ms-2",
     attrs: {
       type: "button",
       "data-bs-dismiss": "modal"
@@ -9502,21 +9502,21 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex w-100"
   }, [_c("button", {
-    staticClass: "btn btn-danger w-50 me-2",
+    staticClass: "btn btn-soft-danger w-50 me-2",
     attrs: {
       type: "button"
     },
     on: {
       click: _vm.resetForm
     }
-  }, [_vm._v("\n                        Reset\n                    ")]), _vm._v(" "), _c("button", {
+  }, [_vm._v("\n                        Reset changes\n                    ")]), _vm._v(" "), _c("button", {
     directives: [{
       name: "show",
       rawName: "v-show",
       value: _vm.isLoading == false,
       expression: "isLoading == false"
     }],
-    staticClass: "btn btn-primary w-50 ms-2",
+    staticClass: "btn btn-soft-primary w-50 ms-2",
     attrs: {
       type: "button"
     },
@@ -9530,7 +9530,7 @@ var render = function render() {
       value: _vm.isLoading,
       expression: "isLoading"
     }],
-    staticClass: "btn btn-primary disabled w-50 ms-2",
+    staticClass: "btn btn-soft-primary disabled w-50 ms-2",
     attrs: {
       type: "button"
     }
@@ -12428,15 +12428,15 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex w-100"
   }, [_c("button", {
-    staticClass: "btn btn-danger w-50 me-2",
+    staticClass: "btn btn-soft-danger w-50 me-2",
     attrs: {
       type: "button"
     },
     on: {
       click: _vm.resetForm
     }
-  }, [_vm._v("\n                        Reset\n                    ")]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-primary w-50 ms-2",
+  }, [_vm._v("\n                        Reset changes\n                    ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-soft-primary w-50 ms-2",
     attrs: {
       type: "button",
       disabled: _vm.isLoading
@@ -12504,7 +12504,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex w-100"
   }, [_c("button", {
-    staticClass: "btn btn-danger w-50 me-2",
+    staticClass: "btn btn-soft-danger w-50 me-2",
     attrs: {
       type: "button",
       disabled: _vm.isLoading
@@ -12513,7 +12513,7 @@ var render = function render() {
       click: _vm.deleteForm
     }
   }, [_vm._v("\n                        Yes\n                    ")]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-primary w-50 ms-2",
+    staticClass: "btn btn-soft-primary w-50 ms-2",
     attrs: {
       type: "button",
       "data-bs-dismiss": "modal"
@@ -12878,15 +12878,15 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex w-100"
   }, [_c("button", {
-    staticClass: "btn btn-danger w-50 me-2",
+    staticClass: "btn btn-soft-danger w-50 me-2",
     attrs: {
       type: "button"
     },
     on: {
       click: _vm.resetForm
     }
-  }, [_vm._v("\n                        Reset\n                    ")]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-primary w-50 ms-2",
+  }, [_vm._v("\n                        Reset changes\n                    ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-soft-primary w-50 ms-2",
     attrs: {
       type: "button",
       disabled: _vm.isLoading
