@@ -19,10 +19,11 @@
 export default {
   props: {
     value: {
-      type: Number|String,
+      type: Number | String,
     },
     initSelected: {
       type: Object,
+      default: null,
     },
   },
   data() {
@@ -38,9 +39,7 @@ export default {
     initSelected: {
       immediate: true,
       handler() {
-        if (this.initSelected) {
-          this.initUserSelector();
-        }
+        this.initUserSelector();
       },
     },
   },
@@ -49,7 +48,7 @@ export default {
   },
   methods: {
     initUserSelector() {
-      this.selected = { ...this.initSelected };
+      this.selected = this.initSelected == null ? null : { ...this.initSelected };
     },
     async fetch() {
       try {
@@ -73,7 +72,7 @@ export default {
 </script>
 
 <style scoped>
-.style-chooser .vs__search::placeholder{
-    color: #000;
+.style-chooser .vs__search::placeholder {
+  color: #000;
 }
 </style>

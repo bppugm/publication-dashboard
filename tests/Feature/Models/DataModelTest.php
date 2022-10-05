@@ -5,6 +5,7 @@ namespace Tests\Feature\Models;
 use App\Models\Category;
 use App\Models\Dashboard;
 use App\Models\Data;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -88,13 +89,15 @@ class DataModelTest extends TestCase
     /** @test */
     public function it_belongs_to_a_user()
     {
-        $data = Data::factory()->create();
+        $data = Data::factory()->create([
+            'user_id' => User::factory()
+        ]);
 
         $this->assertInstanceOf(\App\Models\User::class, $data->user);
     }
 
     /** @test */
-    // it acn be filtered by user
+    // it can be filtered by user
     public function it_can_be_filtered_by_user()
     {
         $user = \App\Models\User::factory()->create();

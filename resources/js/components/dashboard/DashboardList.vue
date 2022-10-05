@@ -26,8 +26,9 @@
                             {{ dashboard.description }}
                         </td>
                         <!-- Action -->
-                        <td class="align-middle">
-                            <button
+                        <td>
+                            <div class="align-middle" v-if="canManage">
+                                <button
                                 type="button"
                                 class="btn btn-outline-primary"
                                 data-bs-toggle="modal"
@@ -45,6 +46,7 @@
                             >
                                 Delete
                             </button>
+                            </div>
                         </td>
                     </tr>
                     <!-- make table row if data is not found -->
@@ -78,6 +80,7 @@ export default {
                 return [];
             },
         },
+        canManage: Boolean,
     },
     data() {
         return {

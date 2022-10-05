@@ -16,15 +16,23 @@ class DataController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('viewAny', Data::class);
-
         $request->validate([
             'categories' => 'nullable|array',
             'categories.*' => 'string',
             'user' => 'nullable|integer',
         ]);
 
-        $data = Data::filter($request->all())
+        $data = new Data;
+        $query = request()->query();
+
+        if ($request->filled('user')) {
+            $query['user'] = $request->user()->cannot('viewAny', Data::class) ? $request->user()->id : $request->user;
+        }
+        if ($request->filled('me')) {
+            $query['user'] = $request->user()->id;
+        }
+
+        $data = $data->filter($query)
         ->orderBy('name')->with(['categories' => function ($query) {
             $query->select('categories.id', 'categories.name', 'colour')->orderBy('name');
         }, 'user' => function ($query) {
@@ -144,10 +152,11 @@ class DataController extends Controller
         if ($request->has('categories')) {
             $data->categories()->sync($request->categories);
         };
-        // if request has user_id, attach to user
-        if ($request->has('user_id')) {
-            $data->user()->associate($request->user_id);
-            $data->save();
+
+        // if superadmin, attach data to user if request has user_id
+        if ($request->user()->can('create', Data::class) && $request->has('user_id')) {
+                $data->user()->associate($request->user_id);
+                $data->save();
         }
 
         return $data->fresh()->load('categories', 'user');

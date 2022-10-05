@@ -19,7 +19,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <dashboard-show :initial-dashboard='@json($dashboard)'></dashboard-show>
+            <dashboard-show :can-edit='@json(request()->user()->can('update', $dashboard))' :initial-dashboard='@json($dashboard)'></dashboard-show>
         </div>
     </div>
 </div>

@@ -3,7 +3,7 @@
     <div class="card card-body p-4 shadow border-0">
       <div class="d-flex justify-content-between">
         <h2 class="text-primary">{{ dashboard.name }}</h2>
-        <div class="form-check form-switch">
+        <div class="form-check form-switch" v-if="canEdit">
           <label class="form-check-label" for="flexSwitchCheckChecked"
             >Edit mode</label
           >
@@ -21,7 +21,7 @@
         <div class="col-md-8">
           <b>{{ dashboard.description }}</b>
         </div>
-        <div class="col-md-4 d-flex" v-show="editMode">
+        <div class="col-md-4 d-flex" v-if="editMode">
           <button
             type="button"
             class="btn btn-outline-primary ms-auto me-1"
@@ -172,6 +172,7 @@ export default {
   name: "DashboardShow",
   props: {
     initialDashboard: Object,
+    canEdit: Boolean,
   },
   components: {
     GridLayout: VueGridLayout.GridLayout,
@@ -182,7 +183,7 @@ export default {
     return {
       dashboard: { ...this.initialDashboard },
       parser: new Parser(),
-      editMode: true,
+      editMode: this.canEdit,
       editedWidget: {},
       editedWidgetIndex: null,
     };
@@ -298,7 +299,7 @@ export default {
           position: "top",
         });
       } catch (error) {
-        this.$toast.errpr("Update dashboard failed", {
+        this.$toast.error("Update dashboard failed", {
           position: "top",
         });
         console.log(error);
