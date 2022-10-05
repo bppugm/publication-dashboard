@@ -154,11 +154,9 @@ class DataController extends Controller
         };
 
         // if superadmin, attach data to user if request has user_id
-        if ($request->user()->is_superadmin) {
-            if ($request->has('user_id')) {
+        if ($request->user()->can('create', Data::class) && $request->has('user_id')) {
                 $data->user()->associate($request->user_id);
                 $data->save();
-            }
         }
 
         return $data->fresh()->load('categories', 'user');

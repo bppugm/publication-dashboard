@@ -100,7 +100,6 @@ class DataModelTest extends TestCase
     // it can be filtered by user
     public function it_can_be_filtered_by_user()
     {
-        $this->login();
         $user = \App\Models\User::factory()->create();
         $data = Data::factory(5)->create();
         $data->first()->update(['user_id' => $user->id]);
