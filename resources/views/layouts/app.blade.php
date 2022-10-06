@@ -108,6 +108,7 @@
                                     </span>
                                 </a>
                             </li>
+                            @can('viewAny', \App\Models\User::class)
                             <li class="nav-item nav-custom px-2 {{ request()->is('user') ? 'active-nav-custom' : '' }}">
                                 <a class="nav-link d-flex h-100" href="{{ route('user.index') }}">
                                     <span class="my-auto">
@@ -115,6 +116,8 @@
                                     </span>
                                 </a>
                             </li>
+                            @endcan
+
                             @endauth
                         </ul>
                     </div>

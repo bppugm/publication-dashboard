@@ -25,7 +25,9 @@ class DataPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        if ($user->is_superadmin) {
+            return true;
+        }
     }
 
     /**
@@ -37,7 +39,7 @@ class DataPolicy
      */
     public function view(User $user, Data $data)
     {
-        //
+        return true;
     }
 
     /**
@@ -60,7 +62,7 @@ class DataPolicy
      */
     public function update(User $user, Data $data)
     {
-        //
+        return true;
     }
 
     /**

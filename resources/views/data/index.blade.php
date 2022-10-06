@@ -43,33 +43,45 @@
                                 data-bs-auto-close="false" aria-expanded="false" id="dropdownMenuButton1"
                                 data-bs-toggle="dropdown">
                                 <i class="mdi mdi-filter-variant"></i> Filter
+                                @if(request()->only(['categories', 'user', 'me']))
+                                <span
+                                    class="position-absolute top-0 start-100 translate-middle p-2 bg-warning rounded-circle">
+                                    <span class="visually-hidden">New alerts</span>
+                                </span>
+                                @endif
                             </button>
                             <div class="dropdown-menu p-4" style="width: 300px">
                                 <div class="mb-3">
                                     <label for="" class="form-label fw-bold">Filter Category</label>
-                                    <data-category-selector
-                                    :value='@json(request()->categories)' :init-selected='@json($categories)'>
+                                    <data-category-selector :value='@json(request()->categories)'
+                                        :init-selected='@json($categories)'>
                                         <template v-slot="prop">
-                                            <input
-                                            v-for="item in prop.selected"
-                                            type="hidden"
-                                            name="categories[]"
-                                            :value="item.name">
+                                            <input v-for="item in prop.selected" type="hidden" name="categories[]"
+                                                :value="item.name">
                                         </template>
                                     </data-category-selector>
                                     <span class="text-muted text-small">You can select multiple category</span>
                                 </div>
+                                @can('viewAny', \App\Models\User::class)
                                 <div class="mb-3">
                                     <label for="" class="form-label fw-bold">Filter Assigned User</label>
                                     <data-user-selector value="{{request()->user}}" :init-selected='@json($user)'>
                                         <template v-slot="{selected}">
-                                            <input v-if="selected"
-                                            type="hidden"
-                                            name="user"
-                                            :value="selected.id">
+                                            <input v-if="selected" type="hidden" name="user" :value="selected.id">
                                         </template>
                                     </data-user-selector>
                                 </div>
+                                @endcan
+                                {{-- filter assigned to me for authenticated user only --}}
+                                @cannot('viewAny', \App\Models\User::class)
+                                <div class="mb-3">
+                                    <input type="checkbox" name="me" value="1" id="filter-assigned-to-me"
+                                        class="form-check-input" {{request()->me ? 'checked' : ''}}>
+                                    <label for="filter-assigned-to-me" class="form-check-label">Filter Assigned to
+                                        Me</label>
+                                </div>
+                                @endcannot
+                                {{-- end filter assigned to me for authenticated user only --}}
                                 <div class="d-flex w-100 gap-2">
                                     <a href="{{ route('data.index') }}" class="btn btn-outline-danger w-50">Reset</a>
                                     <button type="submit" class="btn btn-primary w-50">Apply</button>
@@ -99,6 +111,7 @@
                     </form>
                     <!-- Add Data -->
                     <div class="flex-shrink-0">
+                        @can('create', \App\Models\Data::class)
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#data-add-modal">
                             <i class="mdi mdi-plus d-none d-sm-inline" style="margin-right: 10px"></i>
@@ -106,6 +119,7 @@
                             <span class="d-inline d-sm-none"> Add</span>
                         </button>
                         <data-add-modal> </data-add-modal>
+                        @endcan
                     </div>
                 </div>
                 <data-list :data='{{ json_encode($data->items()) }}'>

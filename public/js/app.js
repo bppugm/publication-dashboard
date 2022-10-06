@@ -6322,25 +6322,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
                 _this.modal.toggle();
 
-                _context.next = 13;
+                _context.next = 14;
                 break;
 
               case 10:
                 _context.prev = 10;
                 _context.t0 = _context["catch"](1);
-                _this.errors = _context.t0.response.data.errors;
 
-              case 13:
-                _context.prev = 13;
+                _this.$toast.error("Update failed with status ".concat(_context.t0.response.status), {
+                  position: "top-right",
+                  duration: 2000
+                });
+
+                if (_context.t0.response.status == 422) {
+                  _this.errors = _context.t0.response.data.errors;
+                }
+
+              case 14:
                 _this.isLoading = false;
-                return _context.finish(13);
 
-              case 16:
+              case 15:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[1, 10, 13, 16]]);
+        }, _callee, null, [[1, 10]]);
       }))();
     },
     hasErrors: function hasErrors(key) {
@@ -6394,7 +6400,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       "default": function _default() {
         return [];
       }
-    }
+    },
+    canManage: Boolean
   },
   data: function data() {
     return {
@@ -6513,7 +6520,8 @@ chart_js__WEBPACK_IMPORTED_MODULE_2__.Chart.register(chart_js__WEBPACK_IMPORTED_
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "DashboardShow",
   props: {
-    initialDashboard: Object
+    initialDashboard: Object,
+    canEdit: Boolean
   },
   components: {
     GridLayout: (vue_grid_layout__WEBPACK_IMPORTED_MODULE_1___default().GridLayout),
@@ -6524,7 +6532,7 @@ chart_js__WEBPACK_IMPORTED_MODULE_2__.Chart.register(chart_js__WEBPACK_IMPORTED_
     return {
       dashboard: _objectSpread({}, this.initialDashboard),
       parser: new expr_eval__WEBPACK_IMPORTED_MODULE_0__.Parser(),
-      editMode: true,
+      editMode: this.canEdit,
       editedWidget: {},
       editedWidgetIndex: null
     };
@@ -6663,7 +6671,7 @@ chart_js__WEBPACK_IMPORTED_MODULE_2__.Chart.register(chart_js__WEBPACK_IMPORTED_
                 _context.prev = 7;
                 _context.t0 = _context["catch"](0);
 
-                _this4.$toast.errpr("Update dashboard failed", {
+                _this4.$toast.error("Update dashboard failed", {
                   position: "top"
                 });
 
@@ -7581,7 +7589,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 8:
                 _context.prev = 8;
                 _context.t0 = _context["catch"](1);
-                _this.errors = _context.t0.response.data.errors;
+
+                _this.$toast.error("Delete failed", {
+                  position: "top-right",
+                  duration: 2000
+                });
 
               case 11:
                 _this.isLoading = false;
@@ -7920,7 +7932,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: Number | String
     },
     initSelected: {
-      type: Object
+      type: Object,
+      "default": null
     }
   },
   data: function data() {
@@ -7936,9 +7949,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     initSelected: {
       immediate: true,
       handler: function handler() {
-        if (this.initSelected) {
-          this.initUserSelector();
-        }
+        this.initUserSelector();
       }
     }
   },
@@ -7947,7 +7958,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: {
     initUserSelector: function initUserSelector() {
-      this.selected = _objectSpread({}, this.initSelected);
+      this.selected = this.initSelected == null ? null : _objectSpread({}, this.initSelected);
     },
     fetch: function fetch() {
       var _this = this;
@@ -9313,21 +9324,21 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex w-100"
   }, [_c("button", {
-    staticClass: "btn btn-danger w-50 me-2",
+    staticClass: "btn btn-soft-danger w-50 me-2",
     attrs: {
       type: "button"
     },
     on: {
       click: _vm.resetForm
     }
-  }, [_vm._v("\n                        Reset\n                    ")]), _vm._v(" "), _c("button", {
+  }, [_vm._v("\n                        Reset changes\n                    ")]), _vm._v(" "), _c("button", {
     directives: [{
       name: "show",
       rawName: "v-show",
       value: _vm.isLoading == false,
       expression: "isLoading == false"
     }],
-    staticClass: "btn btn-primary w-50 ms-2",
+    staticClass: "btn btn-soft-primary w-50 ms-2",
     attrs: {
       type: "button"
     },
@@ -9341,7 +9352,7 @@ var render = function render() {
       value: _vm.isLoading,
       expression: "isLoading"
     }],
-    staticClass: "btn btn-primary disabled w-50 ms-2",
+    staticClass: "btn btn-soft-primary disabled w-50 ms-2",
     attrs: {
       type: "button"
     }
@@ -9407,7 +9418,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex w-100"
   }, [_c("button", {
-    staticClass: "btn btn-danger w-50 me-2",
+    staticClass: "btn btn-soft-danger w-50 me-2",
     attrs: {
       type: "button",
       disabled: _vm.isLoading
@@ -9416,7 +9427,7 @@ var render = function render() {
       click: _vm.deleteForm
     }
   }, [_vm._v("\n                        Yes\n                    ")]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-primary w-50 ms-2",
+    staticClass: "btn btn-soft-primary w-50 ms-2",
     attrs: {
       type: "button",
       "data-bs-dismiss": "modal"
@@ -9596,21 +9607,21 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex w-100"
   }, [_c("button", {
-    staticClass: "btn btn-danger w-50 me-2",
+    staticClass: "btn btn-soft-danger w-50 me-2",
     attrs: {
       type: "button"
     },
     on: {
       click: _vm.resetForm
     }
-  }, [_vm._v("\n                        Reset\n                    ")]), _vm._v(" "), _c("button", {
+  }, [_vm._v("\n                        Reset changes\n                    ")]), _vm._v(" "), _c("button", {
     directives: [{
       name: "show",
       rawName: "v-show",
       value: _vm.isLoading == false,
       expression: "isLoading == false"
     }],
-    staticClass: "btn btn-primary w-50 ms-2",
+    staticClass: "btn btn-soft-primary w-50 ms-2",
     attrs: {
       type: "button"
     },
@@ -9624,7 +9635,7 @@ var render = function render() {
       value: _vm.isLoading,
       expression: "isLoading"
     }],
-    staticClass: "btn btn-primary disabled w-50 ms-2",
+    staticClass: "btn btn-soft-primary disabled w-50 ms-2",
     attrs: {
       type: "button"
     }
@@ -9906,7 +9917,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex w-100"
   }, [_c("button", {
-    staticClass: "btn btn-danger w-50 me-2",
+    staticClass: "btn btn-soft-danger w-50 me-2",
     attrs: {
       type: "button"
     },
@@ -9914,7 +9925,7 @@ var render = function render() {
       click: _vm.resetForm
     }
   }, [_vm._v("\n                        Reset\n                    ")]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-primary w-50 ms-2",
+    staticClass: "btn btn-soft-primary w-50 ms-2",
     attrs: {
       type: "button",
       disabled: _vm.isLoading
@@ -10091,7 +10102,7 @@ var render = function render() {
     }
   }), _vm._v(" "), _c("div", {
     staticClass: "invalid-feedback"
-  }, [_vm._v("\n                        " + _vm._s(_vm.getErrors("name")) + "\n                    ")])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n            " + _vm._s(_vm.getErrors("name")) + "\n          ")])]), _vm._v(" "), _c("div", {
     staticClass: "mb-3"
   }, [_c("label", {
     staticClass: "form-label fw-bold",
@@ -10128,15 +10139,15 @@ var render = function render() {
     }
   }), _vm._v(" "), _c("div", {
     staticClass: "invalid-feedback"
-  }, [_vm._v("\n                        " + _vm._s(_vm.getErrors("description")) + "\n                    ")]), _vm._v(" "), _c("div", [_c("small", {
+  }, [_vm._v("\n            " + _vm._s(_vm.getErrors("description")) + "\n          ")]), _vm._v(" "), _c("div", [_c("small", {
     staticClass: "text-muted"
-  }, [_vm._v("\n                            max 300 characters.\n                        ")]), _vm._v(" "), _c("small", {
+  }, [_vm._v(" max 300 characters. ")]), _vm._v(" "), _c("small", {
     staticClass: "float-end",
     "class": {
       "text-danger": _vm.countError,
       "text-muted": !_vm.countError
     }
-  }, [_vm._v("\n                            " + _vm._s(_vm.count) + " to 300\n                        ")])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n              " + _vm._s(_vm.count) + " to 300\n            ")])])])]), _vm._v(" "), _c("div", {
     staticClass: "modal-footer border-0"
   }, [_c("div", {
     staticClass: "d-flex w-100"
@@ -10148,7 +10159,7 @@ var render = function render() {
     on: {
       click: _vm.resetForm
     }
-  }, [_vm._v("\n                        Reset changes\n                    ")]), _vm._v(" "), _c("button", {
+  }, [_vm._v("\n            Reset changes\n          ")]), _vm._v(" "), _c("button", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -10162,18 +10173,18 @@ var render = function render() {
     on: {
       click: _vm.submitForm
     }
-  }, [_vm._v("\n                        Save\n                    ")]), _vm._v(" "), _c("button", {
+  }, [_vm._v("\n            Save\n          ")]), _vm._v(" "), _c("button", {
     directives: [{
       name: "show",
       rawName: "v-show",
       value: _vm.isLoading,
       expression: "isLoading"
     }],
-    staticClass: "btn btn-primary disabled w-50 ms-2",
+    staticClass: "btn btn-soft-primary disabled w-50 ms-2",
     attrs: {
       type: "button"
     }
-  }, [_vm._v("\n                        Saving...\n                    ")])])])])])]);
+  }, [_vm._v("\n            Saving...\n          ")])])])])])]);
 };
 
 var staticRenderFns = [function () {
@@ -10193,7 +10204,7 @@ var staticRenderFns = [function () {
     staticClass: "pt-2 w-100"
   }, [_c("h5", {
     staticClass: "modal-title text-primary fw-bold"
-  }, [_vm._v("\n                        Edit Dashboard\n                    ")]), _vm._v(" "), _c("hr")])]);
+  }, [_vm._v("Edit Dashboard")]), _vm._v(" "), _c("hr")])]);
 }];
 render._withStripped = true;
 
@@ -10231,7 +10242,7 @@ var render = function render() {
       }
     }, [_vm._v("\n                            " + _vm._s(dashboard.name))])]), _vm._v(" "), _c("td", {
       staticClass: "align-middle"
-    }, [_vm._v("\n                        " + _vm._s(dashboard.description) + "\n                    ")]), _vm._v(" "), _c("td", {
+    }, [_vm._v("\n                        " + _vm._s(dashboard.description) + "\n                    ")]), _vm._v(" "), _c("td", [_vm.canManage ? _c("div", {
       staticClass: "align-middle"
     }, [_c("button", {
       staticClass: "btn btn-outline-primary",
@@ -10257,7 +10268,7 @@ var render = function render() {
           return _vm.deleteItem(dashboard);
         }
       }
-    }, [_vm._v("\n                            Delete\n                        ")])])]);
+    }, [_vm._v("\n                            Delete\n                        ")])]) : _vm._e()])]);
   }), _vm._v(" "), _vm.data.length == 0 ? _c("tr", [_c("td", {
     staticClass: "text-center",
     attrs: {
@@ -10353,7 +10364,7 @@ var render = function render() {
     staticClass: "d-flex justify-content-between"
   }, [_c("h2", {
     staticClass: "text-primary"
-  }, [_vm._v(_vm._s(_vm.dashboard.name))]), _vm._v(" "), _c("div", {
+  }, [_vm._v(_vm._s(_vm.dashboard.name))]), _vm._v(" "), _vm.canEdit ? _c("div", {
     staticClass: "form-check form-switch"
   }, [_c("label", {
     staticClass: "form-check-label",
@@ -10396,17 +10407,11 @@ var render = function render() {
         }
       }
     }
-  })])]), _vm._v(" "), _c("hr"), _vm._v(" "), _c("div", {
+  })]) : _vm._e()]), _vm._v(" "), _c("hr"), _vm._v(" "), _c("div", {
     staticClass: "row"
   }, [_c("div", {
     staticClass: "col-md-8"
-  }, [_c("b", [_vm._v(_vm._s(_vm.dashboard.description))])]), _vm._v(" "), _c("div", {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: _vm.editMode,
-      expression: "editMode"
-    }],
+  }, [_c("b", [_vm._v(_vm._s(_vm.dashboard.description))])]), _vm._v(" "), _vm.editMode ? _c("div", {
     staticClass: "col-md-4 d-flex"
   }, [_c("button", {
     staticClass: "btn btn-outline-primary ms-auto me-1",
@@ -10431,7 +10436,7 @@ var render = function render() {
     on: {
       submitted: _vm.handleWidgetSubmitted
     }
-  })], 1)])]), _vm._v(" "), _c("dashboard-edit-modal", {
+  })], 1) : _vm._e()])]), _vm._v(" "), _c("dashboard-edit-modal", {
     attrs: {
       "selected-data": _vm.dashboard
     },
@@ -11336,7 +11341,7 @@ var render = function render() {
   }), _vm._v(" "), _c("div", {
     staticClass: "invalid-feedback"
   }, [_vm._v("\n                        " + _vm._s(_vm.getErrors("name")) + "\n                    ")])]), _vm._v(" "), _c("div", {
-    staticClass: "mb-3 required-field"
+    staticClass: "mb-3"
   }, [_c("label", {
     staticClass: "form-label fw-bold",
     attrs: {
@@ -11390,7 +11395,7 @@ var render = function render() {
   }), _vm._v(" "), _c("div", {
     staticClass: "invalid-feedback"
   }, [_vm._v("\n                        " + _vm._s(_vm.getErrors("value")) + "\n                    ")])]), _vm._v(" "), _c("div", {
-    staticClass: "mb-3 required-field"
+    staticClass: "mb-3"
   }, [_c("label", {
     staticClass: "form-label fw-bold",
     attrs: {
@@ -11493,7 +11498,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex w-100"
   }, [_c("button", {
-    staticClass: "btn btn-danger w-50 me-2",
+    staticClass: "btn btn-soft-danger w-50 me-2",
     attrs: {
       type: "button"
     },
@@ -11501,7 +11506,7 @@ var render = function render() {
       click: _vm.resetForm
     }
   }, [_vm._v("\n                        Reset\n                    ")]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-primary w-50 ms-2",
+    staticClass: "btn btn-soft-primary w-50 ms-2",
     attrs: {
       type: "button",
       disabled: _vm.isLoading
@@ -11652,7 +11657,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex w-100"
   }, [_c("button", {
-    staticClass: "btn btn-danger w-50 me-2",
+    staticClass: "btn btn-soft-danger w-50 me-2",
     attrs: {
       type: "button",
       disabled: _vm.isLoading
@@ -11661,7 +11666,7 @@ var render = function render() {
       click: _vm.deleteForm
     }
   }, [_vm._v("\n            Yes\n          ")]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-primary w-50 ms-2",
+    staticClass: "btn btn-soft-primary w-50 ms-2",
     attrs: {
       type: "button",
       "data-bs-dismiss": "modal"
@@ -11760,7 +11765,7 @@ var render = function render() {
   }), _vm._v(" "), _c("div", {
     staticClass: "invalid-feedback"
   }, [_vm._v("\n                        " + _vm._s(_vm.getErrors("name")) + "\n                    ")])]), _vm._v(" "), _c("div", {
-    staticClass: "mb-3 required-field"
+    staticClass: "mb-3"
   }, [_c("label", {
     staticClass: "form-label fw-bold",
     attrs: {
@@ -11817,7 +11822,7 @@ var render = function render() {
   }), _vm._v(" "), _c("div", {
     staticClass: "invalid-feedback"
   }, [_vm._v("\n                        " + _vm._s(_vm.getErrors("value")) + "\n                    ")])]), _vm._v(" "), _c("div", {
-    staticClass: "mb-3 required-field"
+    staticClass: "mb-3"
   }, [_c("label", {
     staticClass: "form-label fw-bold",
     attrs: {
@@ -11923,15 +11928,15 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex w-100"
   }, [_c("button", {
-    staticClass: "btn btn-danger w-50 me-2",
+    staticClass: "btn btn-soft-danger w-50 me-2",
     attrs: {
       type: "button"
     },
     on: {
       click: _vm.resetForm
     }
-  }, [_vm._v("\n                        Reset\n                    ")]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-primary w-50 ms-2",
+  }, [_vm._v("\n                        Reset changes\n                    ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-soft-primary w-50 ms-2",
     attrs: {
       type: "button",
       disabled: _vm.isLoading
@@ -12588,15 +12593,15 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex w-100"
   }, [_c("button", {
-    staticClass: "btn btn-danger w-50 me-2",
+    staticClass: "btn btn-soft-danger w-50 me-2",
     attrs: {
       type: "button"
     },
     on: {
       click: _vm.resetForm
     }
-  }, [_vm._v("\n                        Reset\n                    ")]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-primary w-50 ms-2",
+  }, [_vm._v("\n                        Reset changes\n                    ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-soft-primary w-50 ms-2",
     attrs: {
       type: "button",
       disabled: _vm.isLoading
@@ -12664,7 +12669,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex w-100"
   }, [_c("button", {
-    staticClass: "btn btn-danger w-50 me-2",
+    staticClass: "btn btn-soft-danger w-50 me-2",
     attrs: {
       type: "button",
       disabled: _vm.isLoading
@@ -12673,7 +12678,7 @@ var render = function render() {
       click: _vm.deleteForm
     }
   }, [_vm._v("\n                        Yes\n                    ")]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-primary w-50 ms-2",
+    staticClass: "btn btn-soft-primary w-50 ms-2",
     attrs: {
       type: "button",
       "data-bs-dismiss": "modal"
@@ -13038,15 +13043,15 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex w-100"
   }, [_c("button", {
-    staticClass: "btn btn-danger w-50 me-2",
+    staticClass: "btn btn-soft-danger w-50 me-2",
     attrs: {
       type: "button"
     },
     on: {
       click: _vm.resetForm
     }
-  }, [_vm._v("\n                        Reset\n                    ")]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-primary w-50 ms-2",
+  }, [_vm._v("\n                        Reset changes\n                    ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-soft-primary w-50 ms-2",
     attrs: {
       type: "button",
       disabled: _vm.isLoading
@@ -18686,7 +18691,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.style-chooser .vs__search[data-v-e9631084]::-moz-placeholder{\r\n    color: #000;\n}\n.style-chooser .vs__search[data-v-e9631084]::placeholder{\r\n    color: #000;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.style-chooser .vs__search[data-v-e9631084]::-moz-placeholder {\r\n  color: #000;\n}\n.style-chooser .vs__search[data-v-e9631084]::placeholder {\r\n  color: #000;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

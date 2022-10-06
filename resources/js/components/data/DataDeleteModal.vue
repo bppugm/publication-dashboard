@@ -27,7 +27,7 @@
           <div class="d-flex w-100">
             <button
               type="button"
-              class="btn btn-danger w-50 me-2"
+              class="btn btn-soft-danger w-50 me-2"
               :disabled="isLoading"
               @click="deleteForm"
             >
@@ -35,7 +35,7 @@
             </button>
             <button
               type="button"
-              class="btn btn-primary w-50 ms-2"
+              class="btn btn-soft-primary w-50 ms-2"
               data-bs-dismiss="modal"
             >
               No
@@ -76,7 +76,9 @@ export default {
   },
 
   mounted() {
-    this.modal = new bootstrap.Modal(document.getElementById("data-delete-modal"));
+    this.modal = new bootstrap.Modal(
+      document.getElementById("data-delete-modal")
+    );
   },
 
   methods: {
@@ -91,7 +93,10 @@ export default {
         this.modal.hide();
         this.$emit("deleted");
       } catch (error) {
-        this.errors = error.response.data.errors;
+        this.$toast.error("Delete failed", {
+          position: "top-right",
+          duration: 2000,
+        });
       }
       this.isLoading = false;
     },

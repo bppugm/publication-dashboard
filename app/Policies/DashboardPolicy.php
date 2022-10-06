@@ -25,7 +25,7 @@ class DashboardPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class DashboardPolicy
      */
     public function view(User $user, Dashboard $dashboard)
     {
-        //
+        return true;
     }
 
     /**

@@ -24,7 +24,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        //
+
     }
 
     /**
@@ -36,7 +36,9 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        //
+        if ($user->id == $model->id) {
+            return true;
+        }
     }
 
     /**
@@ -59,7 +61,9 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        //
+        if ($user->id == $model->id) {
+            return true;
+        }
     }
 
     /**

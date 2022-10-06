@@ -12,18 +12,16 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $dashboards = Dashboard::select('id', 'name', 'description')
             ->filter(request(['search']))
             ->paginate(10)
             ->appends(request()->query());
 
-        if (request()->wantsJson()) {
-            return $dashboards;
-        }
+        $canManage = $request->user()->can('create', Dashboard::class);
 
-        return view('dashboard.index', compact('dashboards'));
+        return view('dashboard.index', compact('dashboards', 'canManage'));
     }
 
     /**
@@ -91,6 +89,8 @@ class DashboardController extends Controller
      */
     public function update(Request $request, Dashboard $dashboard)
     {
+        $this->authorize('update', $dashboard);
+
         $data = $request->validate([
             'name' => 'string|max:100',
             'description' => 'string|max:300|nullable',
