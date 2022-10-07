@@ -6548,6 +6548,11 @@ chart_js__WEBPACK_IMPORTED_MODULE_2__.Chart.register(chart_js__WEBPACK_IMPORTED_
     this.dashboard = this.initialDashboard;
   },
   methods: {
+    generateUrl: function generateUrl(id) {
+      var url = new URL(window.location.origin + "/dashboard/" + id + window.location.search);
+      url.searchParams.append('from[]', this.dashboard.id);
+      return url;
+    },
     getRibbonColour: function getRibbonColour(hex) {
       if (hex) {
         return hex;
@@ -6709,19 +6714,13 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     value: {
-      type: Number | String
+      type: Number
     },
     initSelected: {
-      type: Object
+      type: Number
     }
   },
   data: function data() {
@@ -6737,9 +6736,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     initSelected: {
       immediate: true,
       handler: function handler() {
-        if (this.initSelected) {
-          this.initDashboardSelector();
-        }
+        this.initConnectSelector();
       }
     }
   },
@@ -6747,11 +6744,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.fetch();
   },
   methods: {
-    initDashboardSelector: function initDashboardSelector() {
-      this.selected = _objectSpread({}, this.initSelected);
+    initConnectSelector: function initConnectSelector() {
+      var _this = this;
+
+      this.selected = null;
+
+      if (this.initSelected != null) {
+        this.selected = this.dashboards.find(function (item) {
+          return item.id == _this.initSelected;
+        });
+      }
     },
     fetch: function fetch() {
-      var _this = this;
+      var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         var response;
@@ -6762,12 +6767,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _context.prev = 0;
                 _context.next = 3;
                 return axios.get("/dashboard", {
-                  params: _this.form
+                  params: _this2.form
                 });
 
               case 3:
                 response = _context.sent;
-                _this.users = response.data.data;
+                _this2.dashboards = response.data.data;
                 _context.next = 10;
                 break;
 
@@ -7175,6 +7180,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         w: 4,
         h: 4,
         i: i,
+        connect: null,
         type: "numeric",
         title: "",
         description: "",
@@ -10493,16 +10499,11 @@ var render = function render() {
       staticStyle: {
         "font-weight": "700"
       }
-    }, [_vm._v(_vm._s(item.ribbonText ? item.ribbonText : "empty"))])])]), _vm._v(" "), _c("a", {
-      staticClass: "text-decoration-none text-primary",
-      attrs: {
-        href: "/dashboard/".concat(item.connectTo)
-      }
-    }, [_c("h4", {
+    }, [_vm._v(_vm._s(item.ribbonText ? item.ribbonText : "empty"))])])]), _vm._v(" "), _c("h4", {
       staticStyle: {
         "font-weight": "400"
       }
-    }, [_vm._v(_vm._s(item.title))])]), _vm._v(" "), item.type == "chart" ? _c("div", {
+    }, [_vm._v(_vm._s(item.title))]), _vm._v(" "), item.type == "chart" ? _c("div", {
       staticClass: "my-auto"
     }, [_c("bar", {
       attrs: {
@@ -10572,7 +10573,12 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "mdi mdi-trash-can-outline"
-    })])]) : _vm._e()]);
+    })])]) : _vm._e(), _vm._v(" "), item.connect != null && !_vm.editMode ? _c("a", {
+      staticClass: "stretched-link",
+      attrs: {
+        href: _vm.generateUrl(item.connect)
+      }
+    }) : _vm._e()]);
   }), 1) : _vm._e()], 1);
 };
 
@@ -10599,7 +10605,6 @@ var render = function render() {
       _c = _vm._self._c;
 
   return _c("v-select", {
-    staticClass: "style-chooser",
     attrs: {
       placeholder: "--Select Dashboard--",
       options: _vm.dashboards,
@@ -11036,19 +11041,22 @@ var render = function render() {
               _vm.$set(_vm.form, "description", $event.target.value);
             }
           }
-        })]), _vm._v(" "), _c("dashboard-show-connect-selector", {
+        })]), _vm._v(" "), _c("div", {
+          staticClass: "form-group mt-3"
+        }, [_c("label", {
+          staticClass: "form-label"
+        }, [_c("b", [_vm._v("Connect to : ")])]), _vm._v(" "), _c("dashboard-show-connect-selector", {
           attrs: {
-            "connect-to": _vm.form.connectTo,
-            initSelected: _vm.form.connectTo
+            initSelected: _vm.form.connect
           },
           model: {
-            value: _vm.form.connectTo,
+            value: _vm.form.connect,
             callback: function callback($$v) {
-              _vm.$set(_vm.form, "connectTo", $$v);
+              _vm.$set(_vm.form, "connect", $$v);
             },
-            expression: "form.connectTo"
+            expression: "form.connect"
           }
-        }), _vm._v(" "), _c("div", {
+        })], 1), _vm._v(" "), _c("div", {
           staticClass: "form-group mt-3 mb-3 bg-light p-1 text-center"
         }, [_c("b", {
           staticClass: "text-primary"
@@ -11236,7 +11244,7 @@ var render = function render() {
           attrs: {
             type: "submit"
           }
-        }, [_vm._v("Save")])])])], 2) : _vm._e()];
+        }, [_vm._v("\n                    Save\n                  ")])])])], 2) : _vm._e()];
       }
     }])
   })], 1)])])])]);

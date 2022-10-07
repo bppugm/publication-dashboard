@@ -1,6 +1,5 @@
 <template>
   <v-select
-    class="style-chooser"
     placeholder="--Select Dashboard--"
     :options="dashboards"
     label="name"
@@ -15,10 +14,10 @@
 export default {
   props: {
     value: {
-      type: Number|String,
+      type: Number,
     },
     initSelected: {
-      type: Object,
+      type: Number,
     },
   },
   data() {
@@ -34,9 +33,7 @@ export default {
     initSelected: {
       immediate: true,
       handler() {
-        if (this.initSelected) {
-          this.initDashboardSelector();
-        }
+          this.initConnectSelector();
       },
     },
   },
@@ -44,15 +41,18 @@ export default {
     this.fetch();
   },
   methods: {
-    initDashboardSelector() {
-      this.selected = { ...this.initSelected };
+    initConnectSelector() {
+        this.selected = null;
+        if (this.initSelected != null) {
+            this.selected = this.dashboards.find(item => item.id == this.initSelected);
+        }
     },
     async fetch() {
       try {
         let response = await axios.get(`/dashboard`, {
           params: this.form,
         });
-        this.users = response.data.data;
+        this.dashboards = response.data.data;
       } catch (error) {
         console.log(error);
       }

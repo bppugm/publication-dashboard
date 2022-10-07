@@ -134,12 +134,15 @@
                 </div>
                 <!-- END DESCRIPTION -->
 
-                <!-- Connect To selector from component DashbboardShowConnectSelector-->
-                <dashboard-show-connect-selector
-                  v-model="form.connectTo"
-                  :connect-to="form.connectTo"
-                  :initSelected="form.connectTo"
-                ></dashboard-show-connect-selector>
+                <!-- CONNECT-->
+                <div class="form-group mt-3">
+                  <label class="form-label"><b>Connect to : </b></label>
+                  <dashboard-show-connect-selector
+                    v-model="form.connect"
+                    :initSelected="form.connect"
+                  ></dashboard-show-connect-selector>
+                </div>
+                <!-- END CONNECT -->
 
                 <!-- Values -->
                 <div class="form-group mt-3 mb-3 bg-light p-1 text-center">
@@ -243,7 +246,9 @@
                     </button>
                   </div>
                   <div class="col-md-6 d-grid">
-                    <button type="submit" class="btn btn-soft-primary">Save</button>
+                    <button type="submit" class="btn btn-soft-primary">
+                      Save
+                    </button>
                   </div>
                 </div>
               </form>
@@ -311,6 +316,7 @@ export default {
         w: 4,
         h: 4,
         i: i,
+        connect: null,
         type: "numeric",
         title: "",
         description: "",

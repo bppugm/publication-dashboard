@@ -95,10 +95,7 @@
             }}</span>
           </div>
         </div>
-        <a
-          class="text-decoration-none text-primary"
-          :href="`/dashboard/${item.connectTo}`">
-        <h4 style="font-weight: 400">{{ item.title }}</h4></a>
+        <h4 style="font-weight: 400">{{ item.title }}</h4>
         <div class="my-auto" v-if="item.type == 'chart'">
           <bar
             :chart-data="item.chartOptions.data"
@@ -143,6 +140,13 @@
             ><i class="mdi mdi-trash-can-outline"></i
           ></span>
         </div>
+        <a
+          :href="generateUrl(item.connect)"
+
+          class="stretched-link"
+          v-if="item.connect != null && !editMode"
+        >
+        </a>
       </grid-item>
     </grid-layout>
   </div>
@@ -202,6 +206,12 @@ export default {
     this.dashboard = this.initialDashboard;
   },
   methods: {
+    generateUrl(id){
+        var url = new URL(window.location.origin + "/dashboard/" + id + window.location.search);
+        url.searchParams.append('from[]', this.dashboard.id)
+
+        return url;
+    },
     getRibbonColour(hex) {
       if (hex) {
         return hex;
