@@ -197,8 +197,14 @@ export default {
   },
   mounted() {
     this.dashboard = this.initialDashboard;
+    this.subscribe();
   },
   methods: {
+    subscribe() {
+      Echo.channel('data-updated').listen('DataUpdated', (e) => {
+        this.dashboard.data.find((data) => data.id == e.data.id).value = e.data.value;
+      });
+    },
     getRibbonColour(hex) {
       if (hex) {
         return hex;
