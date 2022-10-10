@@ -134,6 +134,16 @@
                 </div>
                 <!-- END DESCRIPTION -->
 
+                <!-- CONNECT TO-->
+                <div class="form-group mt-3">
+                  <label class="form-label"><b>Connect to : </b></label>
+                  <dashboard-show-connect-to-selector
+                    v-model="form.connect_to"
+                    :initSelected="form.connect_to"
+                  ></dashboard-show-connect-to-selector>
+                </div>
+                <!-- END CONNECT TO -->
+
                 <!-- Values -->
                 <div class="form-group mt-3 mb-3 bg-light p-1 text-center">
                   <b class="text-primary">Widget Values</b>
@@ -236,7 +246,9 @@
                     </button>
                   </div>
                   <div class="col-md-6 d-grid">
-                    <button type="submit" class="btn btn-soft-primary">Save</button>
+                    <button type="submit" class="btn btn-soft-primary">
+                      Save
+                    </button>
                   </div>
                 </div>
               </form>
@@ -304,6 +316,7 @@ export default {
         w: 4,
         h: 4,
         i: i,
+        connect_to: null,
         type: "numeric",
         title: "",
         description: "",

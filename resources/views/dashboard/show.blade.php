@@ -6,12 +6,16 @@
         <div class="col-md-12">
             <div class="d-flex justify-content-between">
                 <h5 class="text-primary card-title mb-0">
+                    @if ($url)
+                    <a href="{{ $url }}" class="text-primary text-decoration-none">
+                        <i class="mdi mdi-arrow-left"></i>
+                    @endif
                     <b>DASHBOARD</b>
                 </h5>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Dashboard List</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Dashboard Detail</li>
+                        <li class="breadcrumb-item active" aria-current="page">{{$dashboard->name}}</li>
                     </ol>
                 </nav>
             </div>

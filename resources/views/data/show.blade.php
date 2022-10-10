@@ -10,7 +10,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('data.index') }}">Data List</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Data Detail</li>
+                <li class="breadcrumb-item active" aria-current="page">{{Ucwords($data->name)}}</li>
             </ol>
         </nav>
     </div>

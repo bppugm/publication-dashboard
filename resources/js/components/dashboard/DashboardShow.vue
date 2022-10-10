@@ -140,6 +140,13 @@
             ><i class="mdi mdi-trash-can-outline"></i
           ></span>
         </div>
+        <a
+          :href="generateUrl(item.connect_to)"
+
+          class="stretched-link"
+          v-if="item.connect_to != null && !editMode"
+        >
+        </a>
       </grid-item>
     </grid-layout>
   </div>
@@ -204,6 +211,12 @@ export default {
       Echo.channel('data-updated').listen('DataUpdated', (e) => {
         this.dashboard.data.find((data) => data.id == e.data.id).value = e.data.value;
       });
+    },
+    generateUrl(id){
+        var url = new URL(window.location.origin + "/dashboard/" + id + window.location.search);
+        url.searchParams.append('from[]', this.dashboard.id)
+
+        return url;
     },
     getRibbonColour(hex) {
       if (hex) {
