@@ -6695,10 +6695,10 @@ chart_js__WEBPACK_IMPORTED_MODULE_2__.Chart.register(chart_js__WEBPACK_IMPORTED_
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/dashboard/DashboardShowConnectSelector.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/dashboard/DashboardShowConnectSelector.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/dashboard/DashboardShowConnectToSelector.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/dashboard/DashboardShowConnectToSelector.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -6736,7 +6736,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     initSelected: {
       immediate: true,
       handler: function handler() {
-        this.initConnectSelector();
+        this.initConnectToSelector();
       }
     }
   },
@@ -6744,7 +6744,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.fetch();
   },
   methods: {
-    initConnectSelector: function initConnectSelector() {
+    initConnectToSelector: function initConnectToSelector() {
       var _this = this;
 
       this.selected = null;
@@ -7180,7 +7180,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         w: 4,
         h: 4,
         i: i,
-        connect: null,
+        connect_to: null,
         type: "numeric",
         title: "",
         description: "",
@@ -10573,10 +10573,10 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "mdi mdi-trash-can-outline"
-    })])]) : _vm._e(), _vm._v(" "), item.connect != null && !_vm.editMode ? _c("a", {
+    })])]) : _vm._e(), _vm._v(" "), item.connect_to != null && !_vm.editMode ? _c("a", {
       staticClass: "stretched-link",
       attrs: {
-        href: _vm.generateUrl(item.connect)
+        href: _vm.generateUrl(item.connect_to)
       }
     }) : _vm._e()]);
   }), 1) : _vm._e()], 1);
@@ -10588,10 +10588,10 @@ render._withStripped = true;
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/dashboard/DashboardShowConnectSelector.vue?vue&type=template&id=6b91fd84&scoped=true&":
-/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/dashboard/DashboardShowConnectSelector.vue?vue&type=template&id=6b91fd84&scoped=true& ***!
-  \********************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/dashboard/DashboardShowConnectToSelector.vue?vue&type=template&id=6b820d99&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/dashboard/DashboardShowConnectToSelector.vue?vue&type=template&id=6b820d99&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -11045,16 +11045,16 @@ var render = function render() {
           staticClass: "form-group mt-3"
         }, [_c("label", {
           staticClass: "form-label"
-        }, [_c("b", [_vm._v("Connect to : ")])]), _vm._v(" "), _c("dashboard-show-connect-selector", {
+        }, [_c("b", [_vm._v("Connect to : ")])]), _vm._v(" "), _c("dashboard-show-connect-to-selector", {
           attrs: {
-            initSelected: _vm.form.connect
+            initSelected: _vm.form.connect_to
           },
           model: {
-            value: _vm.form.connect,
+            value: _vm.form.connect_to,
             callback: function callback($$v) {
-              _vm.$set(_vm.form, "connect", $$v);
+              _vm.$set(_vm.form, "connect_to", $$v);
             },
-            expression: "form.connect"
+            expression: "form.connect_to"
           }
         })], 1), _vm._v(" "), _c("div", {
           staticClass: "form-group mt-3 mb-3 bg-light p-1 text-center"
@@ -68282,10 +68282,10 @@ component.options.__file = "resources/js/components/dashboard/DashboardShow.vue"
 
 /***/ }),
 
-/***/ "./resources/js/components/dashboard/DashboardShowConnectSelector.vue":
-/*!****************************************************************************!*\
-  !*** ./resources/js/components/dashboard/DashboardShowConnectSelector.vue ***!
-  \****************************************************************************/
+/***/ "./resources/js/components/dashboard/DashboardShowConnectToSelector.vue":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/dashboard/DashboardShowConnectToSelector.vue ***!
+  \******************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -68293,8 +68293,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _DashboardShowConnectSelector_vue_vue_type_template_id_6b91fd84_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DashboardShowConnectSelector.vue?vue&type=template&id=6b91fd84&scoped=true& */ "./resources/js/components/dashboard/DashboardShowConnectSelector.vue?vue&type=template&id=6b91fd84&scoped=true&");
-/* harmony import */ var _DashboardShowConnectSelector_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DashboardShowConnectSelector.vue?vue&type=script&lang=js& */ "./resources/js/components/dashboard/DashboardShowConnectSelector.vue?vue&type=script&lang=js&");
+/* harmony import */ var _DashboardShowConnectToSelector_vue_vue_type_template_id_6b820d99_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DashboardShowConnectToSelector.vue?vue&type=template&id=6b820d99&scoped=true& */ "./resources/js/components/dashboard/DashboardShowConnectToSelector.vue?vue&type=template&id=6b820d99&scoped=true&");
+/* harmony import */ var _DashboardShowConnectToSelector_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DashboardShowConnectToSelector.vue?vue&type=script&lang=js& */ "./resources/js/components/dashboard/DashboardShowConnectToSelector.vue?vue&type=script&lang=js&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -68304,19 +68304,19 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 ;
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _DashboardShowConnectSelector_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _DashboardShowConnectSelector_vue_vue_type_template_id_6b91fd84_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
-  _DashboardShowConnectSelector_vue_vue_type_template_id_6b91fd84_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _DashboardShowConnectToSelector_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DashboardShowConnectToSelector_vue_vue_type_template_id_6b820d99_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _DashboardShowConnectToSelector_vue_vue_type_template_id_6b820d99_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
-  "6b91fd84",
+  "6b820d99",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/dashboard/DashboardShowConnectSelector.vue"
+component.options.__file = "resources/js/components/dashboard/DashboardShowConnectToSelector.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -69157,10 +69157,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/dashboard/DashboardShowConnectSelector.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************************!*\
-  !*** ./resources/js/components/dashboard/DashboardShowConnectSelector.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************************/
+/***/ "./resources/js/components/dashboard/DashboardShowConnectToSelector.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/dashboard/DashboardShowConnectToSelector.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -69168,8 +69168,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DashboardShowConnectSelector_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DashboardShowConnectSelector.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/dashboard/DashboardShowConnectSelector.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DashboardShowConnectSelector_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DashboardShowConnectToSelector_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DashboardShowConnectToSelector.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/dashboard/DashboardShowConnectToSelector.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DashboardShowConnectToSelector_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -69650,19 +69650,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/dashboard/DashboardShowConnectSelector.vue?vue&type=template&id=6b91fd84&scoped=true&":
-/*!***********************************************************************************************************************!*\
-  !*** ./resources/js/components/dashboard/DashboardShowConnectSelector.vue?vue&type=template&id=6b91fd84&scoped=true& ***!
-  \***********************************************************************************************************************/
+/***/ "./resources/js/components/dashboard/DashboardShowConnectToSelector.vue?vue&type=template&id=6b820d99&scoped=true&":
+/*!*************************************************************************************************************************!*\
+  !*** ./resources/js/components/dashboard/DashboardShowConnectToSelector.vue?vue&type=template&id=6b820d99&scoped=true& ***!
+  \*************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DashboardShowConnectSelector_vue_vue_type_template_id_6b91fd84_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DashboardShowConnectSelector_vue_vue_type_template_id_6b91fd84_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DashboardShowConnectToSelector_vue_vue_type_template_id_6b820d99_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DashboardShowConnectToSelector_vue_vue_type_template_id_6b820d99_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DashboardShowConnectSelector_vue_vue_type_template_id_6b91fd84_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DashboardShowConnectSelector.vue?vue&type=template&id=6b91fd84&scoped=true& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/dashboard/DashboardShowConnectSelector.vue?vue&type=template&id=6b91fd84&scoped=true&");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DashboardShowConnectToSelector_vue_vue_type_template_id_6b820d99_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DashboardShowConnectToSelector.vue?vue&type=template&id=6b820d99&scoped=true& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/dashboard/DashboardShowConnectToSelector.vue?vue&type=template&id=6b820d99&scoped=true&");
 
 
 /***/ }),
@@ -83111,7 +83111,7 @@ var map = {
 	"./components/dashboard/DashboardEditModal.vue": "./resources/js/components/dashboard/DashboardEditModal.vue",
 	"./components/dashboard/DashboardList.vue": "./resources/js/components/dashboard/DashboardList.vue",
 	"./components/dashboard/DashboardShow.vue": "./resources/js/components/dashboard/DashboardShow.vue",
-	"./components/dashboard/DashboardShowConnectSelector.vue": "./resources/js/components/dashboard/DashboardShowConnectSelector.vue",
+	"./components/dashboard/DashboardShowConnectToSelector.vue": "./resources/js/components/dashboard/DashboardShowConnectToSelector.vue",
 	"./components/dashboard/DashboardShowVariableBadge.vue": "./resources/js/components/dashboard/DashboardShowVariableBadge.vue",
 	"./components/dashboard/DashboardShowWidgetDataSelector.vue": "./resources/js/components/dashboard/DashboardShowWidgetDataSelector.vue",
 	"./components/dashboard/DashboardShowWidgetExpression.vue": "./resources/js/components/dashboard/DashboardShowWidgetExpression.vue",

@@ -134,15 +134,15 @@
                 </div>
                 <!-- END DESCRIPTION -->
 
-                <!-- CONNECT-->
+                <!-- CONNECT TO-->
                 <div class="form-group mt-3">
                   <label class="form-label"><b>Connect to : </b></label>
-                  <dashboard-show-connect-selector
-                    v-model="form.connect"
-                    :initSelected="form.connect"
-                  ></dashboard-show-connect-selector>
+                  <dashboard-show-connect-to-selector
+                    v-model="form.connect_to"
+                    :initSelected="form.connect_to"
+                  ></dashboard-show-connect-to-selector>
                 </div>
-                <!-- END CONNECT -->
+                <!-- END CONNECT TO -->
 
                 <!-- Values -->
                 <div class="form-group mt-3 mb-3 bg-light p-1 text-center">
@@ -316,7 +316,7 @@ export default {
         w: 4,
         h: 4,
         i: i,
-        connect: null,
+        connect_to: null,
         type: "numeric",
         title: "",
         description: "",

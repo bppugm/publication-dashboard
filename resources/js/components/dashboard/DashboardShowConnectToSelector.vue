@@ -33,7 +33,7 @@ export default {
     initSelected: {
       immediate: true,
       handler() {
-          this.initConnectSelector();
+          this.initConnectToSelector();
       },
     },
   },
@@ -41,7 +41,7 @@ export default {
     this.fetch();
   },
   methods: {
-    initConnectSelector() {
+    initConnectToSelector() {
         this.selected = null;
         if (this.initSelected != null) {
             this.selected = this.dashboards.find(item => item.id == this.initSelected);

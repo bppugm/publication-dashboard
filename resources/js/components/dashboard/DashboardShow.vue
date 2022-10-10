@@ -141,10 +141,10 @@
           ></span>
         </div>
         <a
-          :href="generateUrl(item.connect)"
+          :href="generateUrl(item.connect_to)"
 
           class="stretched-link"
-          v-if="item.connect != null && !editMode"
+          v-if="item.connect_to != null && !editMode"
         >
         </a>
       </grid-item>
