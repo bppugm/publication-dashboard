@@ -19,6 +19,10 @@ class DashboardController extends Controller
             ->paginate(10)
             ->appends(request()->query());
 
+        if (request()->wantsJson()) {
+            return $dashboards;
+        }
+
         $canManage = $request->user()->can('create', Dashboard::class);
 
         return view('dashboard.index', compact('dashboards', 'canManage'));
@@ -60,13 +64,18 @@ class DashboardController extends Controller
      * @param  \App\Models\Dashboard  $dashboard
      * @return \Illuminate\Http\Response
      */
-    public function show(Dashboard $dashboard)
+    public function show(Dashboard $dashboard, Request $request)
     {
         $this->authorize('view', $dashboard);
 
         $dashboard->load('data');
-
-        return view('dashboard.show', compact('dashboard'));
+        $url = "";
+        if ($request->filled('from')) {
+            $prevs = collect($request->from);
+            $last = $prevs->pull($prevs->count() - 1);
+            $url = route('dashboard.show', [$last, 'from' => $prevs->toArray()]);
+        }
+        return view('dashboard.show', compact('dashboard', 'url'));
     }
 
     /**
