@@ -30,11 +30,13 @@
         "floating-vue": "^1.0.0-beta.18",
         "highcharts": "^10.2.1",
         "highcharts-vue": "^1.4.0",
+        "laravel-echo": "^1.14.0",
+        "pusher-js": "^7.4.0",
         "vee-validate": "^3.4.14",
         "vue-chartjs": "^4.1.1",
         "vue-dataset": "^1.1.16",
         "vue-grid-layout": "^2.4.0",
-        "vue-mention": "^1.0.0-floating-vue1",
+        "vue-mention": "1.0.0-floating-vue1",
         "vue-select": "^3.20.0",
         "vue-toast-notification": "^0.6.3"
     }
