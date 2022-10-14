@@ -121,7 +121,7 @@
             class="mx-1 text-primary"
             style="cursor: grab"
             v-if="item.connect_to"
-            ><a :href="generateUrl(item.connect_to)">
+            ><a :href="`/dashboard/${item.connect_to}`">
                 <i class="mdi mdi-link-variant"></i></a
           ></span>
           <span
