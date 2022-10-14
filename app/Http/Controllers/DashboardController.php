@@ -130,17 +130,17 @@ class DashboardController extends Controller
     }
 
     /**
-     * Display dashboard viewer.
+     * Display dashboard preview.
      */
-    public function viewer(Dashboard $dashboard, Request $request)
+    public function preview(Dashboard $dashboard, Request $request)
     {
         $dashboard->load('data');
         $url = "";
         if ($request->filled('from')) {
             $prevs = collect($request->from);
             $last = $prevs->pull($prevs->count() - 1);
-            $url = route('dashboard.viewer', [$last, 'from' => $prevs->toArray()]);
+            $url = route('dashboard.preview', [$last, 'from' => $prevs->toArray()]);
         }
-        return view('dashboard.viewer', compact('dashboard', 'url'));
+        return view('dashboard.preview', compact('dashboard', 'url'));
     }
 }

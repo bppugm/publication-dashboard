@@ -21,6 +21,16 @@
         <div class="col-md-8">
           <b>{{ dashboard.description }}</b>
         </div>
+        <div class="col-md-4 d-flex justify-content-end" v-if="!editMode">
+          <a
+            type="button"
+            class="btn btn-outline-success"
+            :href="`/dashboard/preview/${dashboard.id}`"
+            role="button"
+          >
+            Preview
+          </a>
+        </div>
         <div class="col-md-4 d-flex" v-if="editMode">
           <button
             type="button"
@@ -221,7 +231,7 @@ export default {
       });
     },
     generateUrl(id){
-        var url = new URL(window.location.origin + "/dashboard/viewer/" + id + window.location.search);
+        var url = new URL(window.location.origin + "/dashboard/preview/" + id + window.location.search);
         url.searchParams.append('from[]', this.dashboard.id)
         return url;
     },

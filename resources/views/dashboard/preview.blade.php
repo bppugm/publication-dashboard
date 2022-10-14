@@ -9,10 +9,11 @@
                         <div class="card-body border-warning d-flex justify-content-between" style="border-bottom: 4px solid">
                             <div class="text-primary">
                                 <a href="{{ $url }}" class="text-decoration-none">
-                                    <i class="mdi mdi-arrow-left"> <b>BACK</b> </i>
+                                    <i class="mdi mdi-arrow-left d-flex"
+                                        style="font-size: 1.25rem; font-style: normal"><b>&nbsp Back</b></i>
                                 </a>
                             </div>
-                            <div class="text-primary">
+                            <div class="text-primary align-self-center">
                                 <h4 class="m-0"><b>{{ Ucwords($dashboard->name) }}</b></h4>
                             </div>
                         </div>

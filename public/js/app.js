@@ -6559,7 +6559,7 @@ chart_js__WEBPACK_IMPORTED_MODULE_2__.Chart.register(chart_js__WEBPACK_IMPORTED_
       });
     },
     generateUrl: function generateUrl(id) {
-      var url = new URL(window.location.origin + "/dashboard/viewer/" + id + window.location.search);
+      var url = new URL(window.location.origin + "/dashboard/preview/" + id + window.location.search);
       url.searchParams.append('from[]', this.dashboard.id);
       return url;
     },
@@ -10272,7 +10272,7 @@ var render = function render() {
           return _vm.editItem(dashboard, index);
         }
       }
-    }, [_vm._v("\n                            Edit\n                        ")]), _vm._v(" "), _c("button", {
+    }, [_vm._v("\n                            Edit\n                            ")]), _vm._v(" "), _c("button", {
       staticClass: "btn btn-outline-danger",
       attrs: {
         type: "button",
@@ -10284,7 +10284,14 @@ var render = function render() {
           return _vm.deleteItem(dashboard);
         }
       }
-    }, [_vm._v("\n                            Delete\n                        ")])]) : _vm._e()])]);
+    }, [_vm._v("\n                                Delete\n                            ")]), _vm._v(" "), _c("a", {
+      staticClass: "btn btn-outline-success",
+      attrs: {
+        type: "button",
+        href: "/dashboard/preview/".concat(dashboard.id),
+        role: "button"
+      }
+    }, [_vm._v("\n                                Preview\n                            ")])]) : _vm._e()])]);
   }), _vm._v(" "), _vm.data.length == 0 ? _c("tr", [_c("td", {
     staticClass: "text-center",
     attrs: {
@@ -10427,7 +10434,16 @@ var render = function render() {
     staticClass: "row"
   }, [_c("div", {
     staticClass: "col-md-8"
-  }, [_c("b", [_vm._v(_vm._s(_vm.dashboard.description))])]), _vm._v(" "), _vm.editMode ? _c("div", {
+  }, [_c("b", [_vm._v(_vm._s(_vm.dashboard.description))])]), _vm._v(" "), !_vm.editMode ? _c("div", {
+    staticClass: "col-md-4 d-flex justify-content-end"
+  }, [_c("a", {
+    staticClass: "btn btn-outline-success",
+    attrs: {
+      type: "button",
+      href: "/dashboard/preview/".concat(_vm.dashboard.id),
+      role: "button"
+    }
+  }, [_vm._v("\n          Preview\n        ")])]) : _vm._e(), _vm._v(" "), _vm.editMode ? _c("div", {
     staticClass: "col-md-4 d-flex"
   }, [_c("button", {
     staticClass: "btn btn-outline-primary ms-auto me-1",
@@ -10546,7 +10562,7 @@ var render = function render() {
       }
     }, [_c("a", {
       attrs: {
-        href: _vm.generateUrl(item.connect_to)
+        href: "/dashboard/".concat(item.connect_to)
       }
     }, [_c("i", {
       staticClass: "mdi mdi-link-variant"
