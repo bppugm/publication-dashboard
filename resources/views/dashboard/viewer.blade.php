@@ -13,7 +13,7 @@
                                 </a>
                             </div>
                             <div class="text-primary">
-                                <h4 class="text-uppercase">{{ $dashboard->name }}</h4>
+                                <h4 class="m-0">{{ Ucwords($dashboard->name) }}</h4>
                             </div>
                         </div>
                     @else
