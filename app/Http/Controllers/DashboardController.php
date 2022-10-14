@@ -139,7 +139,7 @@ class DashboardController extends Controller
         if ($request->filled('from')) {
             $prevs = collect($request->from);
             $last = $prevs->pull($prevs->count() - 1);
-            $url = route('dashboard.show', [$last, 'from' => $prevs->toArray()]);
+            $url = route('dashboard.viewer', [$last, 'from' => $prevs->toArray()]);
         }
         return view('dashboard.viewer', compact('dashboard', 'url'));
     }

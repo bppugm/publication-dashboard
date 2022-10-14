@@ -29,6 +29,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware('auth')->resource('data', DataController::class);
 Route::middleware('auth')->resource('category', CategoryController::class);
-Route::get('/dashboard/viewer/{dashboard}', [DashboardController::class, 'viewer']);
+Route::get('/dashboard/viewer/{dashboard}', [DashboardController::class, 'viewer'])->name('dashboard.viewer');
 Route::middleware('auth')->resource('dashboard', DashboardController::class);
 Route::middleware('auth')->resource('user', UserController::class);
