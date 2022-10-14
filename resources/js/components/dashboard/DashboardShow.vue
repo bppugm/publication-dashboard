@@ -117,6 +117,14 @@
           class="d-flex justify-content-end"
         >
           <span
+            title="To connected dashboard"
+            class="mx-1 text-primary"
+            style="cursor: grab"
+            v-if="item.connect_to"
+            ><a :href="generateUrl(item.connect_to)">
+                <i class="mdi mdi-link-variant"></i></a
+          ></span>
+          <span
             title="Duplicate this widget"
             class="mx-1 text-primary"
             style="cursor: grab"
@@ -144,7 +152,7 @@
           :href="generateUrl(item.connect_to)"
 
           class="stretched-link"
-          v-if="item.connect_to != null && !editMode"
+          v-if="item.connect_to != null && !canEdit"
         >
         </a>
       </grid-item>

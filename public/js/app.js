@@ -10536,7 +10536,21 @@ var render = function render() {
         bottom: "10px",
         right: "20px"
       }
-    }, [_c("span", {
+    }, [item.connect_to ? _c("span", {
+      staticClass: "mx-1 text-primary",
+      staticStyle: {
+        cursor: "grab"
+      },
+      attrs: {
+        title: "To connected dashboard"
+      }
+    }, [_c("a", {
+      attrs: {
+        href: _vm.generateUrl(item.connect_to)
+      }
+    }, [_c("i", {
+      staticClass: "mdi mdi-link-variant"
+    })])]) : _vm._e(), _vm._v(" "), _c("span", {
       staticClass: "mx-1 text-primary",
       staticStyle: {
         cursor: "grab"
@@ -10583,7 +10597,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "mdi mdi-trash-can-outline"
-    })])]) : _vm._e(), _vm._v(" "), item.connect_to != null && !_vm.editMode ? _c("a", {
+    })])]) : _vm._e(), _vm._v(" "), item.connect_to != null && !_vm.canEdit ? _c("a", {
       staticClass: "stretched-link",
       attrs: {
         href: _vm.generateUrl(item.connect_to)
