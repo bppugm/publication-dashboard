@@ -34,18 +34,26 @@
                                 data-bs-toggle="modal"
                                 data-bs-target="#dashboard-edit-modal"
                                 @click="editItem(dashboard, index)"
-                            >
+                                >
                                 Edit
-                            </button>
-                            <button
-                                type="button"
-                                class="btn btn-outline-danger"
-                                data-bs-toggle="modal"
-                                data-bs-target="#dashboard-delete-modal"
-                                @click="deleteItem(dashboard)"
-                            >
-                                Delete
-                            </button>
+                                </button>
+                                <button
+                                    type="button"
+                                    class="btn btn-outline-danger"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#dashboard-delete-modal"
+                                    @click="deleteItem(dashboard)"
+                                >
+                                    Delete
+                                </button>
+                                <a
+                                    type="button"
+                                    class="btn btn-outline-success"
+                                    :href="`/dashboard/preview/${dashboard.id}`"
+                                    role="button"
+                                >
+                                    Preview
+                                </a>
                             </div>
                         </td>
                     </tr>

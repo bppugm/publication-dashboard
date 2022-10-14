@@ -128,4 +128,19 @@ class DashboardController extends Controller
 
         return response()->noContent();
     }
+
+    /**
+     * Display dashboard preview.
+     */
+    public function preview(Dashboard $dashboard, Request $request)
+    {
+        $dashboard->load('data');
+        $url = "";
+        if ($request->filled('from')) {
+            $prevs = collect($request->from);
+            $last = $prevs->pull($prevs->count() - 1);
+            $url = route('dashboard.preview', [$last, 'from' => $prevs->toArray()]);
+        }
+        return view('dashboard.preview', compact('dashboard', 'url'));
+    }
 }

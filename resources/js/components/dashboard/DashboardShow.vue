@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="card card-body p-4 shadow border-0">
+    <div class="card card-body p-4 shadow border-0" v-if="canEdit">
       <div class="d-flex justify-content-between">
         <h2 class="text-primary">{{ dashboard.name }}</h2>
         <div class="form-check form-switch" v-if="canEdit">
@@ -20,6 +20,16 @@
       <div class="row">
         <div class="col-md-8">
           <b>{{ dashboard.description }}</b>
+        </div>
+        <div class="col-md-4 d-flex justify-content-end" v-if="!editMode">
+          <a
+            type="button"
+            class="btn btn-outline-success"
+            :href="`/dashboard/preview/${dashboard.id}`"
+            role="button"
+          >
+            Preview
+          </a>
         </div>
         <div class="col-md-4 d-flex" v-if="editMode">
           <button
@@ -117,6 +127,14 @@
           class="d-flex justify-content-end"
         >
           <span
+            title="To connected dashboard"
+            class="mx-1 text-primary"
+            style="cursor: grab"
+            v-if="item.connect_to"
+            ><a :href="`/dashboard/${item.connect_to}`">
+                <i class="mdi mdi-link-variant"></i></a
+          ></span>
+          <span
             title="Duplicate this widget"
             class="mx-1 text-primary"
             style="cursor: grab"
@@ -144,7 +162,7 @@
           :href="generateUrl(item.connect_to)"
 
           class="stretched-link"
-          v-if="item.connect_to != null && !editMode"
+          v-if="item.connect_to != null && !canEdit"
         >
         </a>
       </grid-item>
@@ -213,9 +231,8 @@ export default {
       });
     },
     generateUrl(id){
-        var url = new URL(window.location.origin + "/dashboard/" + id + window.location.search);
+        var url = new URL(window.location.origin + "/dashboard/preview/" + id + window.location.search);
         url.searchParams.append('from[]', this.dashboard.id)
-
         return url;
     },
     getRibbonColour(hex) {
