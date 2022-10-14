@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="card card-body p-4 shadow border-0">
+    <div class="card card-body p-4 shadow border-0" v-if="canEdit">
       <div class="d-flex justify-content-between">
         <h2 class="text-primary">{{ dashboard.name }}</h2>
         <div class="form-check form-switch" v-if="canEdit">
@@ -213,9 +213,8 @@ export default {
       });
     },
     generateUrl(id){
-        var url = new URL(window.location.origin + "/dashboard/" + id + window.location.search);
+        var url = new URL(window.location.origin + "/dashboard/viewer/" + id + window.location.search);
         url.searchParams.append('from[]', this.dashboard.id)
-
         return url;
     },
     getRibbonColour(hex) {

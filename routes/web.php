@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ViewerController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +29,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware('auth')->resource('data', DataController::class);
 Route::middleware('auth')->resource('category', CategoryController::class);
-
+Route::get('/dashboard/viewer/{dashboard}', [DashboardController::class, 'viewer']);
 Route::middleware('auth')->resource('dashboard', DashboardController::class);
 Route::middleware('auth')->resource('user', UserController::class);
