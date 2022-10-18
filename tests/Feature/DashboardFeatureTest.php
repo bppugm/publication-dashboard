@@ -63,4 +63,109 @@ class DashboardFeatureTest extends TestCase
 
         $response->assertCreated();
     }
+
+  /** @test */
+  public function user_can_activate_dashboard_and_automatically_ordering()
+  {
+    $this->login();
+    $dashboard1 = Dashboard::factory()->create();
+    $dashboard2 = Dashboard::factory()->create();
+    $dashboard3 = Dashboard::factory()->create();
+
+    // activate dashboard 1
+    $response = $this->postJson(route('dashboard.activation'), [
+      'id' => $dashboard1->id,
+    ]);
+    // activate dashboard 2
+    $response = $this->postJson(route('dashboard.activation'), [
+      'id' => $dashboard2->id,
+    ]);
+    // activate dashboard 3
+    $response = $this->postJson(route('dashboard.activation'), [
+      'id' => $dashboard3->id,
+    ]);
+
+    // check the order
+    $this->assertDatabaseHas('dashboards', [
+      'id' => $dashboard1->id,
+      'order' => 1
+    ]);
+    $this->assertDatabaseHas('dashboards', [
+      'id' => $dashboard2->id,
+      'order' => 2
+    ]);
+    $this->assertDatabaseHas('dashboards', [
+      'id' => $dashboard3->id,
+      'order' => 3
+    ]);
+  }
+
+  /** @test */
+  // user can deactivate dashboard and will be ordering automatically
+  public function user_can_deactivate_dashboard_and_automatically_ordering()
+  {
+    $this->login();
+    $dashboard1 = Dashboard::factory()->create();
+    $dashboard2 = Dashboard::factory()->create();
+    $dashboard3 = Dashboard::factory()->create();
+
+    // activate dashboard 1
+    $response = $this->postJson(route('dashboard.activation'), [
+      'id' => $dashboard1->id,
+    ]);
+    // activate dashboard 2
+    $response = $this->postJson(route('dashboard.activation'), [
+      'id' => $dashboard2->id,
+    ]);
+    // activate dashboard 3
+    $response = $this->postJson(route('dashboard.activation'), [
+      'id' => $dashboard3->id,
+    ]);
+    // deactivate dashboard 2
+    $response = $this->delete(route('dashboard.deactivation', $dashboard2->id));
+
+    // check the order
+    $this->assertDatabaseHas('dashboards', [
+      'id' => $dashboard1->id,
+      'order' => 1
+    ]);
+    $this->assertDatabaseHas('dashboards', [
+      'id' => $dashboard2->id,
+      'order' => 0
+    ]);
+    $this->assertDatabaseHas('dashboards', [
+      'id' => $dashboard3->id,
+      'order' => 2
+    ]);
+  }
+
+  /** @test */
+  public function user_can_update_dashboard_order()
+  {
+    $this->login();
+    $dashboard1 = Dashboard::factory()->create([
+      'order' => 1
+    ]);
+    $dashboard2 = Dashboard::factory()->create([
+      'order' => 2
+    ]);
+    $dashboard3 = Dashboard::factory()->create([
+      'order' => 3
+    ]);
+
+    $data = [
+      ['id' => $dashboard1->id, 'order' => 2],
+      ['id' => $dashboard2->id, 'order' => 3],
+      ['id' => $dashboard3->id, 'order' => 1],
+    ];
+
+    $response = $this->putJson(route('dashboard.order'), $data);
+
+    $response->assertNoContent();
+    $this->assertDatabaseHas('dashboards', [
+      'id' => $dashboard1->id,
+      'order' => 2
+    ]);
+  }
+
 }
