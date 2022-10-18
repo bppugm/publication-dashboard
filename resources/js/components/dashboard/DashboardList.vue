@@ -13,7 +13,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="(dashboard, index) in dashboards" :key="index">
-                        <td class="text-center">
+                        <td class="text-center align-middle">
                             <DashboardCheckbox :dashboard="dashboard">
                             </DashboardCheckbox>
                         </td>
@@ -112,7 +112,7 @@ export default {
             this.dashboards[this.selectedItem.index] = event;
         },
         async doLogin() {
-            this.isLoading = true;
+            this.isLoading = true;other
             try {
                 let response = await axios.post("/login", this.filter);
                 window.location = response.data.redirect;
