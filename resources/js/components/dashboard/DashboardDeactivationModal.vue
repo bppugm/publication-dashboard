@@ -84,10 +84,10 @@ export default {
             this.data = { ...this.selectedData };
         },
 
-        deactivateForm() {
+        async deactivateForm() {
             this.loading = true;
             try {
-                axios.delete(`/dashboard/deactivation/${this.data.id}`)
+                let response = await axios.delete(`/dashboard/deactivation/${this.data.id}`)
                 return location.reload();
             } catch (error) {
                 this.errors = error.response.data.errors;

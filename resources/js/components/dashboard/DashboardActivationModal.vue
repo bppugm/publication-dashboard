@@ -83,10 +83,10 @@ export default {
             this.data = { ...this.selectedData };
         },
 
-        activateForm() {
+        async activateForm() {
             this.loading = true;
             try {
-                axios.post("/dashboard/activation", {
+                let response = await axios.post("/dashboard/activation", {
                     id: this.data.id,
                 });
                 return location.reload();

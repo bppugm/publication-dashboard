@@ -106,7 +106,7 @@ export default {
     async submitOrder() {
       this.loading = true;
       try {
-        await axios.put("/dashboard/order", this.changedOrder);
+        let response = await axios.put("/dashboard/order", this.changedOrder);
         this.$toast.success('Dashboard order has been updated', {
           position: "top",
           duration: 2000,
