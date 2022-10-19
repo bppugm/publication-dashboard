@@ -109,7 +109,7 @@ class DashboardController extends Controller
         $this->authorize('update', $dashboard);
 
         $data = $request->validate([
-            'name' => 'string|max:100|nullable',
+            'name' => 'string|max:100',
             'description' => 'string|max:300|nullable',
             'widgets' => 'nullable|array',
         ]);
