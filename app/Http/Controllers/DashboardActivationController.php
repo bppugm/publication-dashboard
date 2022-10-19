@@ -25,19 +25,19 @@ class DashboardActivationController extends Controller
    */
   public function store(Request $request, Dashboard $dashboard)
   {
-    $this->authorize('update', $dashboard);
+    $this->authorize('create', $dashboard);
     // validate the request has id
     $request->validate([
       'id' => 'required|integer',
     ]);
-    // get dashboard order where order is not null by order
-    $dashboards = Dashboard::whereNotNull('order')->orderBy('order', 'desc')->first();
+        // get dashboard order where order is not null by order
+    $dashboards = Dashboard::active()->orderBy('order', 'desc')->first();
     // if there is no dashboard with order then $last = 0
     $last = $dashboards ? $dashboards->order : 0;
     // next order is $last + 1
     $nextOrder = $last + 1;
 
-    if ($nextOrder == 7) {
+    if ($nextOrder >= 7) {
       // if next order is 7 then return error
       return response()->json([
         'message' => 'You have reached the maximum number of dashboards',

@@ -6749,34 +6749,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context.prev = _context.next) {
               case 0:
                 _this.isLoading = true;
-                _context.prev = 1;
-                _context.next = 4;
+                other;
+                _context.prev = 2;
+                _context.next = 5;
                 return axios.post("/login", _this.filter);
 
-              case 4:
+              case 5:
                 response = _context.sent;
                 window.location = response.data.redirect;
-                _context.next = 13;
+                _context.next = 14;
                 break;
 
-              case 8:
-                _context.prev = 8;
-                _context.t0 = _context["catch"](1);
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](2);
                 console.log(_context.t0);
                 _this.errors = _context.t0.response.data.errors;
                 _this.filter.password = "";
 
-              case 13:
-                _context.prev = 13;
+              case 14:
+                _context.prev = 14;
                 _this.isLoading = false;
-                return _context.finish(13);
+                return _context.finish(14);
 
-              case 16:
+              case 17:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[1, 8, 13, 16]]);
+        }, _callee, null, [[2, 9, 14, 17]]);
       }))();
     },
     hasErrors: function hasErrors(key) {
@@ -10892,7 +10893,7 @@ var render = function render() {
     return _c("tr", {
       key: index
     }, [_c("td", {
-      staticClass: "text-center"
+      staticClass: "text-center align-middle"
     }, [_c("DashboardCheckbox", {
       attrs: {
         dashboard: dashboard

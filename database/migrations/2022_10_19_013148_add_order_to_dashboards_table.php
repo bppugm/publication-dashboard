@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class DisplayDashboard extends Migration
+class AddOrderToDashboardsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class DisplayDashboard extends Migration
     public function up()
     {
         Schema::table('dashboards', function (Blueprint $table) {
-            $table->unsignedInteger('order')->default(0);
+            //
         });
     }
 
@@ -25,6 +25,8 @@ class DisplayDashboard extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('dashboards', function (Blueprint $table) {
+            //
+        });
     }
 }

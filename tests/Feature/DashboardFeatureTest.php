@@ -105,22 +105,16 @@ class DashboardFeatureTest extends TestCase
   public function user_can_deactivate_dashboard_and_automatically_ordering()
   {
     $this->login();
-    $dashboard1 = Dashboard::factory()->create();
-    $dashboard2 = Dashboard::factory()->create();
-    $dashboard3 = Dashboard::factory()->create();
-
-    // activate dashboard 1
-    $response = $this->postJson(route('dashboard.activation'), [
-      'id' => $dashboard1->id,
+    $dashboard1 = Dashboard::factory()->create([
+        'order' => 1
     ]);
-    // activate dashboard 2
-    $response = $this->postJson(route('dashboard.activation'), [
-      'id' => $dashboard2->id,
+    $dashboard2 = Dashboard::factory()->create([
+        'order' => 2
     ]);
-    // activate dashboard 3
-    $response = $this->postJson(route('dashboard.activation'), [
-      'id' => $dashboard3->id,
+    $dashboard3 = Dashboard::factory()->create([
+        'order' => 3
     ]);
+    
     // deactivate dashboard 2
     $response = $this->delete(route('dashboard.deactivation', $dashboard2->id));
 
