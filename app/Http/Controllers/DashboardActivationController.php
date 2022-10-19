@@ -25,7 +25,7 @@ class DashboardActivationController extends Controller
    */
   public function store(Request $request, Dashboard $dashboard)
   {
-    $this->authorize('create', $dashboard);
+    $this->authorize('update', $dashboard);
     // validate the request has id
     $request->validate([
       'id' => 'required|integer',
@@ -82,7 +82,7 @@ class DashboardActivationController extends Controller
    */
   public function update(Request $request)
   {
-    $this->authorize('update', Dashboard::class);
+    $this->authorize('create', Dashboard::class);
 
     // validate foreach request
     $request->validate([
