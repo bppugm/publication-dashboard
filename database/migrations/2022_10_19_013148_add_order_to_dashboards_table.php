@@ -14,7 +14,7 @@ class AddOrderToDashboardsTable extends Migration
     public function up()
     {
         Schema::table('dashboards', function (Blueprint $table) {
-            //
+            $table->unsignedInteger('order')->default(0);
         });
     }
 
@@ -26,7 +26,7 @@ class AddOrderToDashboardsTable extends Migration
     public function down()
     {
         Schema::table('dashboards', function (Blueprint $table) {
-            //
+            $table->dropColumn(['order']);
         });
     }
 }
