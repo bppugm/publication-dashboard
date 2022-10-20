@@ -38,6 +38,7 @@
         "vue-grid-layout": "^2.4.0",
         "vue-mention": "1.0.0-floating-vue1",
         "vue-select": "^3.20.0",
-        "vue-toast-notification": "^0.6.3"
+        "vue-toast-notification": "^0.6.3",
+        "vuedraggable": "^2.24.3"
     }
 }

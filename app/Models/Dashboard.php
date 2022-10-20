@@ -27,6 +27,11 @@ class Dashboard extends Model
         );
     }
 
+    public function scopeActive($query)
+    {
+        return $query->where('order', '!=', 0);
+    }
+
     public function data()
     {
         return $this->belongsToMany(\App\Models\Data::class);

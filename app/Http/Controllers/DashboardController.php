@@ -14,18 +14,26 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
-        $dashboards = Dashboard::select('id', 'name', 'description')
+        $dashboards = Dashboard::select('id', 'name', 'description', 'order')
             ->filter(request(['search']))
+            // order by oder 1 to 6
+            ->orderBy('order', 'desc')
+            ->orderBy('name')
             ->paginate(10)
-            ->appends(request()->query());
+            ->withQueryString();
 
         if (request()->wantsJson()) {
             return $dashboards;
         }
 
+        $displays = Dashboard::select('id', 'name', 'description', 'order')
+            ->active()
+            ->orderBy('order', 'asc')
+            ->get();
+
         $canManage = $request->user()->can('create', Dashboard::class);
 
-        return view('dashboard.index', compact('dashboards', 'canManage'));
+        return view('dashboard.index', compact('dashboards', 'canManage', 'displays'));
     }
 
     /**
@@ -103,7 +111,7 @@ class DashboardController extends Controller
         $data = $request->validate([
             'name' => 'string|max:100',
             'description' => 'string|max:300|nullable',
-            'widgets' => 'nullable|array'
+            'widgets' => 'nullable|array',
         ]);
 
         $dashboard->update($data);
@@ -127,20 +135,5 @@ class DashboardController extends Controller
         $dashboard->delete();
 
         return response()->noContent();
-    }
-
-    /**
-     * Display dashboard preview.
-     */
-    public function preview(Dashboard $dashboard, Request $request)
-    {
-        $dashboard->load('data');
-        $url = "";
-        if ($request->filled('from')) {
-            $prevs = collect($request->from);
-            $last = $prevs->pull($prevs->count() - 1);
-            $url = route('dashboard.preview', [$last, 'from' => $prevs->toArray()]);
-        }
-        return view('dashboard.preview', compact('dashboard', 'url'));
     }
 }
