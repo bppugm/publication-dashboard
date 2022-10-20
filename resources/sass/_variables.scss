@@ -1,0 +1,24 @@
+// Body
+$body-bg: #f8fafc;
+
+// Typography
+$font-family-sans-serif: 'Nunito', sans-serif;
+$font-size-base: 0.85rem;
+$line-height-base: 1.6;
+
+// color
+$blue:    #073C64 !default;
+$light:    #E2E6E9 !default;
+$soft-primary: #CDD8E0;
+$soft-danger: #FCD9DC;
+
+// breadcrumb
+$breadcrumb-margin-bottom:          0;
+
+// modals
+.modal-title {
+    font-weight: 800;
+    color: $blue;
+}
+
+$input-bg: #fff;
