@@ -24,7 +24,7 @@
                 <div class="text-primary col">
                   <h4 class="m-0">
                     <!-- dashboard name in bold capitalize every word -->
-                    <b>{{ Ucword(dashboard.name) }}</b>
+                    <b>{{ dashboard.name }}</b>
                   </h4>
                 </div>
                 <div class="justify-content-end">
@@ -32,7 +32,7 @@
                     class="mdi mdi-calendar text-center text-primary"
                     style="font-size: 1.25rem; font-style: normal;"
                   >
-                    {{ dateToday() }}
+                    <date-formatter class="ps-1" pattern="dd MMMM yyyy" :iso-date="new Date().toISOString()"></date-formatter>
                   </i>
                 </div>
               </div>
@@ -74,23 +74,11 @@ export default {
   data() {
     return {};
   },
-  methods: {
-    Ucword(str) {
-      return str.replace(
-        /(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g,
-        function (s) {
-          return s.toUpperCase();
-        }
-      );
-    },
-    // date today month is in word
-    dateToday() {
-      let date = new Date();
-      let month = date.toLocaleString("default", { month: "long" });
-      return `${date.getDate()} ${month} ${date.getFullYear()}`;
-    },
-  },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+h4 {
+  text-transform: capitalize;
+}
+</style>
