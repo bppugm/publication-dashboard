@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\DashboardUpdated;
 use App\Models\Dashboard;
 use Illuminate\Http\Request;
 
@@ -118,6 +119,8 @@ class DashboardController extends Controller
 
         $dataIds = $dashboard->fresh()->extractedDataIds();
         $dashboard->data()->sync($dataIds);
+
+        DashboardUpdated::dispatch($dashboard);
 
         return $dashboard;
     }

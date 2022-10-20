@@ -234,6 +234,11 @@ export default {
       Echo.channel('data-updated').listen('DataUpdated', (e) => {
         this.dashboard.data.find((data) => data.id == e.data.id).value = e.data.value;
       });
+      Echo.channel('dashboard-updated').listen('DashboardUpdated', (e) => {
+        if (e.dashboard.id == this.dashboard.id) {
+          location.reload();
+        }
+      });
     },
     generateUrl(id){
         var url = new URL(window.location.origin + "/dashboard/preview/" + id + window.location.search);

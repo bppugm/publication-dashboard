@@ -6,7 +6,7 @@
       :navigationEnabled="false"
       :autoplay="true"
       :autoplayHoverPause="false"
-      :autoplayTimeout="5000"
+      :autoplayTimeout="20000"
       :loop="true"
       :paginationEnabled="true"
       paginationColor="#D9D9D9"
@@ -73,6 +73,19 @@ export default {
   },
   data() {
     return {};
+  },
+  mounted() {
+    this.subscribe();
+  },
+  methods: {
+    subscribe() {
+      Echo.channel("dashboard-activation-updated").listen(
+        "DashboardActivationUpdated",
+        (e) => {
+          location.reload();
+        }
+      );
+    },
   },
 };
 </script>
