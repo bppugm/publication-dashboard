@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dashboard;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -13,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -21,8 +22,12 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Dashboard $dashboard)
     {
-        return view('home');
+        $dashboards = Dashboard::active()->orderBy('order', 'asc')->get();
+        $dashboards->load('data');
+        $hideNavbar = true;
+
+        return view('welcome', compact('dashboards', 'hideNavbar'));
     }
 }

@@ -11065,3 +11065,28 @@ input.is-invalid.icon-append {
   --bs-btn-disabled-bg: #FCD9DC;
   --bs-btn-disabled-border-color: #FCD9DC;
 }
+
+.VueCarousel-dot-container {
+  margin-bottom: 10px !important;
+}
+
+.VueCarousel-dot {
+  display: inline-block;
+  cursor: pointer;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border: 1px solid #ccc;
+  background-clip: content-box;
+  box-sizing: content-box;
+  padding: 0;
+  margin-top: 0 !important;
+  border-radius: 0% !important;
+  width: 50px !important;
+  height: 3px !important;
+  outline: none;
+}
+
+.VueCarousel-dot:focus {
+  outline: 1px solid lightblue;
+}
