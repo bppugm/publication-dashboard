@@ -22,9 +22,8 @@
                 <div class="card-header text-primary bg-transparent p-0 pb-1">
                     <h5><b>Displayed Dashboard List</b></h5>
                 </div>
-                <div class="card-body text-primary bg-transparent">
-                    <h5>Coming soon ...</h5>
-                </div>
+                <dashboard-display-list :data='{{ json_encode($displays) }}'>
+                </dashboard-display-list>
             </div>
         </div>
 

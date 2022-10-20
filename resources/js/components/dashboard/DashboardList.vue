@@ -13,9 +13,9 @@
                 </thead>
                 <tbody>
                     <tr v-for="(dashboard, index) in dashboards" :key="index">
-                        <!-- placeholder for display, waiting for feature-->
-                        <td class="align-middle text-center" style="zoom: 1.5">
-                            <input type="checkbox" />
+                        <td class="text-center align-middle">
+                            <DashboardCheckbox :dashboard="dashboard">
+                            </DashboardCheckbox>
                         </td>
                         <td class="align-middle">
                             <a :href="`/dashboard/${dashboard.id}`">
@@ -29,23 +29,31 @@
                         <td>
                             <div class="align-middle" v-if="canManage">
                                 <button
-                                type="button"
-                                class="btn btn-outline-primary"
-                                data-bs-toggle="modal"
-                                data-bs-target="#dashboard-edit-modal"
-                                @click="editItem(dashboard, index)"
-                            >
-                                Edit
-                            </button>
-                            <button
-                                type="button"
-                                class="btn btn-outline-danger"
-                                data-bs-toggle="modal"
-                                data-bs-target="#dashboard-delete-modal"
-                                @click="deleteItem(dashboard)"
-                            >
-                                Delete
-                            </button>
+                                    type="button"
+                                    class="btn btn-outline-primary"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#dashboard-edit-modal"
+                                    @click="editItem(dashboard, index)"
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    type="button"
+                                    class="btn btn-outline-danger"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#dashboard-delete-modal"
+                                    @click="deleteItem(dashboard)"
+                                >
+                                    Delete
+                                </button>
+                                <a
+                                    type="button"
+                                    class="btn btn-outline-success"
+                                    :href="`/dashboard/preview/${dashboard.id}`"
+                                    role="button"
+                                >
+                                    Preview
+                                </a>
                             </div>
                         </td>
                     </tr>
@@ -72,6 +80,7 @@
 </template>
 
 <script>
+import DashboardCheckbox from './DashboardCheckbox.vue';
 export default {
     props: {
         data: {
@@ -103,16 +112,17 @@ export default {
             this.dashboards[this.selectedItem.index] = event;
         },
         async doLogin() {
-            this.isLoading = true;
-
+            this.isLoading = true;other
             try {
                 let response = await axios.post("/login", this.filter);
                 window.location = response.data.redirect;
-            } catch (error) {
+            }
+            catch (error) {
                 console.log(error);
                 this.errors = error.response.data.errors;
                 this.filter.password = "";
-            } finally {
+            }
+            finally {
                 this.isLoading = false;
             }
         },
@@ -129,5 +139,6 @@ export default {
             return "";
         },
     },
+    components: { DashboardCheckbox }
 };
 </script>

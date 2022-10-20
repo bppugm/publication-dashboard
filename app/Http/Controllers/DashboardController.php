@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\DashboardUpdated;
 use App\Models\Dashboard;
 use Illuminate\Http\Request;
 
@@ -14,14 +15,26 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
-        $dashboards = Dashboard::select('id', 'name', 'description')
+        $dashboards = Dashboard::select('id', 'name', 'description', 'order')
             ->filter(request(['search']))
+            // order by oder 1 to 6
+            ->orderBy('order', 'desc')
+            ->orderBy('name')
             ->paginate(10)
-            ->appends(request()->query());
+            ->withQueryString();
+
+        if (request()->wantsJson()) {
+            return $dashboards;
+        }
+
+        $displays = Dashboard::select('id', 'name', 'description', 'order')
+            ->active()
+            ->orderBy('order', 'asc')
+            ->get();
 
         $canManage = $request->user()->can('create', Dashboard::class);
 
-        return view('dashboard.index', compact('dashboards', 'canManage'));
+        return view('dashboard.index', compact('dashboards', 'canManage', 'displays'));
     }
 
     /**
@@ -60,13 +73,18 @@ class DashboardController extends Controller
      * @param  \App\Models\Dashboard  $dashboard
      * @return \Illuminate\Http\Response
      */
-    public function show(Dashboard $dashboard)
+    public function show(Dashboard $dashboard, Request $request)
     {
         $this->authorize('view', $dashboard);
 
         $dashboard->load('data');
-
-        return view('dashboard.show', compact('dashboard'));
+        $url = "";
+        if ($request->filled('from')) {
+            $prevs = collect($request->from);
+            $last = $prevs->pull($prevs->count() - 1);
+            $url = route('dashboard.show', [$last, 'from' => $prevs->toArray()]);
+        }
+        return view('dashboard.show', compact('dashboard', 'url'));
     }
 
     /**
@@ -94,13 +112,15 @@ class DashboardController extends Controller
         $data = $request->validate([
             'name' => 'string|max:100',
             'description' => 'string|max:300|nullable',
-            'widgets' => 'nullable|array'
+            'widgets' => 'nullable|array',
         ]);
 
         $dashboard->update($data);
 
         $dataIds = $dashboard->fresh()->extractedDataIds();
         $dashboard->data()->sync($dataIds);
+
+        DashboardUpdated::dispatch($dashboard);
 
         return $dashboard;
     }

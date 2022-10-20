@@ -109,4 +109,15 @@ class DataModelTest extends TestCase
         $this->assertCount(1, $filtered);
     }
 
+    /** @test */
+    // assert event dispatch on data updated
+    public function it_dispatches_event_on_updated()
+    {
+        $data = Data::factory()->create();
+
+        $this->expectsEvents(\App\Events\DataUpdated::class);
+
+        $data->update(['value' => '950']);
+    }
+
 }

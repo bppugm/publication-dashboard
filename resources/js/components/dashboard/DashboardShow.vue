@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="card card-body p-4 shadow border-0">
+    <div class="card card-body p-4 shadow border-0" v-if="canEdit">
       <div class="d-flex justify-content-between">
         <h2 class="text-primary">{{ dashboard.name }}</h2>
         <div class="form-check form-switch" v-if="canEdit">
@@ -20,6 +20,16 @@
       <div class="row">
         <div class="col-md-8">
           <b>{{ dashboard.description }}</b>
+        </div>
+        <div class="col-md-4 d-flex justify-content-end" v-if="!editMode">
+          <a
+            type="button"
+            class="btn btn-outline-success"
+            :href="`/dashboard/preview/${dashboard.id}`"
+            role="button"
+          >
+            Preview
+          </a>
         </div>
         <div class="col-md-4 d-flex" v-if="editMode">
           <button
@@ -117,6 +127,14 @@
           class="d-flex justify-content-end"
         >
           <span
+            title="To connected dashboard"
+            class="mx-1 text-primary"
+            style="cursor: grab"
+            v-if="item.connect_to"
+            ><a :href="`/dashboard/${item.connect_to}`">
+                <i class="mdi mdi-link-variant"></i></a
+          ></span>
+          <span
             title="Duplicate this widget"
             class="mx-1 text-primary"
             style="cursor: grab"
@@ -140,6 +158,13 @@
             ><i class="mdi mdi-trash-can-outline"></i
           ></span>
         </div>
+        <a
+          :href="generateUrl(item.connect_to)"
+
+          class="stretched-link"
+          v-if="item.connect_to != null && !canEdit"
+        >
+        </a>
       </grid-item>
     </grid-layout>
   </div>
@@ -173,6 +198,11 @@ export default {
   props: {
     initialDashboard: Object,
     canEdit: Boolean,
+    // props home by default is false
+    isHome: {
+      type: Boolean,
+      default: false,
+    },
   },
   components: {
     GridLayout: VueGridLayout.GridLayout,
@@ -197,8 +227,28 @@ export default {
   },
   mounted() {
     this.dashboard = this.initialDashboard;
+    this.subscribe();
   },
   methods: {
+    subscribe() {
+      Echo.channel('data-updated').listen('DataUpdated', (e) => {
+        this.dashboard.data.find((data) => data.id == e.data.id).value = e.data.value;
+      });
+      Echo.channel('dashboard-updated').listen('DashboardUpdated', (e) => {
+        if (e.dashboard.id == this.dashboard.id) {
+          location.reload();
+        }
+      });
+    },
+    generateUrl(id){
+        var url = new URL(window.location.origin + "/dashboard/preview/" + id + window.location.search);
+        if(this.isHome){
+            url.searchParams.append("from[]", "home");
+        }else{
+            url.searchParams.append("from[]", this.dashboard.id);
+        }
+        return url;
+    },
     getRibbonColour(hex) {
       if (hex) {
         return hex;
