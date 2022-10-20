@@ -6256,6 +6256,16 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {};
+  },
+  mounted: function mounted() {
+    this.subscribe();
+  },
+  methods: {
+    subscribe: function subscribe() {
+      Echo.channel("dashboard-activation-updated").listen("DashboardActivationUpdated", function (e) {
+        location.reload();
+      });
+    }
   }
 });
 
@@ -6981,6 +6991,11 @@ chart_js__WEBPACK_IMPORTED_MODULE_2__.Chart.register(chart_js__WEBPACK_IMPORTED_
         _this.dashboard.data.find(function (data) {
           return data.id == e.data.id;
         }).value = e.data.value;
+      });
+      Echo.channel('dashboard-updated').listen('DashboardUpdated', function (e) {
+        if (e.dashboard.id == _this.dashboard.id) {
+          location.reload();
+        }
       });
     },
     generateUrl: function generateUrl(id) {
@@ -10506,7 +10521,7 @@ var render = function render() {
       navigationEnabled: false,
       autoplay: true,
       autoplayHoverPause: false,
-      autoplayTimeout: 5000,
+      autoplayTimeout: 20000,
       loop: true,
       paginationEnabled: true,
       paginationColor: "#D9D9D9",
