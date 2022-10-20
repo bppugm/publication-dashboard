@@ -24,7 +24,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Auth::routes();
 
 Route::middleware('auth')->get('/home', function () {
-    return redirect('home'); // callback for successful login
+    return redirect()->route('home');
 });
 
 Route::middleware('auth')->resource('data', DataController::class);
