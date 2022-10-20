@@ -198,6 +198,11 @@ export default {
   props: {
     initialDashboard: Object,
     canEdit: Boolean,
+    // props home by default is false
+    isHome: {
+      type: Boolean,
+      default: false,
+    },
   },
   components: {
     GridLayout: VueGridLayout.GridLayout,
@@ -232,7 +237,11 @@ export default {
     },
     generateUrl(id){
         var url = new URL(window.location.origin + "/dashboard/preview/" + id + window.location.search);
-        url.searchParams.append('from[]', this.dashboard.id)
+        if(this.isHome){
+            url.searchParams.append("from[]", "home");
+        }else{
+            url.searchParams.append("from[]", this.dashboard.id);
+        }
         return url;
     },
     getRibbonColour(hex) {

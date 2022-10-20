@@ -69,6 +69,9 @@ class DashboardActivationController extends Controller
       $url = route('dashboard.preview', [$last, 'from' => $prevs->toArray()]);
     }
     $hideNavbar = true;
+    if ($request->filled('from') && $request->from[count($request->from) - 1] == 'home') {
+        $url = route('home');
+    }
 
     return view('dashboard.preview', compact('dashboard', 'url', 'hideNavbar'));
   }

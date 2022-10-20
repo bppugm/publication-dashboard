@@ -33,6 +33,7 @@
         "laravel-echo": "^1.14.0",
         "pusher-js": "^7.4.0",
         "vee-validate": "^3.4.14",
+        "vue-carousel": "^0.18.0",
         "vue-chartjs": "^4.1.1",
         "vue-dataset": "^1.1.16",
         "vue-grid-layout": "^2.4.0",
